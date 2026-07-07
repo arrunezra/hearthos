@@ -1,6 +1,6 @@
 import React, { useState } from 'react'; // 🎯 Added useState here
 import { Platform, Pressable, StatusBar, TouchableOpacity } from 'react-native';
-import { Menu, Bell, ChevronLeft, Search, X, LogOut, Navigation } from 'lucide-react-native';
+import { Menu, Bell, ChevronLeft, Search, X, LogOut, Navigation, User2, Navigation2, Settings } from 'lucide-react-native';
 import { Menu as HOSMenu, MenuItem, MenuItemLabel } from '../components/HOSGluestackUI';
 import FastImage from '@d11/react-native-fast-image';
 import { Box, Heading, HStack, VStack } from './HOSGluestackUI';
@@ -173,7 +173,7 @@ const HeaderSession = ({
                                         navigation.navigate('AuthScreen');
                                     }}
                                 >
-                                    <Icon as={LogOut} size="sm" className="text-red-600 mr-2" />
+                                    <Icon as={User2} size="sm" className="text-red-600 mr-2" />
                                     <MenuItemLabel className="text-red-600 font-bold text-sm">
                                         Sign IN
                                     </MenuItemLabel>
@@ -186,7 +186,7 @@ const HeaderSession = ({
                                             navigation.navigate('Settings');
                                         }}
                                     >
-                                        <Icon as={LogOut} size="sm" className="text-red-600 mr-2" />
+                                        <Icon as={Settings} size="sm" className="text-red-600 mr-2" />
                                         <MenuItemLabel className="text-red-600 font-bold text-sm">
                                             Settings
                                         </MenuItemLabel>
@@ -199,7 +199,7 @@ const HeaderSession = ({
                                             navigation.navigate('Tracker');
                                         }}
                                     >
-                                        <Icon as={LogOut} size="sm" className="text-red-600 mr-2" />
+                                        <Icon as={Navigation2} size="sm" className="text-red-600 mr-2" />
                                         <MenuItemLabel className="text-red-600 font-bold text-sm">
                                             Tracker
                                         </MenuItemLabel>

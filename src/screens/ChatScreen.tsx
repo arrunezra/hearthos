@@ -67,7 +67,7 @@ export default function ChatScreen({ route, navigation }: any) {
     const [gifSearchText, setGifSearchText] = useState('');
     const isPickingMedia = useRef(false);
     const appStateRef = useRef(AppState.currentState);
-
+    const [activeHighlightId, setActiveHighlightId] = useState<string | null>(null);
     // 🚀 REFACTOR: Shared Values for smooth text input expansion and drawer panel locks
     const extraContentPadding = useSharedValue(0);
     const freezeScroll = useSharedValue(false);
@@ -182,6 +182,14 @@ export default function ChatScreen({ route, navigation }: any) {
         const targetIndex = messages.findIndex((msg) => msg.id === targetMessageId);
         if (targetIndex === -1 || !flashListRef.current) return;
 
+        // 🚀 TRIGGER BLINK INSTANTLY
+        setActiveHighlightId(targetMessageId);
+        console.log('targetMessageId', targetMessageId);
+        // Clear the blink highlight after 1.5 seconds
+        setTimeout(() => {
+            setActiveHighlightId(null);
+        }, 1500);
+
         try {
             flashListRef.current.scrollToIndex({
                 index: targetIndex,
@@ -248,9 +256,11 @@ export default function ChatScreen({ route, navigation }: any) {
                 onDeleteTrigger={handleDeleteMessageTrigger}
                 isAdmin={currentUserRole === 'admin'}
                 isDeletedByUser={!!item?.isDeletedByUser}
+                // 🚀 PASS HIGHLIGHT STATUS DOWN
+                isHighlighted={activeHighlightId === item.id}
             />
         );
-    }, [currentUser?.uid, currentUserRole, handleScrollToOriginalMessage, handleDeleteMessageTrigger]);
+    }, [currentUser?.uid, currentUserRole, handleScrollToOriginalMessage, handleDeleteMessageTrigger, activeHighlightId]);
 
     const handleMediaMessageSend = async (source: 'camera' | 'gallery') => {
         if (Platform.OS === 'android' && source === 'camera') {
@@ -425,13 +435,14 @@ export default function ChatScreen({ route, navigation }: any) {
                     keyExtractor={(item) => (item.isDeletedByUser ? `${item.id}-deleted` : item.id)}
                     inverted
                     renderItem={renderMessageItem}
-                    extraData={[messages, currentUserRole]}
+                    extraData={[messages, currentUserRole, activeHighlightId]}
                     drawDistance={500}
                     maintainVisibleContentPosition={{
                         autoscrollToTopThreshold: scale(50),
                     }}
                     renderScrollComponent={renderScrollComponent}
-
+                    keyboardShouldPersistTaps="handled"
+                    contentContainerStyle={{ paddingBottom: BOTTOM_MARGIN * 2 }}
                 />
 
                 {/* 4. Sticky control composer bar anchored perfectly aligned to soft keyboard frames */}

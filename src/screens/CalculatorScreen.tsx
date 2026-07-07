@@ -1,6 +1,6 @@
 // src/screens/CalculatorScreen.tsx
 import React, { useState, useEffect, useRef } from 'react';
-import { Alert, KeyboardAvoidingView, PermissionsAndroid, Platform, StatusBar, StyleSheet, TextInput, TouchableOpacity, Switch as NativeSwitch } from 'react-native';
+import { Alert, KeyboardAvoidingView, PermissionsAndroid, Platform, StatusBar, StyleSheet, TextInput, TouchableOpacity, Switch as NativeSwitch, Pressable } from 'react-native';
 import { Box, Input, InputField, Text, VStack, HStack, Button, ButtonText, Switch, InputSlot } from '../components/HOSGluestackUI';
 import { Trash2, Plus, X } from 'lucide-react-native';
 // 💡 Import your unified screen layout container
@@ -175,6 +175,22 @@ export default function CalculatorScreen() {
         }, 50);
     };
 
+    const showAdminPanel = async () => {
+        const currentUser = getAuth().currentUser;
+        if (!currentUser) {
+            return;
+        }
+        try {
+            const db = getFirestore();
+            const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+            const profile = userDoc.data();
+            if (profile?.role === 'admin') {
+                navigation.navigate('VerifyList');
+            }
+        } catch (error) {
+            console.error("Navigation pipeline crash: ", error);
+        }
+    }
     // Administrative Secret Long Press Telemetry Action
     const handleSecretLongPress = async () => {
         const currentUser = getAuth().currentUser;
@@ -404,9 +420,11 @@ export default function CalculatorScreen() {
                                 </Input>
                             </VStack>
                             <VStack style={{ flex: 1, gap: verticalScale(6) }}>
-                                <Text style={{ fontSize: moderateScale(11) }} className="font-bold text-slate-500 uppercase tracking-wider">
-                                    Sample Price (₹)
-                                </Text>
+                                <Pressable delayLongPress={800} onLongPress={showAdminPanel}>
+                                    <Text style={{ fontSize: moderateScale(11) }} className="font-bold text-slate-500 uppercase tracking-wider">
+                                        Sample Price (₹)
+                                    </Text>
+                                </Pressable>
                                 <Input
                                     className="border-0 border-b border-slate-300 rounded-none"
                                     style={{

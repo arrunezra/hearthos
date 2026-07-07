@@ -39,17 +39,20 @@ interface ChatMessageBubbleProps {
     timeString: string;
     isAdmin: boolean;
     isDeletedByUser: boolean;
+    isHighlighted?: boolean;
     onReplyTrigger: (item: MessageItem) => void;
     onReplyClick: (replyToId: string) => void;
     onDeleteTrigger: (messageId: string, senderId: string) => void;
 }
 
+// 🚀 THE FIX: Destructure 'isHighlighted' from the arguments array at the very top of your bubble component!
 const ChatMessageBubble = ({
     item,
     currentUserId,
     timeString,
     isAdmin,
     isDeletedByUser,
+    isHighlighted = false, // 🎯 ADD THIS PROP DEFENDER ENTRY
     onReplyTrigger,
     onReplyClick,
     onDeleteTrigger
@@ -59,8 +62,12 @@ const ChatMessageBubble = ({
     const isMedia = !!item.mediaUrl;
     const isGif = item?.mediaType === 'image/gif' || item?.text === '[GIF]';
     const [viewerVisible, setViewerVisible] = useState(false);
+
     const getBubbleColor = () => {
-        if (isDeletedByUser && isAdmin) return '#7F1D1D'; // Distinct dark red bubble background for Admin viewing deleted content
+        // 🚀 THE FIX: This will now catch the targetMessageId toggle instantly!
+        if (isHighlighted) return '#0a2b12ff';
+
+        if (isDeletedByUser && isAdmin) return '#7F1D1D';
         return isMe ? '#064E3B' : '#115E59';
     };
 
@@ -84,7 +91,7 @@ const ChatMessageBubble = ({
                     style={{
                         maxWidth: '75%',
                         alignItems: isMe ? 'flex-end' : 'flex-start',
-                        width: '100%' // 🚀 Forces containment inside screen bounds
+                        width: '100%'
                     }}
                 >
                     <Box style={{
@@ -94,11 +101,11 @@ const ChatMessageBubble = ({
                         borderRadius: scale(16),
                         borderBottomRightRadius: isMe ? scale(4) : scale(16),
                         borderBottomLeftRadius: !isMe ? scale(4) : scale(16),
-                        backgroundColor: getBubbleColor(),
+                        backgroundColor: getBubbleColor(), // Uses dynamic background calculation 
                         overflow: 'hidden',
                         borderWidth: isMedia ? 1 : 0,
                         borderColor: isMe ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)',
-                        alignSelf: isMe ? 'flex-end' : 'flex-start' // 🚀 Keeps bubble hugging content tightly
+                        alignSelf: isMe ? 'flex-end' : 'flex-start'
                     }}>
 
                         {/* 🎯 NESTED WHATSAPP REPLY DECORATOR */}
@@ -131,8 +138,15 @@ const ChatMessageBubble = ({
                         )}
 
                         {isMedia ? (
-                            /* 🎬 MEDIA VIEW LAYOUT */
-                            <Box style={{ position: 'relative', marginTop: hasReply ? scale(4) : 0 }}>
+                            /* 🎬 MEDIA VIEW LAYOUT WITH INTEGRATED BLINK HIGHLIGHT */
+                            <Box style={{
+                                position: 'relative',
+                                marginTop: hasReply ? scale(4) : 0,
+                                borderWidth: isHighlighted ? 3 : 0,
+                                borderColor: '#0a2b12ff',
+                                borderRadius: scale(12),
+                                overflow: 'hidden'
+                            }}>
                                 {isGif ? (
                                     <OptimizedChatGif
                                         mediaUrl={item.mediaUrl!}
@@ -165,6 +179,19 @@ const ChatMessageBubble = ({
                                         </Box>
                                     </Box>
                                 )}
+
+                                {/* 🚀 OPTIONAL WHATSAPP OVERLAY FLASH: Overlay an amber transparent tint directly over the image/GIF */}
+                                {isHighlighted && (
+                                    <Box style={{
+                                        position: 'absolute',
+                                        top: 0,
+                                        left: 0,
+                                        right: 0,
+                                        bottom: 0,
+                                        backgroundColor: 'rgba(230, 81, 0, 0.25)', // Transparent amber overlay tint
+                                        pointerEvents: 'none' // Ensures users can still click the media through the flash overlay
+                                    }} />
+                                )}
                             </Box>
                         ) : (
                             /* 💬 WHATSAPP TEXT WRAPPER & ANTI-OVERLAP ENGINE */
@@ -172,7 +199,7 @@ const ChatMessageBubble = ({
                                 flexDirection: 'row',
                                 flexWrap: 'wrap',
                                 alignItems: 'flex-end',
-                                paddingRight: scale(45), // 🚀 Creates a safe zone for the timestamp overlay
+                                paddingRight: scale(45),
                                 minWidth: scale(80)
                             }}>
                                 <Text
@@ -186,11 +213,10 @@ const ChatMessageBubble = ({
                                     {item.text}
                                 </Text>
 
-                                {/* Absolute bottom right bounds inside the safe text padding container */}
                                 <Box style={{
                                     position: 'absolute',
                                     bottom: 0,
-                                    right: scale(-2), // Shifts timestamp flush into the built-in padding zone
+                                    right: scale(-2),
                                     flexDirection: 'row',
                                     alignItems: 'center'
                                 }}>
@@ -215,7 +241,6 @@ const ChatMessageBubble = ({
         </VStack>
     );
 };
-
 // 🎯 OPTIMIZATION: Prevents unneeded row items re-rendering cycles
 export default React.memo(ChatMessageBubble, (prevProps, nextProps) => {
     return (
@@ -226,6 +251,7 @@ export default React.memo(ChatMessageBubble, (prevProps, nextProps) => {
         // 🚀 CRITICAL FIX: Tell React to watch for deletion changes instantly
         prevProps.isDeletedByUser === nextProps.isDeletedByUser &&
         prevProps.isAdmin === nextProps.isAdmin &&
+        !!prevProps.isHighlighted === !!nextProps.isHighlighted &&
         prevProps.onDeleteTrigger === nextProps.onDeleteTrigger
     );
 });
