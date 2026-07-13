@@ -1,0 +1,14 @@
+
+# Block access to any .txt or .log files
+<FilesMatch "\.(txt|log)$">
+    Order deny,allow
+    Deny from all
+</FilesMatch>
+
+# --- ADD THESE LINES BELOW ---
+RewriteEngine On
+
+# Ensure the Authorization header is passed to PHP
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+# -----------------------------

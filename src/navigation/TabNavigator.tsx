@@ -6,6 +6,7 @@ import CalculatorScreen from '../screens/CalculatorScreen';
 import { verticalScale } from '../utils/scaling';
 import NotesScreen from '../notes/NotesScreen';
 import ChatTab from '../screens/ChatTab';
+import GalleryViewScreen from '../screens/Gallery/GalleryViewScreen';
 // import CalculatorScreen from '../screens/CalculatorScreen';
 // import TrackerScreen from '../screens/TrackerScreen';
 // import { Calculator, Radar, Wallet } from '../components/HOSIconUI';
@@ -42,7 +43,8 @@ export default function TabNavigator() {
         >
             <Tab.Screen name="Calculator" component={CalculatorScreen} options={{ title: 'KG Price Tool' }} />
             <Tab.Screen name="Notes" component={NotesScreen} options={{ title: 'Notes' }} />
-            <Tab.Screen name="Chat" component={ChatTab} options={{ title: 'Chat' }} />
+            <Tab.Screen name="Gallery" component={GalleryViewScreen} options={{ title: 'Gallery' }} />
+            {/* <Tab.Screen name="Chat" component={ChatTab} options={{ title: 'Chat' }} /> */}
         </Tab.Navigator>
     );
 }

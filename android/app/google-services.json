@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "450020064775-i82q0jkibuvrt33gfa79rldgvd69i497.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hearthos",
+            "certificate_hash": "577ea6e811be5bbd910ddda2ef539a23ffcc0d26"
+          }
+        },
+        {
           "client_id": "450020064775-vdoshkkplehj9u3h0rtu6fjgm5rahjvb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

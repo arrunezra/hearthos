@@ -13,7 +13,9 @@ interface UserProfile {
     role: string;
 }
 
-export default function VerifyListScreen({ navigation }: any) {
+export default function VerifyListScreen({ navigation, route }: any) {
+    console.log("VerifyListScreen route params:", route.params);
+    const { screen } = route.params;
     const [users, setUsers] = useState<UserProfile[]>([]);
     const db = getFirestore();
 
@@ -110,7 +112,7 @@ export default function VerifyListScreen({ navigation }: any) {
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         onLongPress={() => handleSetDefaultUser(item)}
-                        onPress={() => navigation.navigate('VerifyImage', { targetUser: item })}
+                        onPress={() => navigation.navigate('VerifyImage', { targetUser: item, screen })}
                         style={{ padding: scale(14), borderRadius: scale(12), marginBottom: verticalScale(10) }}
                         className="bg-slate-50 border border-slate-100"
                     >

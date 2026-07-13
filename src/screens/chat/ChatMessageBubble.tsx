@@ -71,6 +71,11 @@ const ChatMessageBubble = ({
         return isMe ? '#064E3B' : '#115E59';
     };
 
+    const getReplyColor = () => {
+        if (isDeletedByUser && isAdmin) return '#7F1D1D';
+        return '#00000066';
+    };
+
     return (
         <VStack style={{ alignItems: isMe ? 'flex-end' : 'flex-start', marginBottom: verticalScale(12) }}>
             <SwipeableMessageRow isMe={isMe} onReplyTrigger={() => onReplyTrigger(item)}>
@@ -143,7 +148,7 @@ const ChatMessageBubble = ({
                                 position: 'relative',
                                 marginTop: hasReply ? scale(4) : 0,
                                 borderWidth: isHighlighted ? 3 : 0,
-                                borderColor: '#0a2b12ff',
+                                borderColor: getBubbleColor(),
                                 borderRadius: scale(12),
                                 overflow: 'hidden'
                             }}>
@@ -165,7 +170,7 @@ const ChatMessageBubble = ({
                                             position: 'absolute',
                                             bottom: scale(6),
                                             right: scale(8),
-                                            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                                            backgroundColor: getReplyColor(),
                                             paddingHorizontal: scale(6),
                                             paddingVertical: verticalScale(2),
                                             borderRadius: scale(10),
@@ -238,7 +243,7 @@ const ChatMessageBubble = ({
                 imageUrl={item.mediaUrl!}
                 onClose={() => setViewerVisible(false)}
             />
-        </VStack>
+        </VStack >
     );
 };
 // 🎯 OPTIMIZATION: Prevents unneeded row items re-rendering cycles

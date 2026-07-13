@@ -9,6 +9,8 @@ import StartedScreen from "../auth/StartedScreen";
 import ChatScreen from "../screens/ChatScreen";
 import VerifyListScreen from "../screens/images/VerifyListScreen";
 import VerifyImageScreen from "../screens/images/VerifyImageScreen";
+import AlbumPhotosScreen from "../screens/Gallery/AlbumPhotosScreen";
+import GalleryViewScreen from "../screens/Gallery/GalleryViewScreen";
 
 const RootStack = createNativeStackNavigator();
 
@@ -30,6 +32,8 @@ export const RootNavigation = () => {
                 <RootStack.Screen name="Settings" component={SettingsScreen} />
                 <RootStack.Screen name="VerifyList" component={VerifyListScreen} />
                 <RootStack.Screen name="VerifyImage" component={VerifyImageScreen} />
+                <RootStack.Screen name="AlbumPhotosScreen" component={AlbumPhotosScreen} />
+                <RootStack.Screen name="GalleryView" component={GalleryViewScreen} />
 
                 {/* <RootStack.Screen name="Tracker" component={TrackerScreen} />   */}
 

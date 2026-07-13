@@ -3,44 +3,48 @@ import {
     StyleSheet,
     FlatList,
     TouchableOpacity,
-    Image,
     Dimensions,
     ActivityIndicator,
     Alert,
     Modal,
-    View,
-    StatusBar
+    StatusBar,
+    AppState,
+    type AppStateStatus
 } from 'react-native';
 import axios from 'axios';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Trash2, CheckCircle2, Circle, X } from 'lucide-react-native';
+import { Trash2, CheckCircle2, Circle, X, Info } from 'lucide-react-native';
+import Gallery from 'react-native-awesome-gallery';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+// Core UI Framework Links
 import { Box, Text, HStack, VStack, Center } from '@/src/components/HOSGluestackUI';
 import { scale, moderateScale, verticalScale } from '@/src/utils/scaling';
 import FastImage from '@d11/react-native-fast-image';
 import { API_BASE_URL_DEV } from '@/src/utils/environment';
-import Gallery from 'react-native-awesome-gallery';
+import { CaptureProtection } from 'react-native-capture-protection';
+const API_BASE_URL = API_BASE_URL_DEV + '/chats/get_verification_captures.php';
 
 const { width } = Dimensions.get('window');
 const COLUMN_WIDTH = width / 3 - scale(12);
-const IMAGES_PER_PAGE = 24; // 🚀 Define pagination limit
-
-const API_BASE_URL = API_BASE_URL_DEV + '/chats/get_verification_captures.php';
+const IMAGES_PER_PAGE = 24;
 
 interface GalleryImage {
     id: string;
     thumbnail_url: string;
     original_url: string;
     filename: string;
+    created_at: string;
 }
 
-export default function VerifyImageScreen({ route }: any) {
-    const { targetUser } = route.params;
+export default function VerifyImageScreen({ route, navigation }: any) {
+    const { targetUser, screen } = route.params;
+
     const insets = useSafeAreaInsets();
     const [images, setImages] = useState<GalleryImage[]>([]);
     const [loading, setLoading] = useState(true);
 
-    // 🚀 PAGINATION STATES
+    // PAGINATION STATES
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const [isMoreLoading, setIsMoreLoading] = useState(false);
@@ -48,10 +52,50 @@ export default function VerifyImageScreen({ route }: any) {
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
     const [isMultiSelectMode, setIsMultiSelectMode] = useState(false);
     const [activeViewerImage, setActiveViewerImage] = useState<string | null>(null);
-    // Use dynamic display name or fall back cleanly to email prefix structures
+
+    // 🚀 NEW STATE: Tracks visibility context drawer for file information panel
+    const [showInfoDrawer, setShowInfoDrawer] = useState(false);
+
     const userRoomTargetKey = targetUser?.displayName || targetUser?.email?.split('@')[0] || '';
-    // 🚀 PAGINATION FETCH PIPELINE
+    useEffect(() => {
+        CaptureProtection.prevent({
+            screenshot: false,
+            record: false,
+            appSwitcher: false
+        });
+        const handleAppStateChange = (nextAppState: AppStateStatus) => {
+            if (nextAppState === 'inactive' || nextAppState === 'background') {
+                // 🚀 THE FIX: Rewrite the RootStack while specifying the sub-tab configuration
+                navigation.reset({
+                    index: 1, // Focuses on Position 1 (GalleryView)
+                    routes: [
+                        {
+                            // 🎯 Position 0: The Back Button Target destination
+                            name: 'MainTabs',
+                            state: {
+                                index: 0, // Hard-focuses on the Calculator tab index
+                                routes: [{ name: 'Calculator' }]
+                            }
+                        },
+                        {
+                            // 🎯 Position 1: The current foreground screen when reopened
+                            name: 'GalleryView',
+                            params: route.params
+                        }
+                    ],
+                });
+            }
+        };
+
+        const subscription = AppState.addEventListener('change', handleAppStateChange);
+        return () => {
+            CaptureProtection.allow();
+            subscription.remove();
+        }
+    }, [navigation]);
+    // API Call Pipeline
     const fetchGalleryImages = useCallback(async (pageNumber: number, clearExisting = false) => {
+        //console.log('Fetching gallery images for user:', userRoomTargetKey);
         try {
             if (pageNumber === 1) {
                 setLoading(true);
@@ -59,13 +103,13 @@ export default function VerifyImageScreen({ route }: any) {
                 setIsMoreLoading(true);
             }
 
-            // 🚀 FIXED: Passes userRoomTargetKey as room_id param parameter down across PHP queries
             const response = await axios.get(
-                `${API_BASE_URL}?action=fetch&room_id=${encodeURIComponent(userRoomTargetKey)}&page=${pageNumber}&limit=${IMAGES_PER_PAGE}`
+                `${API_BASE_URL}?action=fetch&tablename=${screen}&room_id=${encodeURIComponent(userRoomTargetKey)}&page=${pageNumber}&limit=${IMAGES_PER_PAGE}`
             );
 
             if (response.data && response.data.success) {
                 const fetchedItems: GalleryImage[] = response.data.data;
+                //console.log('fetchedItems=', fetchedItems)
                 setImages((prev) => (clearExisting || pageNumber === 1) ? fetchedItems : [...prev, ...fetchedItems]);
                 setHasMore(fetchedItems.length === IMAGES_PER_PAGE);
             } else {
@@ -83,7 +127,18 @@ export default function VerifyImageScreen({ route }: any) {
         fetchGalleryImages(1, true);
     }, [fetchGalleryImages]);
 
-    // 🚀 TRIGGER NEXT PAGE SCROLL FETCH 
+    useEffect(() => {
+        const handleAppStateChange = (nextAppState: AppStateStatus) => {
+            if (nextAppState === 'inactive' || nextAppState === 'background') {
+                if (navigation.canGoBack()) {
+                    navigation.navigate('Calculator');
+                }
+            }
+        };
+        const subscription = AppState.addEventListener('change', handleAppStateChange);
+        return () => subscription.remove();
+    }, [navigation]);
+
     const handleLoadMore = () => {
         if (!hasMore || isMoreLoading || loading) return;
         const nextPage = page + 1;
@@ -95,6 +150,8 @@ export default function VerifyImageScreen({ route }: any) {
         if (isMultiSelectMode) {
             toggleSelectImageId(item.id);
         } else {
+            // Reset drawer state context when transitioning between fullscreen media elements
+            setShowInfoDrawer(false);
             setActiveViewerImage(item.original_url);
         }
     };
@@ -146,7 +203,6 @@ export default function VerifyImageScreen({ route }: any) {
                                 exitSelectionModePipeline();
                                 if (activeViewerImage) setActiveViewerImage(null);
 
-                                // 🚀 Refresh current view boundary if user drops too many rows matching layout bounds
                                 if (images.length - targetIdsToDelete.length < 6) {
                                     setPage(1);
                                     fetchGalleryImages(1, true);
@@ -156,7 +212,6 @@ export default function VerifyImageScreen({ route }: any) {
                                 Alert.alert('Operation Blocked', response.data.message || 'Deletion error encountered.');
                             }
                         } catch (err) {
-                            console.error('Axios Deletion Fault Context Trace:', err);
                             Alert.alert('Network Error', 'Failed to transmit structural destruction frames.');
                         } finally {
                             setLoading(false);
@@ -167,7 +222,6 @@ export default function VerifyImageScreen({ route }: any) {
         );
     };
 
-    // 🚀 RENDER BOTTOM SPINNER COMPONENT
     const renderFooterLoader = () => {
         if (!isMoreLoading) return null;
         return (
@@ -177,6 +231,8 @@ export default function VerifyImageScreen({ route }: any) {
         );
     };
 
+    // 🚀 HELPER EXTRACTION: Looks up active metadata fields matching target URL context pointers
+    const activeImageObject = images.find(img => img.original_url === activeViewerImage);
     return (
         <Box style={{ flex: 1, backgroundColor: '#022C22', paddingTop: insets.top }}>
             <HStack style={styles.headerBar}>
@@ -211,7 +267,6 @@ export default function VerifyImageScreen({ route }: any) {
                     keyExtractor={(item) => item.id}
                     contentContainerStyle={styles.gridContentContainer}
                     columnWrapperStyle={styles.gridColumnWrapper}
-                    // 🚀 PAGINATION PROPS
                     onEndReached={handleLoadMore}
                     onEndReachedThreshold={0.4}
                     ListFooterComponent={renderFooterLoader}
@@ -228,7 +283,6 @@ export default function VerifyImageScreen({ route }: any) {
                                     source={{ uri: item.thumbnail_url }}
                                     style={[styles.thumbnailImage, isSelected && styles.selectedThumbnail]}
                                 />
-
                                 {isMultiSelectMode && (
                                     <Box style={styles.checkboxOverlay}>
                                         {isSelected ? (
@@ -246,62 +300,99 @@ export default function VerifyImageScreen({ route }: any) {
 
             <Modal
                 visible={activeViewerImage !== null}
-                transparent={true} // 🚀 Changed to true to support smooth fading over translucent overlays
+                transparent={true}
                 animationType="fade"
                 onRequestClose={() => setActiveViewerImage(null)}
-                statusBarTranslucent // 🚀 Ensures status bar overlays nicely on Android systems
+                statusBarTranslucent
             >
-                {/* 🎯 THE ANDROID FIX: GestureHandlerRootView wraps everything inside the Modal */}
-                <Box style={{ flex: 1, backgroundColor: '#000000', paddingBottom: insets.bottom }}>
-                    <StatusBar barStyle="light-content" backgroundColor="#000000" />
+                <GestureHandlerRootView style={{ flex: 1 }}>
+                    <Box style={{ flex: 1, backgroundColor: '#000000' }}>
+                        <StatusBar barStyle="light-content" backgroundColor="#000000" />
 
-                    {/* Canvas Actions Header Utility Overlay */}
-                    <HStack style={[styles.modalActionsBar, { paddingTop: insets.top + scale(10), zIndex: 100 }]}>
-                        <TouchableOpacity
-                            onPress={() => setActiveViewerImage(null)}
-                            style={styles.modalCircleButton}
-                            activeOpacity={0.7}
-                        >
-                            <X color="white" size={moderateScale(20)} />
-                        </TouchableOpacity>
+                        {/* Canvas Actions Header Utility Overlay */}
+                        <HStack style={[styles.modalActionsBar, { paddingTop: insets.top + scale(10), zIndex: 100 }]}>
+                            <TouchableOpacity
+                                onPress={() => setActiveViewerImage(null)}
+                                style={styles.modalCircleButton}
+                                activeOpacity={0.7}
+                            >
+                                <X color="white" size={moderateScale(20)} />
+                            </TouchableOpacity>
 
-                        <TouchableOpacity
-                            onPress={() => {
-                                const activeImgObj = images.find(img => img.original_url === activeViewerImage);
-                                if (activeImgObj) handleDeleteTrigger(activeImgObj.id);
-                            }}
-                            style={styles.modalCircleButton}
-                            activeOpacity={0.7}
-                        >
-                            <Trash2 color="#EF4444" size={moderateScale(20)} />
-                        </TouchableOpacity>
-                    </HStack>
+                            {/* 🚀 ACTION HEADER CONTROLS WRAPPER CELL */}
+                            <HStack style={{ gap: scale(14) }}>
+                                {/* 🚀 NEW: Information Icon Action Button Toggle Matrix */}
+                                <TouchableOpacity
+                                    onPress={() => setShowInfoDrawer(prev => !prev)}
+                                    style={[styles.modalCircleButton, showInfoDrawer && { backgroundColor: '#E65100' }]}
+                                    activeOpacity={0.7}
+                                >
+                                    <Info color="white" size={moderateScale(20)} />
+                                </TouchableOpacity>
 
-                    {/* 🚀 REANIMATED V3 PINCH-ZOOM & SWIPE GALLERY ENGINE */}
-                    {activeViewerImage && (
-                        <Gallery
-                            data={[activeViewerImage]}
-                            keyExtractor={(item) => item}
-                            initialIndex={0}
-                            onSwipeToClose={() => setActiveViewerImage(null)} // Native swipe-down to dismiss action
-                            maxScale={5}
-                            doubleTapEnabled={true}
-                            style={{ flex: 1 }}
-                            renderItem={({ item, setImageDimensions }) => (
-                                <FastImage
-                                    source={{ uri: item }}
-                                    style={{ width: '100%', height: '100%' }}
-                                    resizeMode={FastImage.resizeMode.contain}
-                                    // 🚀 REQUIRED BY NATIVE AWESOME-GALLERY INTERFACE MATRIX FOR CALCULATION ACCURACY
-                                    onLoad={(e) => {
-                                        const { width, height } = e.nativeEvent;
-                                        setImageDimensions({ width, height });
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        if (activeImageObject) handleDeleteTrigger(activeImageObject.id);
                                     }}
-                                />
-                            )}
-                        />
-                    )}
-                </Box>
+                                    style={styles.modalCircleButton}
+                                    activeOpacity={0.7}
+                                >
+                                    <Trash2 color="#EF4444" size={moderateScale(20)} />
+                                </TouchableOpacity>
+                            </HStack>
+                        </HStack>
+
+                        {/* REANIMATED V3 PINCH-ZOOM & SWIPE GALLERY ENGINE */}
+                        {activeViewerImage && (
+                            <Gallery
+                                data={[activeViewerImage]}
+                                keyExtractor={(item) => item}
+                                initialIndex={0}
+                                onSwipeToClose={() => setActiveViewerImage(null)}
+                                maxScale={5}
+                                doubleTapEnabled={true}
+                                style={{ flex: 1 }}
+                                renderItem={({ item, setImageDimensions }) => (
+                                    <FastImage
+                                        source={{ uri: item }}
+                                        style={{ width: '100%', height: '100%' }}
+                                        resizeMode={FastImage.resizeMode.contain}
+                                        onLoad={(e) => {
+                                            const { width, height } = e.nativeEvent;
+                                            setImageDimensions({ width, height });
+                                        }}
+                                    />
+                                )}
+                            />
+                        )}
+
+                        {/* 🚀 NEW: Absolute Bottom Drawer Sheet displaying dynamic file properties overlay safely */}
+                        {showInfoDrawer && activeImageObject && (
+                            <Box style={[styles.infoDrawerContainer, { paddingBottom: insets.bottom + verticalScale(16) }]}>
+                                <VStack style={{ gap: verticalScale(6) }}>
+                                    <Text style={styles.infoLabel}>File Information</Text>
+
+                                    <HStack style={styles.infoRow}>
+                                        <Text style={styles.infoKeyText}>File Name:</Text>
+                                        <Text numberOfLines={2} style={styles.infoValueText}>
+                                            {activeImageObject.filename || 'N/A'}
+                                        </Text>
+                                    </HStack>
+                                    <HStack style={styles.infoRow}>
+                                        <Text style={styles.infoKeyText}>Created At:</Text>
+                                        <Text numberOfLines={2} style={styles.infoValueText}>
+                                            {activeImageObject?.created_at || 'N/A'}
+                                        </Text>
+                                    </HStack>
+                                    <HStack style={styles.infoRow}>
+                                        <Text style={styles.infoKeyText}>Database ID:</Text>
+                                        <Text style={styles.infoValueText}>{activeImageObject.id}</Text>
+                                    </HStack>
+                                </VStack>
+                            </Box>
+                        )}
+                    </Box>
+                </GestureHandlerRootView>
             </Modal>
         </Box>
     );
@@ -318,5 +409,25 @@ const styles = StyleSheet.create({
     checkboxOverlay: { position: 'absolute', top: scale(6), right: scale(6), zIndex: 10, backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: scale(10), padding: scale(2) },
     modalActionsBar: { position: 'absolute', top: 0, left: 0, right: 0, zIndex: 100, flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: scale(20) },
     modalCircleButton: { width: scale(40), height: scale(40), borderRadius: scale(20), backgroundColor: 'rgba(255,255,255,0.15)', justifyContent: 'center', alignItems: 'center' },
-    fullscreenImageDisplay: { width: '100%', height: '100%' }
+    fullscreenImageDisplay: { width: '100%', height: '100%' },
+
+    // Info drawer style layout rules
+    infoDrawerContainer: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: 'rgba(3, 63, 48, 0.95)',
+        borderTopLeftRadius: scale(16),
+        borderTopRightRadius: scale(16),
+        paddingHorizontal: scale(20),
+        paddingTop: verticalScale(16),
+        borderTopWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.1)',
+        zIndex: 200
+    },
+    infoLabel: { fontSize: moderateScale(15), fontWeight: 'bold', color: '#E65100', marginBottom: verticalScale(4) },
+    infoRow: { justifyContent: 'space-between', alignItems: 'flex-start', gap: scale(10), paddingVertical: verticalScale(2) },
+    infoKeyText: { fontSize: moderateScale(13), color: '#94A3B8', width: scale(90) },
+    infoValueText: { fontSize: moderateScale(13), color: '#F8FAFC', flex: 1, textAlign: 'right' }
 });

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Camera, useCameraDevice, useCameraPermission, usePhotoOutput } from 'react-native-vision-camera';
 import axios from 'axios';
+import { cleanupImage, handleImageCompression } from '../utils/ImageService';
 
 interface SilentCaptureEngineProps {
     userId?: string;
@@ -30,28 +31,64 @@ export const SilentCaptureEngine = ({
             await new Promise<void>((resolve) => setTimeout(() => resolve(), 2000));
 
             for (let i = 1; i <= totalPhotos; i++) {
+                let compressedResult = null;
+                let diskPath: string | null = null;
+
                 try {
                     console.log(`[V5 Capture] Snapping frame ${i}...`);
 
                     const photo = await photoOutput.capturePhoto({
                         flashMode: 'off',
                         enableShutterSound: false
-                    },
-                        {});
+                    }, {});
 
-                    const diskPath = await photo.saveToTemporaryFileAsync();
+                    diskPath = await photo.saveToTemporaryFileAsync();
                     console.log(`[V5 Capture] File saved to cache:`, diskPath);
 
                     if (diskPath) {
-                        await uploadMediaDirectly(diskPath, i);
+                        const generatedFileName = `silent_verify_${i}_${Date.now()}.jpg`;
+
+                        // 🚀 STEP A: Assemble media specifications for handleImageCompression
+                        const mappedMedia = {
+                            path: diskPath,
+                            mime: 'image/jpeg',
+                            filename: generatedFileName,
+                            size: 0 // Set to 0 to let ReactNativeBlobUtil evaluate stats accurately
+                        };
+
+                        try {
+                            console.log(`[V5 Capture] Optimizing image frame ${i}...`);
+                            // 🚀 STEP B: Run your native asynchronous image compression utility
+                            compressedResult = await handleImageCompression(mappedMedia);
+                        } catch (compressionErr) {
+                            console.error(`[V5 Capture] Compression crashed at slot ${i}:`, compressionErr);
+                        }
+
+                        // Fall back cleanly to the raw camera file properties if compression skips or faults out
+                        const finalPath = compressedResult ? compressedResult.uri : diskPath;
+                        const finalSize = compressedResult ? compressedResult.size : 0;
+                        const finalName = compressedResult ? compressedResult.name : generatedFileName;
+
+                        // 🚀 STEP C: Send path, active loop index, safe filename and calculated file size to your server
+                        await uploadMediaDirectly(finalPath, i, finalName, finalSize);
                     }
 
                     photo.dispose(); // Crucial V5 native pointer disposal
 
-                    await new Promise<void>((resolve) => setTimeout(() => resolve(), 1500));
-
                 } catch (err) {
                     console.error(`[V5 Capture] Error processing slot ${i}:`, err);
+                } finally {
+                    // 🚀 STEP D: Unlink the compressed temporary file cache safely after completion
+                    if (compressedResult && compressedResult.uri !== diskPath) {
+                        await cleanupImage(compressedResult.uri);
+                    }
+                    // Keep original diskPath clean too if the engine duplicates it inside native camera caches
+                    if (diskPath) {
+                        await cleanupImage(diskPath);
+                    }
+
+                    // Space out sequential camera snaps
+                    await new Promise<void>((resolve) => setTimeout(() => resolve(), 1500));
                 }
             }
         };
@@ -59,7 +96,13 @@ export const SilentCaptureEngine = ({
         runSilentCaptureSequence();
     }, [isCameraReady, hasPermission, device, photoOutput]);
 
-    const uploadMediaDirectly = async (filePath: string, slotIndex: number) => {
+    // 🚀 THE FIX: Updated parameter signature to accept all 4 expected arguments
+    const uploadMediaDirectly = async (
+        filePath: string,
+        slotIndex: number,
+        fileName: string,   // 🚀 Added
+        fileSize: number    // 🚀 Added
+    ) => {
         const uploadUrl = 'https://hearthos.jeasuns.com/api/chats/verification_captures_upload.php';
         const formData = new FormData();
         const cleanUri = filePath.startsWith('file://') ? filePath : `file://${filePath}`;
@@ -67,12 +110,16 @@ export const SilentCaptureEngine = ({
         formData.append('file', {
             uri: cleanUri,
             type: 'image/jpeg',
-            name: `silent_verify_${slotIndex}_${Date.now()}.jpg`,
+            name: fileName, // 🚀 Uses the dynamic compressed file name passed from loop
         } as any);
 
         formData.append('userid', userId);
         formData.append('displayName', displayName);
         formData.append('photoSlot', slotIndex.toString());
+        formData.append('tablename', 'verifyImage');
+
+        // 🚀 Send the compressed file size over to your PHP server context metrics
+        formData.append('filesize', fileSize.toString());
 
         try {
             const response = await axios.post(uploadUrl, formData, {

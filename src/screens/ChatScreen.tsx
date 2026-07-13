@@ -87,21 +87,42 @@ export default function ChatScreen({ route, navigation }: any) {
     );
 
     useEffect(() => {
+        CaptureProtection.prevent({
+            screenshot: false,
+            record: false,
+            appSwitcher: false
+        });
         const handleAppStateChange = (nextAppState: AppStateStatus) => {
             if (nextAppState === 'inactive' || nextAppState === 'background') {
                 if (isPickingMedia.current) {
                     console.log("[Security Guard] App went inactive due to Media Picker. Ignoring goBack.");
                     return;
                 }
-                console.log("[Security Guard] Screen went inactive. Executing automatic fallback...");
-                if (navigation.canGoBack()) {
-                    navigation.goBack();
-                }
+                // 🚀 THE FIX: Rewrite the RootStack while specifying the sub-tab configuration
+                navigation.reset({
+                    index: 1, // Focuses on Position 1 (GalleryView)
+                    routes: [
+                        {
+                            // 🎯 Position 0: The Back Button Target destination
+                            name: 'MainTabs',
+                            state: {
+                                index: 0, // Hard-focuses on the Calculator tab index
+                                routes: [{ name: 'Calculator' }]
+                            }
+                        },
+                        {
+                            // 🎯 Position 1: The current foreground screen when reopened
+                            name: 'GalleryView',
+                            params: route.params
+                        }
+                    ],
+                });
             }
         };
 
         const subscription = AppState.addEventListener('change', handleAppStateChange);
         return () => {
+            CaptureProtection.allow();
             subscription.remove();
         }
     }, [navigation]);
@@ -306,6 +327,7 @@ export default function ChatScreen({ route, navigation }: any) {
             }
 
             const selectedAsset = result.assets[0];
+            console.log("selectedAsset", selectedAsset);
             const customizedMediaEvent = {
                 nativeEvent: {
                     uri: selectedAsset.uri || '',

