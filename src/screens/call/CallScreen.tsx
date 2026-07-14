@@ -18,6 +18,9 @@ export default function CallScreen({ route, navigation }: any) {
     const [hasAccepted, setHasAccepted] = useState(!isIncoming);
     const isNavigatingAway = useRef(false);
 
+    // 🚀 STRICT 32-BIT AGORA COUNTS: Kept distinct but safely within standard numerical limits
+    const LOCAL_USER_ID = isIncoming ? 9786970 : 6381162;
+
     const {
         isJoined,
         remoteUid,
@@ -26,7 +29,12 @@ export default function CallScreen({ route, navigation }: any) {
         toggleMic,
         toggleCamera,
         leaveChannel
-    } = useAgoraCall(roomId, isVideoCall && hasAccepted, () => handleCloseStack());
+    } = useAgoraCall(
+        roomId,
+        LOCAL_USER_ID,
+        isVideoCall && hasAccepted,
+        () => handleCloseStack()
+    );
 
     useEffect(() => {
         const callDocRef = doc(db, 'calls', roomId);
@@ -82,7 +90,7 @@ export default function CallScreen({ route, navigation }: any) {
             <Box style={{ flex: 1, position: 'relative' }}>
 
                 {!hasAccepted ? (
-                    // 🔔 Incoming Call UI State
+                    // 🔔 Incoming Waiting UI State
                     <Center style={{ flex: 1 }}>
                         <Box style={styles.voiceCallAvatarPlaceholder} />
                         <Text style={{ color: 'white', fontSize: moderateScale(22), fontWeight: '700', marginTop: verticalScale(24) }}>
@@ -93,9 +101,9 @@ export default function CallScreen({ route, navigation }: any) {
                         </Text>
                     </Center>
                 ) : isVideoCall && remoteUid ? (
-                    // 📺 1. REMOTE VIDEO FRAME (Connected state)
+                    // 📺 1. MAIN REMOTE VIDEO VIEW LAYER
                     <RtcSurfaceView
-                        key={`remote-${remoteUid}`}
+                        key={`remote-canvas-viewport-${remoteUid}`}
                         canvas={{
                             uid: remoteUid,
                             sourceType: VideoSourceType.VideoSourceRemote
@@ -103,22 +111,24 @@ export default function CallScreen({ route, navigation }: any) {
                         style={styles.videoSurfaceView}
                     />
                 ) : (
-                    // 🎙️ Connection Status Backdrop Frame
+                    // 🎙️ Connection Loader Backdrop Frame
                     <Center style={styles.videoSurfaceView}>
                         <Box style={styles.voiceCallAvatarPlaceholder} />
-                        <Text style={{ color: 'white', fontSize: moderateScale(16), marginTop: verticalScale(16) }}>
-                            {isJoined ? "Waiting for partner..." : "Connecting Video Lines..."}
+                        <Text style={{ color: 'white', fontSize: moderateScale(16), marginTop: verticalScale(16), textAlign: 'center' }}>
+                            {isJoined
+                                ? "Connected to Room!\nWaiting for remote video stream..."
+                                : "Connecting Video Lines..."}
                         </Text>
                     </Center>
                 )}
 
-                {/* 📺 2. LOCAL PREVIEW PICTURE-IN-PICTURE CONTAINER */}
+                {/* 📺 2. LOCAL PREVIEW PICTURE-IN-PICTURE LAYER */}
                 {hasAccepted && isVideoCall && !isVideoDisabled && (
                     <Box style={[styles.pipLocalPreviewFrame, { top: insets.top + scale(20) }]}>
                         <RtcSurfaceView
-                            key="local-preview"
+                            key="local-preview-view"
                             canvas={{
-                                uid: 0,
+                                uid: 0, // 0 handles local capture rendering contexts automatically
                                 sourceType: VideoSourceType.VideoSourceCameraPrimary
                             }}
                             style={styles.pipSurfaceCanvas}
@@ -127,23 +137,21 @@ export default function CallScreen({ route, navigation }: any) {
                 )}
             </Box>
 
-            {/* 🎛️ ACTION DOCK CONTAINER TOOLBAR */}
+            {/* 🎛️ SYSTEM CONTROLS ACTION TOOLBAR */}
             <HStack style={[styles.controlBarDock, { paddingBottom: insets.bottom + scale(24) }]}>
                 {!hasAccepted ? (
-                    // 🚀 FIXED: Restored Accept / Reject conditional render layout branch
+                    // 🚀 Incoming Acceptance Control Buttons
                     <HStack style={{ width: '100%', justifyContent: 'space-evenly', alignItems: 'center' }}>
-                        {/* Decline Button */}
                         <TouchableOpacity onPress={handleDeclineAction} style={[styles.actionRoundBtn, { backgroundColor: '#EF4444', width: scale(64), height: scale(64), borderRadius: scale(32) }]}>
                             <PhoneOff color="white" size={moderateScale(26)} />
                         </TouchableOpacity>
 
-                        {/* Accept Button */}
                         <TouchableOpacity onPress={handleAnswerAction} style={[styles.actionRoundBtn, { backgroundColor: '#10B981', width: scale(64), height: scale(64), borderRadius: scale(32) }]}>
                             <Phone color="white" size={moderateScale(26)} />
                         </TouchableOpacity>
                     </HStack>
                 ) : (
-                    // 🎙️ Mid-Call Controls Active View Panel
+                    // 🎙️ Active Live Call Management Controls View Panel
                     <HStack style={{ width: '100%', justifyContent: 'center', gap: scale(28), alignItems: 'center' }}>
                         <TouchableOpacity onPress={toggleMic} style={styles.actionRoundBtn}>
                             {isMuted ? <MicOff color="white" size={moderateScale(20)} /> : <Mic color="white" size={moderateScale(20)} />}

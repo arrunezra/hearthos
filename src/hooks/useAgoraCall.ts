@@ -14,7 +14,13 @@ const AGORA_APP_ID = AGORA_APP_ID_key;
 // 🚀 THE FIX: Move engine creation globally out of the component re-render pipeline
 const agoraEngine = createAgoraRtcEngine();
 
-export const useAgoraCall = (roomId: string, shouldConnect: boolean, onRemoteLeave: () => void) => {
+// 🚀 FIX: Ensure localUid is defined in the hook argument list
+export const useAgoraCall = (
+    roomId: string,
+    localUid: number,
+    shouldConnect: boolean,
+    onRemoteLeave: () => void
+) => {
     const [isJoined, setIsJoined] = useState(false);
     const [remoteUid, setRemoteUid] = useState<number | null>(null);
     const [isMuted, setIsMuted] = useState(false);
@@ -30,10 +36,17 @@ export const useAgoraCall = (roomId: string, shouldConnect: boolean, onRemoteLea
         }
     };
 
-    const fetchAgoraToken = async (channelName: string): Promise<string> => {
+    const fetchAgoraToken = async (channelName: string, uid: number): Promise<string> => {
         try {
-            const response = await fetch(`https://hearthos.jeasuns.com/api/config/rtcToken.php?channel=${channelName}`);
+            const stringUid = String(uid);
+            const url = `https://hearthos.jeasuns.com/api/config/rtcToken.php?channel=${channelName}&uid=${stringUid}`;
+            console.log('[Token API] Fetching production v2 token:', url);
+
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`HTTP Error Status: ${response.status}`);
+
             const data = await response.json();
+            console.log('[Token API Success] Token received safely.');
             return data.token || '';
         } catch (error) {
             console.error('[Token API Error]: Failed to fetch rtcToken:', error);
@@ -47,38 +60,47 @@ export const useAgoraCall = (roomId: string, shouldConnect: boolean, onRemoteLea
 
         try {
             await requestPermissions();
-            const token = await fetchAgoraToken(roomId);
+            const token = await fetchAgoraToken(roomId, localUid);
 
-            // Initialize configuration setup metrics
+            if (!token) {
+                console.error('[Agora Engine] Operational token validation aborted: Token empty.');
+                isInitializing.current = false;
+                return;
+            }
+
             agoraEngine.initialize({
                 appId: AGORA_APP_ID,
                 channelProfile: ChannelProfileType.ChannelProfileCommunication
             });
 
-            // Bind native lifecycle updates cleanly
             agoraEngine.registerEventHandler({
                 onJoinChannelSuccess: (connection: RtcConnection) => {
-                    console.log('[RTC Success] Device successfully hooked into channel:', connection.channelId);
+                    console.log('[RTC Success] Local device successfully joined:', connection.localUid);
                     setIsJoined(true);
                     isInitializing.current = false;
                 },
                 onUserJoined: (connection: RtcConnection, uid: number) => {
-                    console.log('[RTC Stream Discovered] Binding remote pixel tracks for UID:', uid);
+                    console.log('[RTC Event] Remote peer streaming channel detected:', uid);
                     setRemoteUid(uid);
                 },
                 onUserOffline: (connection: RtcConnection, uid: number) => {
+                    console.log('[RTC Event] Remote user dropped offline');
                     setRemoteUid(null);
                     onRemoteLeave();
+                },
+                onError: (err: number, msg: string) => {
+                    console.error('[Agora Native Error]: Code', err, 'Msg:', msg);
                 }
             });
 
-            // Activate media hardware layers BEFORE joining the active room pipeline
             agoraEngine.enableVideo();
             agoraEngine.enableAudio();
             agoraEngine.startPreview();
 
-            // Connect using the universal matching ID (0)
-            agoraEngine.joinChannel(token, roomId, 0, {
+            const targetUid = parseInt(String(localUid), 10);
+            console.log(`[Agora Engine] Connecting to channel: ${roomId} with absolute UID: ${targetUid}`);
+
+            agoraEngine.joinChannel(token, roomId, targetUid, {
                 channelProfile: ChannelProfileType.ChannelProfileCommunication,
                 clientRoleType: ClientRoleType.ClientRoleBroadcaster,
                 publishCameraTrack: true,
@@ -109,7 +131,7 @@ export const useAgoraCall = (roomId: string, shouldConnect: boolean, onRemoteLea
             agoraEngine.leaveChannel();
             agoraEngine.unregisterEventHandler({});
         } catch (e) {
-            console.log("Cleanup bypass active");
+            console.log("[Teardown] Engine bypass cleanup active.");
         }
         setIsJoined(false);
         setRemoteUid(null);
@@ -123,7 +145,7 @@ export const useAgoraCall = (roomId: string, shouldConnect: boolean, onRemoteLea
             leaveChannel();
         }
         return () => leaveChannel();
-    }, [roomId, shouldConnect]);
+    }, [roomId, localUid, shouldConnect]);
 
     return { isJoined, remoteUid, isMuted, isVideoDisabled, toggleMic, toggleCamera, leaveChannel };
 };

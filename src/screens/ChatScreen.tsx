@@ -949,11 +949,28 @@ export default function ChatScreen({ route, navigation }: any) {
 
                             {/* 📞 CHOICE 2: Voice Call Option */}
                             <TouchableOpacity
-                                onPress={() => {
+                                onPress={async () => {
                                     setCallMenuVisible(false);
                                     isNavigatingToCall.current = true; // Sets protection flag bypass
+                                    const db = getFirestore();
+
+                                    // 2. Execute the async write operation using setDoc
+                                    await setDoc(doc(db, 'calls', roomId), {
+                                        callerId: currentUser?.uid,
+                                        callerName: currentUser?.displayName,
+                                        receiverId: targetUser?.uid, // The person you are chatting with
+                                        status: 'ringing',
+                                        isVideoCall: true,
+                                        createdAt: serverTimestamp(),
+                                    });
+
+                                    // 2. Open User A's call screen
                                     setTimeout(() => {
-                                        navigation.navigate('CallScreen', { roomId: roomId, isVideoCall: false });
+                                        navigation.navigate('CallScreen', {
+                                            roomId: roomId,
+                                            isVideoCall: false,
+                                            isIncoming: false
+                                        });
                                     }, 150);
                                 }}
                                 style={{ flexDirection: 'row', alignItems: 'center', gap: scale(14), paddingVertical: verticalScale(14) }}
