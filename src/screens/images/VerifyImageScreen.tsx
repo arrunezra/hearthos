@@ -195,7 +195,8 @@ export default function VerifyImageScreen({ route, navigation }: any) {
                         try {
                             setLoading(true);
                             const response = await axios.post(`${API_BASE_URL}?action=delete`, {
-                                ids: targetIdsToDelete
+                                ids: targetIdsToDelete,
+                                tablename: screen
                             });
 
                             if (response.data && response.data.success) {
@@ -207,7 +208,7 @@ export default function VerifyImageScreen({ route, navigation }: any) {
                                     setPage(1);
                                     fetchGalleryImages(1, true);
                                 }
-                                Alert.alert('Success', 'Selected content metadata deleted successfully.');
+                                // Alert.alert('Success', 'Selected content metadata deleted successfully.');
                             } else {
                                 Alert.alert('Operation Blocked', response.data.message || 'Deletion error encountered.');
                             }
@@ -234,7 +235,7 @@ export default function VerifyImageScreen({ route, navigation }: any) {
     // 🚀 HELPER EXTRACTION: Looks up active metadata fields matching target URL context pointers
     const activeImageObject = images.find(img => img.original_url === activeViewerImage);
     return (
-        <Box style={{ flex: 1, backgroundColor: '#022C22', paddingTop: insets.top }}>
+        <Box style={{ flex: 1, backgroundColor: '#022C22' }}>
             <HStack style={styles.headerBar}>
                 {isMultiSelectMode ? (
                     <>

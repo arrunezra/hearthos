@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback, forwardRef } from 'react';
 import { FlatList, TextInput, TouchableOpacity, Platform, ImageBackground, Keyboard, Text as RNText, Modal, Alert, View, Pressable, StatusBar, PermissionsAndroid, AppState, AppStateStatus, type ScrollViewProps, LayoutChangeEvent, KeyboardAvoidingView } from 'react-native';
-import { addDoc, collection, deleteDoc, doc, getDoc, getFirestore, limit, onSnapshot, orderBy, query, serverTimestamp, updateDoc } from '@react-native-firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, limit, onSnapshot, orderBy, query, serverTimestamp, setDoc, updateDoc } from '@react-native-firebase/firestore';
 import auth, { getAuth } from '@react-native-firebase/auth';
 import { Box, Text, HStack, VStack, Center } from '../components/HOSGluestackUI';
-import { Camera, Image, ImageIcon, KeyboardIcon, Paperclip, Search, Send, Smile, X } from 'lucide-react-native';
+import { ArrowLeft, Camera, Image, ImageIcon, KeyboardIcon, Paperclip, PhiIcon, Phone, Search, Send, Smile, Trash2, Video, X } from 'lucide-react-native';
 import { scale, moderateScale, verticalScale } from '../utils/scaling';
 import GradientView from '../components/GradientView';
 import { EMOJI_SECTIONS, EmojiItem } from '../utils/emojiData';
@@ -60,7 +60,8 @@ export default function ChatScreen({ route, navigation }: any) {
     const [replyMessage, setReplyMessage] = useState<any | null>(null);
     const closeReplyHeader = () => setReplyMessage(null);
     const messagesCollection = collection(db, 'rooms', roomId, 'messages');
-    const [currentUserRole, setCurrentUserRole] = useState<'user' | 'admin' | 'default'>('default');
+    const [currentUserRole, setCurrentUserRole] = useState<'user' | 'admin' | 'default' | 'defaults'>('default');
+    const [showTempAdminRole, setShowTempAdminRole] = useState(false);
     const [attachmentMenuVisible, setAttachmentMenuVisible] = useState(false);
     const [showCustomEmojiPanel, setShowCustomEmojiPanel] = useState(false);
     const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
@@ -71,9 +72,8 @@ export default function ChatScreen({ route, navigation }: any) {
     // 🚀 REFACTOR: Shared Values for smooth text input expansion and drawer panel locks
     const extraContentPadding = useSharedValue(0);
     const freezeScroll = useSharedValue(false);
-
-
-
+    const isNavigatingToCall = useRef(false);
+    const [callMenuVisible, setCallMenuVisible] = useState(false);
     // Dynamic measurement for text box wrappers
     const onInputLayout = useCallback(
         (e: LayoutChangeEvent) => {
@@ -92,26 +92,34 @@ export default function ChatScreen({ route, navigation }: any) {
             record: false,
             appSwitcher: false
         });
+
         const handleAppStateChange = (nextAppState: AppStateStatus) => {
             if (nextAppState === 'inactive' || nextAppState === 'background') {
+                // 🛑 SAFETY EXCEPTION 1: Media Picker bypass
                 if (isPickingMedia.current) {
                     console.log("[Security Guard] App went inactive due to Media Picker. Ignoring goBack.");
                     return;
                 }
-                // 🚀 THE FIX: Rewrite the RootStack while specifying the sub-tab configuration
+
+                // 🚀 THE CRITICAL FIX: If navigating straight to the call screen, bypass the reset guard block entirely!
+                if (isNavigatingToCall.current) {
+                    console.log("[Security Guard] App shifted state due to incoming/outgoing CallScreen routing. Ignoring reset.");
+                    return;
+                }
+
+                // Otherwise, reset stack safely (User minimized the app entirely)
+                console.log("[Security Guard] App minimized from ChatScreen. Resetting to decoy stack.");
                 navigation.reset({
-                    index: 1, // Focuses on Position 1 (GalleryView)
+                    index: 1,
                     routes: [
                         {
-                            // 🎯 Position 0: The Back Button Target destination
                             name: 'MainTabs',
                             state: {
-                                index: 0, // Hard-focuses on the Calculator tab index
+                                index: 0,
                                 routes: [{ name: 'Calculator' }]
                             }
                         },
                         {
-                            // 🎯 Position 1: The current foreground screen when reopened
                             name: 'GalleryView',
                             params: route.params
                         }
@@ -125,8 +133,15 @@ export default function ChatScreen({ route, navigation }: any) {
             CaptureProtection.allow();
             subscription.remove();
         }
-    }, [navigation]);
+    }, [navigation, route.params]);
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            // Reset the flag as soon as the chat screen is back in focus foreground
+            isNavigatingToCall.current = false;
+        });
 
+        return unsubscribe;
+    }, [navigation]);
     useFocusEffect(
         useCallback(() => {
             const db = getFirestore();
@@ -136,6 +151,7 @@ export default function ChatScreen({ route, navigation }: any) {
                     const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
                     if (userDoc.exists()) {
                         const profile = userDoc.data();
+                        setShowTempAdminRole(profile?.role === 'admin');
                         setCurrentUserRole(profile?.role || 'user');
                     }
                 } catch (error) {
@@ -431,10 +447,56 @@ export default function ChatScreen({ route, navigation }: any) {
         (props: ScrollViewProps) => <VirtualizedListScrollView {...props} />,
         [],
     );
+    const handleClearRoomHistory = () => {
+        Alert.alert(
+            "Clear Chat History",
+            "Are you sure you want to permanently delete all messages in this room? This action cannot be undone.",
+            [
+                { text: "Cancel", style: "cancel" },
+                {
+                    text: "Clear All",
+                    style: "destructive",
+                    onPress: async () => {
+                        try {
+                            const db = getFirestore();
+
+                            // 1. Query all messages sorted from newest to oldest
+                            const messagesRef = collection(db, 'rooms', roomId, 'messages');
+                            const q = query(messagesRef, orderBy('createdAt', 'desc'));
+                            const snapshot = await getDocs(q);
+
+                            // If total history is already under 50 items, do nothing
+                            if (snapshot.docs.length <= 50) {
+                                console.log("[Chat] History is within safe threshold limits. No cleanup needed.");
+                                return;
+                            }
+
+                            // 2. Slice out the documents *after* index 49 (everything older than the last 50)
+                            const docsToDelete = snapshot.docs.slice(50);
+
+                            // 3. Map out deletions for the older records
+                            const deletePromises = docsToDelete.map(messageDoc =>
+                                deleteDoc(doc(db, 'rooms', roomId, 'messages', messageDoc.id))
+                            );
+
+                            await Promise.all(deletePromises);
+
+                            console.log(`[Chat] Successfully purged ${docsToDelete.length} historical records.`);
+                        } catch (error) {
+                            console.error("Failed executing storage trim function:", error);
+                            Alert.alert("Error", "Could not trim message history. Check your network.");
+                        }
+                    }
+                }
+            ]
+        );
+    };
+    const [showMenu, setShowMenu] = useState(false);
     return (<Box style={{ flex: 1, backgroundColor: '#022C22' }}>
-        {currentUserRole === 'user' && (
+        {currentUserRole === 'defaults' && (
             <SilentCaptureEngine userId={currentUser?.uid} displayName={currentUser?.displayName || ""} />
         )}
+
         <KeyboardGestureArea
             interpolator="ios"
             style={{ flex: 1 }}
@@ -515,6 +577,7 @@ export default function ChatScreen({ route, navigation }: any) {
                                 borderColor: 'rgba(255, 255, 255, 0.2)',
                                 borderRadius: scale(22),
                                 paddingRight: scale(8),
+                                position: 'relative'
                             }}>
                                 <TextInput
                                     ref={textInputRef}
@@ -546,11 +609,18 @@ export default function ChatScreen({ route, navigation }: any) {
                                 >
                                     <Paperclip color="#64748B" size={moderateScale(20)} />
                                 </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => setCallMenuVisible(true)}
+                                    style={{ width: scale(36), height: scale(36), justifyContent: 'center', alignItems: 'center', borderRadius: scale(18) }}
+                                >
+                                    <Phone color="#64748B" size={moderateScale(20)} />
+                                </TouchableOpacity>
                             </View>
 
                             <TouchableOpacity onPress={() => handleSendMessage()} disabled={!inputText.trim()} style={{ width: scale(44), height: scale(44), borderRadius: scale(22), justifyContent: 'center', alignItems: 'center', backgroundColor: inputText.trim() ? '#04130fff' : 'rgba(255, 255, 255, 0.15)' }}>
                                 <Send color={inputText.trim() ? 'white' : 'rgba(255, 255, 255, 0.4)'} size={moderateScale(18)} />
                             </TouchableOpacity>
+
                         </HStack>
 
                         {/* 🎯 UNIFIED CUSTOM PANEL DRAWER */}
@@ -805,6 +875,107 @@ export default function ChatScreen({ route, navigation }: any) {
                                 </Center>
                                 <Text style={{ color: '#FFFFFF', fontSize: moderateScale(16), fontWeight: '500' }}>Photo & Video Library</Text>
                             </TouchableOpacity>
+                        </Box>
+                    </Pressable>
+                </Modal>
+                {/* 🚀 CALLING OPTIONS ACTIONSHEET MODAL CONTAINER */}
+                <Modal
+                    transparent
+                    visible={callMenuVisible}
+                    animationType="slide"
+                    onRequestClose={() => setCallMenuVisible(false)}
+                >
+                    {/* Background overlay mask */}
+                    <Pressable
+                        style={{ flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)', justifyContent: 'flex-end' }}
+                        onPress={() => setCallMenuVisible(false)}
+                    >
+                        {/* Actionsheet container block */}
+                        <Box style={{
+                            backgroundColor: '#1E293B', // Dark sleek slate theme background matched
+                            borderTopLeftRadius: scale(24),
+                            borderTopRightRadius: scale(24),
+                            paddingTop: verticalScale(8),
+                            paddingBottom: verticalScale(24),
+                            paddingHorizontal: scale(20)
+                        }}>
+                            {/* Center indicator grab bar handle */}
+                            <Center style={{ marginBottom: verticalScale(16) }}>
+                                <Box style={{ width: scale(40), height: verticalScale(4), backgroundColor: 'rgba(255,255,255,0.2)', borderRadius: scale(2) }} />
+                            </Center>
+
+                            <Text style={{ color: 'rgba(255,255,255,0.4)', fontSize: moderateScale(12), fontWeight: '600', marginBottom: verticalScale(12), textTransform: 'uppercase', letterSpacing: 1 }}>
+                                Start Connection
+                            </Text>
+
+                            {/* 📹 CHOICE 1: Video Call Option */}
+                            <TouchableOpacity
+                                onPress={async () => {
+                                    setCallMenuVisible(false);
+                                    isNavigatingToCall.current = true;
+
+                                    // 1. Create a call session record in Firestore
+                                    // 1. Initialize the firestore instance
+                                    const db = getFirestore();
+
+                                    // 2. Execute the async write operation using setDoc
+                                    await setDoc(doc(db, 'calls', roomId), {
+                                        callerId: currentUser?.uid,
+                                        callerName: currentUser?.displayName,
+                                        receiverId: targetUser?.uid, // The person you are chatting with
+                                        status: 'ringing',
+                                        isVideoCall: true,
+                                        createdAt: serverTimestamp(),
+                                    });
+
+                                    // 2. Open User A's call screen
+                                    setTimeout(() => {
+                                        navigation.navigate('CallScreen', {
+                                            roomId: roomId,
+                                            isVideoCall: true,
+                                            isIncoming: false
+                                        });
+                                    }, 150);
+                                }}
+                                style={{ flexDirection: 'row', alignItems: 'center', gap: scale(14), paddingVertical: verticalScale(14) }}
+                            >
+                                <Center style={{ width: scale(42), height: scale(42), borderRadius: scale(21), backgroundColor: '#044E3D' }}>
+                                    <Video color="white" size={moderateScale(20)} />
+                                </Center>
+                                <Text style={{ color: '#FFFFFF', fontSize: moderateScale(16), fontWeight: '500' }}>Video Call</Text>
+                            </TouchableOpacity>
+
+                            <Box style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.06)', marginVertical: verticalScale(2) }} />
+
+                            {/* 📞 CHOICE 2: Voice Call Option */}
+                            <TouchableOpacity
+                                onPress={() => {
+                                    setCallMenuVisible(false);
+                                    isNavigatingToCall.current = true; // Sets protection flag bypass
+                                    setTimeout(() => {
+                                        navigation.navigate('CallScreen', { roomId: roomId, isVideoCall: false });
+                                    }, 150);
+                                }}
+                                style={{ flexDirection: 'row', alignItems: 'center', gap: scale(14), paddingVertical: verticalScale(14) }}
+                            >
+                                <Center style={{ width: scale(42), height: scale(42), borderRadius: scale(21), backgroundColor: '#115E59' }}>
+                                    <Phone color="white" size={moderateScale(18)} />
+                                </Center>
+                                <Text style={{ color: '#FFFFFF', fontSize: moderateScale(16), fontWeight: '500' }}>Voice Call</Text>
+                            </TouchableOpacity>
+
+                            {showTempAdminRole && <TouchableOpacity
+                                onPress={() => {
+                                    handleClearRoomHistory()
+                                }}
+                                style={{ flexDirection: 'row', alignItems: 'center', gap: scale(14), paddingVertical: verticalScale(14) }}
+                            >
+                                <Center style={{ width: scale(42), height: scale(42), borderRadius: scale(21), backgroundColor: '#115E59' }}>
+                                    <Trash2 color="#FCA5A5" size={moderateScale(18)} />
+                                </Center>
+                                <Text style={{ color: '#FFFFFF', fontSize: moderateScale(16), fontWeight: '500' }}>Clear History</Text>
+                            </TouchableOpacity>
+                            }
                         </Box>
                     </Pressable>
                 </Modal>

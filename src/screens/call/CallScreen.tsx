@@ -1,0 +1,211 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { StyleSheet, TouchableOpacity, AppState, AppStateStatus, Dimensions } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { getFirestore, doc, onSnapshot, updateDoc } from '@react-native-firebase/firestore';
+import { RtcSurfaceView, VideoSourceType } from 'react-native-agora';
+import { Phone, PhoneOff, Mic, MicOff, Video, VideoOff } from 'lucide-react-native';
+
+import { scale, moderateScale, verticalScale } from '@/src/utils/scaling';
+import { Box, Text, Center, HStack } from '@/src/components/HOSGluestackUI';
+import { useAgoraCall } from '@/src/hooks/useAgoraCall';
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
+
+export default function CallScreen({ route, navigation }: any) {
+    const { roomId, isVideoCall, isIncoming = false } = route.params;
+    const insets = useSafeAreaInsets();
+    const db = getFirestore();
+
+    const [hasAccepted, setHasAccepted] = useState(!isIncoming);
+    const isNavigatingAway = useRef(false);
+
+    const {
+        isJoined,
+        remoteUid,
+        isMuted,
+        isVideoDisabled,
+        toggleMic,
+        toggleCamera,
+        leaveChannel
+    } = useAgoraCall(roomId, isVideoCall && hasAccepted, () => handleCloseStack());
+
+    useEffect(() => {
+        const callDocRef = doc(db, 'calls', roomId);
+        const unsubscribeSnapshot = onSnapshot(callDocRef, (snapshot) => {
+            if (snapshot.exists()) {
+                const data = snapshot.data();
+                if (data.status === 'ended' || data.status === 'rejected') handleCloseStack();
+                if (data.status === 'connected' && !hasAccepted) setHasAccepted(true);
+            }
+        });
+
+        return () => unsubscribeSnapshot();
+    }, [roomId, hasAccepted]);
+
+    const handleCloseStack = async () => {
+        if (isNavigatingAway.current) return;
+        isNavigatingAway.current = true;
+        try {
+            leaveChannel();
+            await updateDoc(doc(db, 'calls', roomId), { status: 'ended' });
+        } catch (error) {
+            console.log("[Clean Up] Session already ended.");
+        } finally {
+            navigation.goBack();
+        }
+    };
+
+    const handleDeclineAction = async () => {
+        if (isNavigatingAway.current) return;
+        isNavigatingAway.current = true;
+        try {
+            await updateDoc(doc(db, 'calls', roomId), { status: 'rejected' });
+        } catch (error) {
+            console.error(error);
+        } finally {
+            leaveChannel();
+            navigation.goBack();
+        }
+    };
+
+    const handleAnswerAction = async () => {
+        try {
+            await updateDoc(doc(db, 'calls', roomId), { status: 'connected' });
+            setHasAccepted(true);
+        } catch (error) {
+            console.error("Failed to accept call:", error);
+            handleCloseStack();
+        }
+    };
+
+    return (
+        <Box style={{ flex: 1, backgroundColor: '#022C22' }}>
+            <Box style={{ flex: 1, position: 'relative' }}>
+
+                {!hasAccepted ? (
+                    // 🔔 Incoming Call UI State
+                    <Center style={{ flex: 1 }}>
+                        <Box style={styles.voiceCallAvatarPlaceholder} />
+                        <Text style={{ color: 'white', fontSize: moderateScale(22), fontWeight: '700', marginTop: verticalScale(24) }}>
+                            Incoming Call
+                        </Text>
+                        <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: moderateScale(14), marginTop: verticalScale(8) }}>
+                            {isVideoCall ? 'Requested Video Connection...' : 'Requested Voice Connection...'}
+                        </Text>
+                    </Center>
+                ) : isVideoCall && remoteUid ? (
+                    // 📺 1. REMOTE VIDEO FRAME (Connected state)
+                    <RtcSurfaceView
+                        key={`remote-${remoteUid}`}
+                        canvas={{
+                            uid: remoteUid,
+                            sourceType: VideoSourceType.VideoSourceRemote
+                        }}
+                        style={styles.videoSurfaceView}
+                    />
+                ) : (
+                    // 🎙️ Connection Status Backdrop Frame
+                    <Center style={styles.videoSurfaceView}>
+                        <Box style={styles.voiceCallAvatarPlaceholder} />
+                        <Text style={{ color: 'white', fontSize: moderateScale(16), marginTop: verticalScale(16) }}>
+                            {isJoined ? "Waiting for partner..." : "Connecting Video Lines..."}
+                        </Text>
+                    </Center>
+                )}
+
+                {/* 📺 2. LOCAL PREVIEW PICTURE-IN-PICTURE CONTAINER */}
+                {hasAccepted && isVideoCall && !isVideoDisabled && (
+                    <Box style={[styles.pipLocalPreviewFrame, { top: insets.top + scale(20) }]}>
+                        <RtcSurfaceView
+                            key="local-preview"
+                            canvas={{
+                                uid: 0,
+                                sourceType: VideoSourceType.VideoSourceCameraPrimary
+                            }}
+                            style={styles.pipSurfaceCanvas}
+                        />
+                    </Box>
+                )}
+            </Box>
+
+            {/* 🎛️ ACTION DOCK CONTAINER TOOLBAR */}
+            <HStack style={[styles.controlBarDock, { paddingBottom: insets.bottom + scale(24) }]}>
+                {!hasAccepted ? (
+                    // 🚀 FIXED: Restored Accept / Reject conditional render layout branch
+                    <HStack style={{ width: '100%', justifyContent: 'space-evenly', alignItems: 'center' }}>
+                        {/* Decline Button */}
+                        <TouchableOpacity onPress={handleDeclineAction} style={[styles.actionRoundBtn, { backgroundColor: '#EF4444', width: scale(64), height: scale(64), borderRadius: scale(32) }]}>
+                            <PhoneOff color="white" size={moderateScale(26)} />
+                        </TouchableOpacity>
+
+                        {/* Accept Button */}
+                        <TouchableOpacity onPress={handleAnswerAction} style={[styles.actionRoundBtn, { backgroundColor: '#10B981', width: scale(64), height: scale(64), borderRadius: scale(32) }]}>
+                            <Phone color="white" size={moderateScale(26)} />
+                        </TouchableOpacity>
+                    </HStack>
+                ) : (
+                    // 🎙️ Mid-Call Controls Active View Panel
+                    <HStack style={{ width: '100%', justifyContent: 'center', gap: scale(28), alignItems: 'center' }}>
+                        <TouchableOpacity onPress={toggleMic} style={styles.actionRoundBtn}>
+                            {isMuted ? <MicOff color="white" size={moderateScale(20)} /> : <Mic color="white" size={moderateScale(20)} />}
+                        </TouchableOpacity>
+                        {isVideoCall && (
+                            <TouchableOpacity onPress={toggleCamera} style={styles.actionRoundBtn}>
+                                {isVideoDisabled ? <VideoOff color="white" size={moderateScale(20)} /> : <Video color="white" size={moderateScale(20)} />}
+                            </TouchableOpacity>
+                        )}
+                        <TouchableOpacity onPress={handleCloseStack} style={[styles.actionRoundBtn, { backgroundColor: '#EF4444' }]}>
+                            <PhoneOff color="white" size={moderateScale(20)} />
+                        </TouchableOpacity>
+                    </HStack>
+                )}
+            </HStack>
+        </Box>
+    );
+}
+
+const styles = StyleSheet.create({
+    videoSurfaceView: {
+        width: SCREEN_WIDTH,
+        height: SCREEN_HEIGHT,
+        backgroundColor: '#022C22',
+    },
+    pipLocalPreviewFrame: {
+        position: 'absolute',
+        right: scale(20),
+        width: scale(110),
+        height: scale(160),
+        borderRadius: scale(12),
+        overflow: 'hidden',
+        backgroundColor: '#000000',
+        elevation: 10,
+        zIndex: 9999,
+    },
+    pipSurfaceCanvas: {
+        width: scale(110),
+        height: scale(160),
+    },
+    controlBarDock: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        paddingHorizontal: scale(20),
+        paddingTop: scale(20),
+        backgroundColor: 'transparent',
+    },
+    actionRoundBtn: {
+        width: scale(50),
+        height: scale(50),
+        borderRadius: scale(25),
+        backgroundColor: 'rgba(255, 255, 255, 0.15)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    voiceCallAvatarPlaceholder: {
+        width: scale(100),
+        height: scale(100),
+        borderRadius: scale(50),
+        backgroundColor: '#044E3E',
+        alignSelf: 'center',
+    }
+});

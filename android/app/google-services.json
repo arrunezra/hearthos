@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "450020064775-t5s8bqplgt2v7mss0ad2a5bkq11seqj5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hearthos",
+            "certificate_hash": "007d294e9cba0cedca901bc4a32aa4131318fb07"
+          }
+        },
+        {
           "client_id": "450020064775-vdoshkkplehj9u3h0rtu6fjgm5rahjvb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

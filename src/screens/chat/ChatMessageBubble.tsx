@@ -1,20 +1,14 @@
 import React, { useState } from 'react';
-import SwipeableMessageRow from './SwipeableMessageRow';
 import { scale, moderateScale, verticalScale } from '@/src/utils/scaling';
-import { Box, VStack, Text } from '@/src/components/HOSGluestackUI';
+import { Box, VStack, Text, HStack } from '@/src/components/HOSGluestackUI';
 import FastImage from '@d11/react-native-fast-image';
-import { Alert, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { OptimizedChatGif } from '@/src/components/OptimizedChatGif';
 import { ModernImageViewer } from '@/src/components/ModernImageViewer';
+import Clipboard from '@react-native-clipboard/clipboard';
+import SwipeableMessageRow from './SwipeableMessageRow';
+import { Copy, Trash2 } from 'lucide-react-native';
 
-interface ReplyToData {
-    messageId: string;
-    text: string;
-    senderId: string;
-    mediaUrl?: string | null;
-}
-
-// 🎯 UPDATE YOUR INTERFACE DESIGN MODEL
 export interface MessageItem {
     id: string;
     senderId: string;
@@ -28,7 +22,6 @@ export interface MessageItem {
         text?: string;
         mediaUrl?: string;
     };
-    // 🎯 ADD THIS OPTIONAL TRACKING FIELD HERE
     isDeletedByUser?: boolean;
     mediaType?: string;
 }
@@ -45,14 +38,13 @@ interface ChatMessageBubbleProps {
     onDeleteTrigger: (messageId: string, senderId: string) => void;
 }
 
-// 🚀 THE FIX: Destructure 'isHighlighted' from the arguments array at the very top of your bubble component!
 const ChatMessageBubble = ({
     item,
     currentUserId,
     timeString,
     isAdmin,
     isDeletedByUser,
-    isHighlighted = false, // 🎯 ADD THIS PROP DEFENDER ENTRY
+    isHighlighted = false,
     onReplyTrigger,
     onReplyClick,
     onDeleteTrigger
@@ -62,11 +54,18 @@ const ChatMessageBubble = ({
     const isMedia = !!item.mediaUrl;
     const isGif = item?.mediaType === 'image/gif' || item?.text === '[GIF]';
     const [viewerVisible, setViewerVisible] = useState(false);
+    const [showActions, setShowActions] = useState(false);
+
+    const handleCopyText = () => {
+        if (item.text) {
+            Clipboard.setString(item.text);
+            setShowActions(false);
+            console.log("[Clipboard] Text string copied successfully.");
+        }
+    };
 
     const getBubbleColor = () => {
-        // 🚀 THE FIX: This will now catch the targetMessageId toggle instantly!
         if (isHighlighted) return '#0a2b12ff';
-
         if (isDeletedByUser && isAdmin) return '#7F1D1D';
         return isMe ? '#064E3B' : '#115E59';
     };
@@ -81,14 +80,13 @@ const ChatMessageBubble = ({
             <SwipeableMessageRow isMe={isMe} onReplyTrigger={() => onReplyTrigger(item)}>
                 <TouchableOpacity
                     onLongPress={() => {
-                        console.log('Working');
-                        setTimeout(() => {
-                            return onDeleteTrigger(item.id, item.senderId);
-                        }, 100);
+                        setShowActions(!showActions);
                     }}
                     onPress={() => {
                         if (isMedia) {
                             setViewerVisible(true);
+                        } else {
+                            setShowActions(false);
                         }
                     }}
                     delayLongPress={400}
@@ -106,7 +104,7 @@ const ChatMessageBubble = ({
                         borderRadius: scale(16),
                         borderBottomRightRadius: isMe ? scale(4) : scale(16),
                         borderBottomLeftRadius: !isMe ? scale(4) : scale(16),
-                        backgroundColor: getBubbleColor(), // Uses dynamic background calculation 
+                        backgroundColor: getBubbleColor(),
                         overflow: 'hidden',
                         borderWidth: isMedia ? 1 : 0,
                         borderColor: isMe ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)',
@@ -185,7 +183,6 @@ const ChatMessageBubble = ({
                                     </Box>
                                 )}
 
-                                {/* 🚀 OPTIONAL WHATSAPP OVERLAY FLASH: Overlay an amber transparent tint directly over the image/GIF */}
                                 {isHighlighted && (
                                     <Box style={{
                                         position: 'absolute',
@@ -193,8 +190,8 @@ const ChatMessageBubble = ({
                                         left: 0,
                                         right: 0,
                                         bottom: 0,
-                                        backgroundColor: 'rgba(230, 81, 0, 0.25)', // Transparent amber overlay tint
-                                        pointerEvents: 'none' // Ensures users can still click the media through the flash overlay
+                                        backgroundColor: 'rgba(230, 81, 0, 0.25)',
+                                        pointerEvents: 'none'
                                     }} />
                                 )}
                             </Box>
@@ -238,6 +235,39 @@ const ChatMessageBubble = ({
                 </TouchableOpacity>
             </SwipeableMessageRow>
 
+            {/* 🚀 SUB-BUBBLE ACTION MENU LAYOUT MATRIX */}
+            {showActions && (
+                <HStack style={{
+                    marginTop: verticalScale(6),
+                    gap: scale(18),
+                    alignSelf: isMe ? 'flex-end' : 'flex-start',
+                    paddingHorizontal: scale(10),
+                    alignItems: 'center'
+                }}>
+                    {/* 📋 Copy Action Option (Icon Only) */}
+                    {!isMedia && (
+                        <TouchableOpacity
+                            onPress={handleCopyText}
+                            activeOpacity={0.7}
+                            style={{ padding: scale(4) }} // Added a small hit-slop padding for easier tapping
+                        >
+                            <Copy color="#94A3B8" size={moderateScale(16)} />
+                        </TouchableOpacity>
+                    )}
+
+                    {/* 🗑️ Delete Action Option (Icon Only) */}
+                    <TouchableOpacity
+                        onPress={() => {
+                            setShowActions(false);
+                            onDeleteTrigger(item.id, item.senderId);
+                        }}
+                        activeOpacity={0.7}
+                        style={{ padding: scale(4) }} // Added a small hit-slop padding for easier tapping
+                    >
+                        <Trash2 color="#EF4444" size={moderateScale(16)} />
+                    </TouchableOpacity>
+                </HStack>
+            )}
             <ModernImageViewer
                 visible={viewerVisible}
                 imageUrl={item.mediaUrl!}
@@ -246,14 +276,13 @@ const ChatMessageBubble = ({
         </VStack >
     );
 };
-// 🎯 OPTIMIZATION: Prevents unneeded row items re-rendering cycles
+
 export default React.memo(ChatMessageBubble, (prevProps, nextProps) => {
     return (
         prevProps.item.id === nextProps.item.id &&
         prevProps.item.text === nextProps.item.text &&
         prevProps.item.mediaUrl === nextProps.item.mediaUrl &&
         prevProps.timeString === nextProps.timeString &&
-        // 🚀 CRITICAL FIX: Tell React to watch for deletion changes instantly
         prevProps.isDeletedByUser === nextProps.isDeletedByUser &&
         prevProps.isAdmin === nextProps.isAdmin &&
         !!prevProps.isHighlighted === !!nextProps.isHighlighted &&

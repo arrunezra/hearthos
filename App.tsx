@@ -1,7 +1,7 @@
 
 import '@/global.css';
 import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
-import { ActivityIndicator, StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+import { ActivityIndicator, PermissionsAndroid, Platform, StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
 import {
   SafeAreaProvider,
   SafeAreaView,
@@ -35,16 +35,27 @@ function App() {
     });
   }, [])
 
-
+  const requestPermissions = async () => {
+    if (Platform.OS === 'android') {
+      await PermissionsAndroid.requestMultiple([
+        PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+      ]);
+    }
+  };
 
 
   useEffect(() => {
+    const callListener = async () => {
+      await requestPermissions();
+    }
+    callListener();
     // 1. Get the initialized auth instance using the modular method
     const authInstance = getAuth();
 
     // 2. Pass the instance directly into the modular listener wrapper
     const subscriber = onAuthStateChanged(authInstance, (currentUser) => {
-      //console.log('currentUser updated:', currentUser);
+      console.log('currentUser updated:', currentUser);
       setUser(currentUser);
 
       if (initializing) {
@@ -71,7 +82,7 @@ function App() {
       <GestureHandlerRootView style={{ flex: 1 }}>
         <SafeAreaProvider style={{ flex: 1 }}>
           <KeyboardProvider>
-            <AppContent />
+            <AppContent currentUser={user} />
 
             {/* <Box className='flex-1 items-center justify-center bg-primary'>
           <Text className='text-2xl font-black text-slate-950 tracking-tight text-white'>Hello Arun ww</Text>
@@ -91,17 +102,16 @@ function App() {
   );
 }
 
-function AppContent() {
+function AppContent({ currentUser }: any) {
   const safeAreaInsets = useSafeAreaInsets();
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#022C22' }} >
-
       <AlertProvider>
         <CustomProvider>
           <View style={styles.container}>
-
-            <RootNavigation />
+            {/* Pass down user session state logic downward here */}
+            <RootNavigation currentUser={currentUser} />
           </View>
         </CustomProvider>
       </AlertProvider>

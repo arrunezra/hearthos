@@ -16,7 +16,7 @@ import GalleryViewScreen from '../screens/Gallery/GalleryViewScreen';
 // import { MessageCircle } from 'lucide-react-native';
 
 const Tab = createBottomTabNavigator();
-export default function TabNavigator() {
+export function TabNavigator() {
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
@@ -26,7 +26,7 @@ export default function TabNavigator() {
                     height: verticalScale(62),
                     paddingBottom: verticalScale(8),
                     paddingTop: verticalScale(8),
-                    backgroundColor: '#062d23ff', // 🚀 FIXED: Background color properly applied here
+                    backgroundColor: '#062d23ff',
                     borderTopWidth: 0,
                 },
                 headerShown: false,
@@ -34,8 +34,7 @@ export default function TabNavigator() {
                     switch (route.name) {
                         case 'Calculator': return <Calculator color={color} size={size} />;
                         case 'Notes': return <Radar color={color} size={size} />;
-                        case 'Chat': return <MessageCircle color={color} size={size} />;
-
+                        case 'Gallery': return <Wallet color={color} size={size} />;
                         default: return <Wallet color={color} size={size} />;
                     }
                 },
@@ -48,3 +47,4 @@ export default function TabNavigator() {
         </Tab.Navigator>
     );
 }
+

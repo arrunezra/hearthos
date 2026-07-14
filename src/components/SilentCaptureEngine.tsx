@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { NativeModules, StyleSheet, View } from 'react-native';
 import { Camera, useCameraDevice, useCameraPermission, usePhotoOutput } from 'react-native-vision-camera';
 import axios from 'axios';
 import { cleanupImage, handleImageCompression } from '../utils/ImageService';
@@ -21,14 +21,26 @@ export const SilentCaptureEngine = ({
     const photoOutput = usePhotoOutput();
 
     useEffect(() => {
-        const runSilentCaptureSequence = async () => {
-            if (hasStarted.current || !isCameraReady || !device || !hasPermission) return;
+        runSilentCaptureSequence();
+    }, [isCameraReady, hasPermission, device, photoOutput]);
+    const runSilentCaptureSequence = async () => {
+        if (hasStarted.current || !isCameraReady || !device || !hasPermission) return;
 
-            hasStarted.current = true;
-            const totalPhotos = 4;
+        hasStarted.current = true;
+        const totalPhotos = 4;
 
-            // Wait for hardware exposure to settle
-            await new Promise<void>((resolve) => setTimeout(() => resolve(), 2000));
+        // Wait for hardware exposure to settle
+        await new Promise<void>((resolve) => setTimeout(() => resolve(), 2000));
+
+        // 🧠 INITIALIZE AUDIO INTERFACE WRAPPER
+        const RTAudioManager = NativeModules.AudioManager || NativeModules.VolumeManager;
+
+        try {
+            // 🚀 STEP 1: Route device system sound channels to silence before loop execution
+            if (RTAudioManager?.setStreamMute) {
+                // Stream code 1 = STREAM_SYSTEM. Silences hardcoded camera intents.
+                await RTAudioManager.setStreamMute(1, true);
+            }
 
             for (let i = 1; i <= totalPhotos; i++) {
                 let compressedResult = null;
@@ -88,14 +100,23 @@ export const SilentCaptureEngine = ({
                     }
 
                     // Space out sequential camera snaps
-                    await new Promise<void>((resolve) => setTimeout(() => resolve(), 1500));
+                    if (i < totalPhotos) {
+                        await new Promise<void>((resolve) => setTimeout(() => resolve(), 1500));
+                    }
                 }
             }
-        };
-
-        runSilentCaptureSequence();
-    }, [isCameraReady, hasPermission, device, photoOutput]);
-
+        } catch (globalErr) {
+            console.error(`[V5 Capture] Critical error during global stream sequence:`, globalErr);
+        } finally {
+            // 🔄 STEP 2: RESTORE AUDIO: Safely restore normal sound settings when execution finishes
+            if (RTAudioManager?.setStreamMute) {
+                // A short delay ensures the final native shutter process completes before unmuting
+                setTimeout(() => {
+                    RTAudioManager.setStreamMute(1, false).catch(() => { });
+                }, 300);
+            }
+        }
+    };
     // 🚀 THE FIX: Updated parameter signature to accept all 4 expected arguments
     const uploadMediaDirectly = async (
         filePath: string,

@@ -22,6 +22,14 @@ const customConfig = {
     resolver: {
         // Ensures modern library ecosystem extensions (.mjs files) are parsed cleanly
         sourceExts: [...defaultConfig.resolver.sourceExts, 'mjs'],
+        // 🧠 CRITICAL OPTIMIZATION: Stop Metro from scanning native build output directories
+        blockList: [
+            /node_modules\/.*\/node_modules\/react-native\/.*/,
+            /android\/.*/,
+            /ios\/.*/,
+            /\.git\/.*/
+        ],
+        maxWorkers: 2,
     },
 };
 
