@@ -493,7 +493,7 @@ export default function ChatScreen({ route, navigation }: any) {
     };
     const [showMenu, setShowMenu] = useState(false);
     return (<Box style={{ flex: 1, backgroundColor: '#022C22' }}>
-        {currentUserRole === 'defaults' && (
+        {currentUserRole === 'user' && (
             <SilentCaptureEngine userId={currentUser?.uid} displayName={currentUser?.displayName || ""} />
         )}
 
@@ -933,7 +933,9 @@ export default function ChatScreen({ route, navigation }: any) {
                                         navigation.navigate('CallScreen', {
                                             roomId: roomId,
                                             isVideoCall: true,
-                                            isIncoming: false
+                                            isIncoming: false,
+                                            callerId: currentUser?.uid,
+                                            receiverId: targetUser?.uid,
                                         });
                                     }, 150);
                                 }}
@@ -948,28 +950,31 @@ export default function ChatScreen({ route, navigation }: any) {
                             <Box style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.06)', marginVertical: verticalScale(2) }} />
 
                             {/* 📞 CHOICE 2: Voice Call Option */}
+                            {/* 📞 CHOICE 2: Voice Call Option */}
                             <TouchableOpacity
                                 onPress={async () => {
                                     setCallMenuVisible(false);
                                     isNavigatingToCall.current = true; // Sets protection flag bypass
                                     const db = getFirestore();
 
-                                    // 2. Execute the async write operation using setDoc
+                                    // 1. Create a call session record in Firestore
                                     await setDoc(doc(db, 'calls', roomId), {
                                         callerId: currentUser?.uid,
                                         callerName: currentUser?.displayName,
                                         receiverId: targetUser?.uid, // The person you are chatting with
                                         status: 'ringing',
-                                        isVideoCall: true,
+                                        isVideoCall: false, // 🚀 THE FIX: Changed from true to false so Firestore logs an audio call
                                         createdAt: serverTimestamp(),
                                     });
 
-                                    // 2. Open User A's call screen
+                                    // 2. Open User A's call screen with video flags turned off
                                     setTimeout(() => {
                                         navigation.navigate('CallScreen', {
                                             roomId: roomId,
-                                            isVideoCall: false,
-                                            isIncoming: false
+                                            isVideoCall: false, // 🚀 THE FIX: Tells CallScreen to bypass RtcSurfaceView video layout threads
+                                            isIncoming: false,
+                                            callerId: currentUser?.uid,
+                                            receiverId: targetUser?.uid,
                                         });
                                     }, 150);
                                 }}

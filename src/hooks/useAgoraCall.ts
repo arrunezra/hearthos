@@ -4,20 +4,17 @@ import { Platform, PermissionsAndroid } from 'react-native';
 import createAgoraRtcEngine, {
     ChannelProfileType,
     ClientRoleType,
-    IRtcEngine,
     RtcConnection,
     VideoSourceType
 } from 'react-native-agora';
 
 const AGORA_APP_ID = AGORA_APP_ID_key;
-
-// 🚀 THE FIX: Move engine creation globally out of the component re-render pipeline
 const agoraEngine = createAgoraRtcEngine();
 
-// 🚀 FIX: Ensure localUid is defined in the hook argument list
 export const useAgoraCall = (
     roomId: string,
     localUid: number,
+    isVideoCall: boolean,
     shouldConnect: boolean,
     onRemoteLeave: () => void
 ) => {
@@ -68,11 +65,23 @@ export const useAgoraCall = (
                 return;
             }
 
+            // 🚀 1. Base initialization setup must happen first
             agoraEngine.initialize({
                 appId: AGORA_APP_ID,
                 channelProfile: ChannelProfileType.ChannelProfileCommunication
             });
 
+            // 🚀 2. THE ORDER FIX: Set up media modes *before* opening listeners or pipelines
+            if (isVideoCall) {
+                agoraEngine.enableVideo();
+                agoraEngine.startPreview();
+            } else {
+                // Completely kill video tracks for a clean audio handshake
+                agoraEngine.disableVideo();
+            }
+            agoraEngine.enableAudio();
+
+            // 🚀 3. Bind events to the securely initialized media scope
             agoraEngine.registerEventHandler({
                 onJoinChannelSuccess: (connection: RtcConnection) => {
                     console.log('[RTC Success] Local device successfully joined:', connection.localUid);
@@ -93,20 +102,17 @@ export const useAgoraCall = (
                 }
             });
 
-            agoraEngine.enableVideo();
-            agoraEngine.enableAudio();
-            agoraEngine.startPreview();
-
             const targetUid = parseInt(String(localUid), 10);
-            console.log(`[Agora Engine] Connecting to channel: ${roomId} with absolute UID: ${targetUid}`);
+            console.log(`[Agora Engine] Connecting to channel: ${roomId} as ${isVideoCall ? 'VIDEO' : 'AUDIO'} with UID: ${targetUid}`);
 
+            // 🚀 4. Match the token signature parameters perfectly
             agoraEngine.joinChannel(token, roomId, targetUid, {
                 channelProfile: ChannelProfileType.ChannelProfileCommunication,
                 clientRoleType: ClientRoleType.ClientRoleBroadcaster,
-                publishCameraTrack: true,
+                publishCameraTrack: isVideoCall,
                 publishMicrophoneTrack: true,
                 autoSubscribeAudio: true,
-                autoSubscribeVideo: true,
+                autoSubscribeVideo: isVideoCall,
             });
 
         } catch (error) {
@@ -145,7 +151,7 @@ export const useAgoraCall = (
             leaveChannel();
         }
         return () => leaveChannel();
-    }, [roomId, localUid, shouldConnect]);
+    }, [roomId, localUid, isVideoCall, shouldConnect]);
 
     return { isJoined, remoteUid, isMuted, isVideoDisabled, toggleMic, toggleCamera, leaveChannel };
 };

@@ -38,6 +38,24 @@ interface ChatMessageBubbleProps {
     onDeleteTrigger: (messageId: string, senderId: string) => void;
 }
 
+// 🚀 1. UNIQUE GLOBAL HELPER DECLARATION: Checked cleanly at the top boundary scope
+const checkEmojiOnlyString = (str: string) => {
+    if (!str) return { isEmojiOnly: false, count: 0 };
+
+    // const emojiRegex = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g;
+    const emojiRegex = /(\u00a9|\u00ae|[\u2000-\u3300]|[\u2700-\u27BF]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]|\uFE0F)/g;
+    const cleanStr = str.replace(/\s/g, '');
+    console.log("cleanStr", cleanStr);
+    const match = cleanStr.match(emojiRegex);
+
+    const isEmojiOnly = match !== null && match.join('') === cleanStr;
+    return {
+        isEmojiOnly,
+        count: isEmojiOnly ? match.length : 0
+    };
+};
+
+// 🚀 2. CORE RENDERING ENGINE
 const ChatMessageBubble = ({
     item,
     currentUserId,
@@ -53,8 +71,19 @@ const ChatMessageBubble = ({
     const hasReply = !!item.replyTo;
     const isMedia = !!item.mediaUrl;
     const isGif = item?.mediaType === 'image/gif' || item?.text === '[GIF]';
+
     const [viewerVisible, setViewerVisible] = useState(false);
     const [showActions, setShowActions] = useState(false);
+
+    // Resolve dynamic WhatsApp layouts based on the unique utility above
+    const emojiStatus = !isMedia && !isDeletedByUser ? checkEmojiOnlyString(item.text) : { isEmojiOnly: false, count: 0 };
+    const renderBigEmojiStyle = emojiStatus.isEmojiOnly && emojiStatus.count <= 3;
+
+    const getEmojiFontSize = () => {
+        if (emojiStatus.count === 1) return moderateScale(44);
+        if (emojiStatus.count === 2) return moderateScale(34);
+        return moderateScale(26);
+    };
 
     const handleCopyText = () => {
         if (item.text) {
@@ -98,13 +127,13 @@ const ChatMessageBubble = ({
                     }}
                 >
                     <Box style={{
-                        paddingHorizontal: isMedia ? 0 : scale(12),
-                        paddingTop: isMedia ? 0 : verticalScale(8),
-                        paddingBottom: isMedia ? 0 : verticalScale(6),
+                        paddingHorizontal: isMedia || renderBigEmojiStyle ? 0 : scale(12),
+                        paddingTop: isMedia || renderBigEmojiStyle ? 0 : verticalScale(8),
+                        paddingBottom: isMedia || renderBigEmojiStyle ? 0 : verticalScale(6),
                         borderRadius: scale(16),
                         borderBottomRightRadius: isMe ? scale(4) : scale(16),
                         borderBottomLeftRadius: !isMe ? scale(4) : scale(16),
-                        backgroundColor: getBubbleColor(),
+                        backgroundColor: renderBigEmojiStyle ? 'transparent' : getBubbleColor(),
                         overflow: 'hidden',
                         borderWidth: isMedia ? 1 : 0,
                         borderColor: isMe ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)',
@@ -195,8 +224,36 @@ const ChatMessageBubble = ({
                                     }} />
                                 )}
                             </Box>
+                        ) : renderBigEmojiStyle ? (
+                            /* 🚀 WHATSAPP BIG STANDALONE EMOJI LAYOUT CONTAINER */
+                            <Box style={{
+                                flexDirection: 'column',
+                                alignItems: isMe ? 'flex-end' : 'flex-start',
+                                padding: scale(4) // 🚀 Added a small buffer padding so the OS font boundary doesn't clip
+                            }}>
+                                <Text
+                                    style={{
+                                        fontSize: getEmojiFontSize(),
+                                        lineHeight: getEmojiFontSize() * 1.2, // 🚀 THE FIX: Dynamic line height stops clipping completely
+                                        textAlign: 'center',
+                                        includeFontPadding: false // 🚀 Android Fix: Removes extra hidden system font padding
+                                    }}
+                                >
+                                    {item.text}
+                                </Text>
+                                <Text
+                                    style={{
+                                        fontSize: moderateScale(10),
+                                        color: '#94A3B8',
+                                        marginTop: verticalScale(4),
+                                        alignSelf: isMe ? 'flex-end' : 'flex-start'
+                                    }}
+                                >
+                                    {timeString}
+                                </Text>
+                            </Box>
                         ) : (
-                            /* 💬 WHATSAPP TEXT WRAPPER & ANTI-OVERLAP ENGINE */
+                            /* 💬 STANDARD TEXT WRAPPER & ANTI-OVERLAP ENGINE */
                             <Box style={{
                                 flexDirection: 'row',
                                 flexWrap: 'wrap',
@@ -244,25 +301,23 @@ const ChatMessageBubble = ({
                     paddingHorizontal: scale(10),
                     alignItems: 'center'
                 }}>
-                    {/* 📋 Copy Action Option (Icon Only) */}
                     {!isMedia && (
                         <TouchableOpacity
                             onPress={handleCopyText}
                             activeOpacity={0.7}
-                            style={{ padding: scale(4) }} // Added a small hit-slop padding for easier tapping
+                            style={{ padding: scale(4) }}
                         >
                             <Copy color="#94A3B8" size={moderateScale(16)} />
                         </TouchableOpacity>
                     )}
 
-                    {/* 🗑️ Delete Action Option (Icon Only) */}
                     <TouchableOpacity
                         onPress={() => {
                             setShowActions(false);
                             onDeleteTrigger(item.id, item.senderId);
                         }}
                         activeOpacity={0.7}
-                        style={{ padding: scale(4) }} // Added a small hit-slop padding for easier tapping
+                        style={{ padding: scale(4) }}
                     >
                         <Trash2 color="#EF4444" size={moderateScale(16)} />
                     </TouchableOpacity>
@@ -289,3 +344,4 @@ export default React.memo(ChatMessageBubble, (prevProps, nextProps) => {
         prevProps.onDeleteTrigger === nextProps.onDeleteTrigger
     );
 });
+

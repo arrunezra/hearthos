@@ -12,6 +12,8 @@ export interface EmojiCategory {
     data: EmojiItem[];
 }
 
+
+
 export const EMOJI_SECTIONS: EmojiCategory[] = [
     {
         "title": "smileys_emotion",
@@ -5743,7 +5745,7 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
     },
     {
         "title": "animals_nature",
-        "icon": "🐵",
+        "icon": "🐇",
         "data": [
             {
                 "emoji": "🐵",
@@ -7312,7 +7314,7 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
     },
     {
         "title": "food_drink",
-        "icon": "🍇",
+        "icon": "🍔",
         "data": [
             {
                 "emoji": "🍇",
@@ -8760,7 +8762,7 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
     },
     {
         "title": "travel_places",
-        "icon": "🌍",
+        "icon": "🌐",
         "data": [
             {
                 "emoji": "🌍",
@@ -11451,7 +11453,7 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
     },
     {
         "title": "activities",
-        "icon": "🎃",
+        "icon": "🎆",
         "data": [
             {
                 "emoji": "🎃",
@@ -12397,7 +12399,7 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
     },
     {
         "title": "objects",
-        "icon": "👓",
+        "icon": "💡",
         "data": [
             {
                 "emoji": "👓",
@@ -15105,7 +15107,7 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
     },
     {
         "title": "symbols",
-        "icon": "🏧",
+        "icon": "🔆",
         "data": [
             {
                 "emoji": "🏧",

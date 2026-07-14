@@ -9,18 +9,32 @@ import { scale, moderateScale, verticalScale } from '@/src/utils/scaling';
 import { Box, Text, Center, HStack } from '@/src/components/HOSGluestackUI';
 import { useAgoraCall } from '@/src/hooks/useAgoraCall';
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
-
+// 🚀 Hashing engine: Safely transforms any Firebase String UID into a unique Agora Integer UID
+const getAgoraNumericUid = (firebaseUid: string): number => {
+    let hash = 0;
+    for (let i = 0; i < firebaseUid.length; i++) {
+        const char = firebaseUid.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash |= 0; // Force signature transformation to a 32-bit integer boundary
+    }
+    // Keeps the value positive and safely under Agora's 4.2 billion ceiling limit
+    return Math.abs(hash) % 4000000000;
+};
 export default function CallScreen({ route, navigation }: any) {
-    const { roomId, isVideoCall, isIncoming = false } = route.params;
+    const { roomId, isVideoCall, isIncoming = false, callerId, receiverId } = route.params;
     const insets = useSafeAreaInsets();
     const db = getFirestore();
 
     const [hasAccepted, setHasAccepted] = useState(!isIncoming);
     const isNavigatingAway = useRef(false);
-
+    // 🚀 THE DYNAMIC ENGINE: Resolves who is local and who is remote based on call direction
+    const localUserStringId = isIncoming ? receiverId : callerId;
+    const remoteUserStringId = isIncoming ? callerId : receiverId;
     // 🚀 STRICT 32-BIT AGORA COUNTS: Kept distinct but safely within standard numerical limits
-    const LOCAL_USER_ID = isIncoming ? 9786970 : 6381162;
-
+    //const LOCAL_USER_ID = isIncoming ? 9786970 : 6381162;
+    // 🚀 CONVERT TO PURE NUMBERS FOR AGORA NATIVE PIPELINES
+    const LOCAL_USER_ID = getAgoraNumericUid(localUserStringId || 'guest');
+    const EXPECTED_REMOTE_UID = getAgoraNumericUid(remoteUserStringId || 'peer');
     const {
         isJoined,
         remoteUid,
@@ -32,7 +46,8 @@ export default function CallScreen({ route, navigation }: any) {
     } = useAgoraCall(
         roomId,
         LOCAL_USER_ID,
-        isVideoCall && hasAccepted,
+        isVideoCall,
+        hasAccepted,
         () => handleCloseStack()
     );
 
@@ -114,10 +129,14 @@ export default function CallScreen({ route, navigation }: any) {
                     // 🎙️ Connection Loader Backdrop Frame
                     <Center style={styles.videoSurfaceView}>
                         <Box style={styles.voiceCallAvatarPlaceholder} />
-                        <Text style={{ color: 'white', fontSize: moderateScale(16), marginTop: verticalScale(16), textAlign: 'center' }}>
+                        <Text style={{ color: 'white', fontSize: moderateScale(16), marginTop: verticalScale(16), textAlign: 'center', paddingHorizontal: scale(20) }}>
                             {isJoined
-                                ? "Connected to Room!\nWaiting for remote video stream..."
-                                : "Connecting Video Lines..."}
+                                ? (isVideoCall
+                                    ? "Connected to Room!\nWaiting for remote video stream..."
+                                    : "Connected!\nWaiting for remote user...")
+                                : (isVideoCall
+                                    ? "Connecting Video Lines..."
+                                    : "Connecting Audio Lines...")}
                         </Text>
                     </Center>
                 )}
@@ -128,7 +147,7 @@ export default function CallScreen({ route, navigation }: any) {
                         <RtcSurfaceView
                             key="local-preview-view"
                             canvas={{
-                                uid: 0, // 0 handles local capture rendering contexts automatically
+                                uid: 0,
                                 sourceType: VideoSourceType.VideoSourceCameraPrimary
                             }}
                             style={styles.pipSurfaceCanvas}
