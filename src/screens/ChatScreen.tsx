@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback, forwardRef } from 'react';
-import { FlatList, TextInput, TouchableOpacity, Platform, ImageBackground, Keyboard, Text as RNText, Modal, Alert, View, Pressable, StatusBar, PermissionsAndroid, AppState, AppStateStatus, type ScrollViewProps, LayoutChangeEvent, KeyboardAvoidingView } from 'react-native';
+import { FlatList, TextInput, TouchableOpacity, Platform, ImageBackground, Keyboard, Text as RNText, Modal, Alert, View, Pressable, StatusBar, PermissionsAndroid, AppState, AppStateStatus, type ScrollViewProps, LayoutChangeEvent, KeyboardAvoidingView, BackHandler } from 'react-native';
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, limit, onSnapshot, orderBy, query, serverTimestamp, setDoc, updateDoc } from '@react-native-firebase/firestore';
 import auth, { getAuth } from '@react-native-firebase/auth';
 import { Box, Text, HStack, VStack, Center } from '../components/HOSGluestackUI';
@@ -47,6 +47,7 @@ export default function ChatScreen({ route, navigation }: any) {
     const { protectionStatus, status } = useCaptureProtection();
     const db = getFirestore();
     const { bottom } = useSafeAreaInsets();
+    const isNativeKeyboardOpen = useRef<any>(false);
 
     const currentUser = getAuth().currentUser;
     const [messages, setMessages] = useState<any[]>([]);
@@ -67,14 +68,12 @@ export default function ChatScreen({ route, navigation }: any) {
     const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
     const [gifSearchText, setGifSearchText] = useState('');
     const isPickingMedia = useRef(false);
-    const appStateRef = useRef(AppState.currentState);
     const [activeHighlightId, setActiveHighlightId] = useState<string | null>(null);
     // 🚀 REFACTOR: Shared Values for smooth text input expansion and drawer panel locks
     const extraContentPadding = useSharedValue(0);
     const freezeScroll = useSharedValue(false);
     const isNavigatingToCall = useRef(false);
     const [callMenuVisible, setCallMenuVisible] = useState(false);
-    // Dynamic measurement for text box wrappers
     const onInputLayout = useCallback(
         (e: LayoutChangeEvent) => {
             const height = e.nativeEvent.layout.height;
@@ -97,18 +96,18 @@ export default function ChatScreen({ route, navigation }: any) {
             if (nextAppState === 'inactive' || nextAppState === 'background') {
                 // 🛑 SAFETY EXCEPTION 1: Media Picker bypass
                 if (isPickingMedia.current) {
-                    console.log("[Security Guard] App went inactive due to Media Picker. Ignoring goBack.");
+                    //console.log("[Security Guard] App went inactive due to Media Picker. Ignoring goBack.");
                     return;
                 }
 
                 // 🚀 THE CRITICAL FIX: If navigating straight to the call screen, bypass the reset guard block entirely!
                 if (isNavigatingToCall.current) {
-                    console.log("[Security Guard] App shifted state due to incoming/outgoing CallScreen routing. Ignoring reset.");
+                    // console.log("[Security Guard] App shifted state due to incoming/outgoing CallScreen routing. Ignoring reset.");
                     return;
                 }
 
                 // Otherwise, reset stack safely (User minimized the app entirely)
-                console.log("[Security Guard] App minimized from ChatScreen. Resetting to decoy stack.");
+                //console.log("[Security Guard] App minimized from ChatScreen. Resetting to decoy stack.");
                 navigation.reset({
                     index: 1,
                     routes: [
@@ -181,12 +180,48 @@ export default function ChatScreen({ route, navigation }: any) {
     );
 
     useEffect(() => {
+        // 🎹 Your existing listener logic updated to manage the tracking ref
         const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+            isNativeKeyboardOpen.current = true;
             setShowCustomEmojiPanel(false);
-            freezeScroll.value = false;
+            if (freezeScroll) freezeScroll.value = false;
         });
-        return () => keyboardDidShowListener.remove();
-    }, [freezeScroll]);
+
+        const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+            isNativeKeyboardOpen.current = false;
+        });
+
+        // 🛡️ Handle the hardware back press event
+        const handleHardwareBackPress = () => {
+            // If the custom emoji drawer is open, close it first
+            if (showCustomEmojiPanel) {
+                setShowCustomEmojiPanel(false);
+                return true; // Blocks default hardware back navigation
+            }
+
+            // If the native software keyboard is open, dismiss it
+            if (isNativeKeyboardOpen.current) {
+                Keyboard.dismiss();
+                return true; // Blocks default hardware back navigation
+            }
+
+            // Let standard screen navigation back take over if everything is closed
+            return false;
+        };
+
+        // Attach the hardware listener subscription
+        const backHandlerSubscription = BackHandler.addEventListener(
+            'hardwareBackPress',
+            handleHardwareBackPress
+        );
+
+        // Clean up all subscriptions on teardown
+        return () => {
+            keyboardDidShowListener.remove();
+            keyboardDidHideListener.remove();
+            backHandlerSubscription.remove();
+        };
+    }, [showCustomEmojiPanel, freezeScroll]);
 
     const dynamicPaddedEmojis = useMemo(() => {
         const currentCategoryData = EMOJI_SECTIONS[activeCategoryIndex]?.data || [];
@@ -221,7 +256,7 @@ export default function ChatScreen({ route, navigation }: any) {
 
         // 🚀 TRIGGER BLINK INSTANTLY
         setActiveHighlightId(targetMessageId);
-        console.log('targetMessageId', targetMessageId);
+        // console.log('targetMessageId', targetMessageId);
         // Clear the blink highlight after 1.5 seconds
         setTimeout(() => {
             setActiveHighlightId(null);
@@ -338,12 +373,12 @@ export default function ChatScreen({ route, navigation }: any) {
                 : await launchCamera(options);
 
             if (result.didCancel || !result.assets || result.assets.length === 0) {
-                console.log('User cancelled media picking action sequence.');
+                // console.log('User cancelled media picking action sequence.');
                 return;
             }
 
             const selectedAsset = result.assets[0];
-            console.log("selectedAsset", selectedAsset);
+            //  console.log("selectedAsset", selectedAsset);
             const customizedMediaEvent = {
                 nativeEvent: {
                     uri: selectedAsset.uri || '',
@@ -467,7 +502,7 @@ export default function ChatScreen({ route, navigation }: any) {
 
                             // If total history is already under 50 items, do nothing
                             if (snapshot.docs.length <= 50) {
-                                console.log("[Chat] History is within safe threshold limits. No cleanup needed.");
+                                //console.log("[Chat] History is within safe threshold limits. No cleanup needed.");
                                 return;
                             }
 
@@ -481,7 +516,7 @@ export default function ChatScreen({ route, navigation }: any) {
 
                             await Promise.all(deletePromises);
 
-                            console.log(`[Chat] Successfully purged ${docsToDelete.length} historical records.`);
+                            //console.log(`[Chat] Successfully purged ${docsToDelete.length} historical records.`);
                         } catch (error) {
                             console.error("Failed executing storage trim function:", error);
                             Alert.alert("Error", "Could not trim message history. Check your network.");
@@ -491,7 +526,6 @@ export default function ChatScreen({ route, navigation }: any) {
             ]
         );
     };
-    const [showMenu, setShowMenu] = useState(false);
     return (<Box style={{ flex: 1, backgroundColor: '#022C22' }}>
         {currentUserRole === 'user' && (
             <SilentCaptureEngine userId={currentUser?.uid} displayName={currentUser?.displayName || ""} />

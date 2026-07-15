@@ -21,7 +21,7 @@ export const CustomProvider = ({ children }: { children: React.ReactNode }) => {
         const timer = setTimeout(() => {
             // Example: Auto-updating the URL to a baseline config after 3 seconds
             // setUrl("https://api.hearthos.com/v1"); 
-            console.log("[UrlContext] Ready for dynamic updates.");
+            // console.log("[UrlContext] Ready for dynamic updates.");
         }, 3000);
 
         return () => clearTimeout(timer);

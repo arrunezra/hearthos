@@ -45,7 +45,7 @@ const checkEmojiOnlyString = (str: string) => {
     // const emojiRegex = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g;
     const emojiRegex = /(\u00a9|\u00ae|[\u2000-\u3300]|[\u2700-\u27BF]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]|\uFE0F)/g;
     const cleanStr = str.replace(/\s/g, '');
-    console.log("cleanStr", cleanStr);
+    //console.log("cleanStr", cleanStr);
     const match = cleanStr.match(emojiRegex);
 
     const isEmojiOnly = match !== null && match.join('') === cleanStr;
@@ -89,7 +89,7 @@ const ChatMessageBubble = ({
         if (item.text) {
             Clipboard.setString(item.text);
             setShowActions(false);
-            console.log("[Clipboard] Text string copied successfully.");
+            //console.log("[Clipboard] Text string copied successfully.");
         }
     };
 

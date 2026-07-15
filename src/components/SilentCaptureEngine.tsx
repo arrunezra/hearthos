@@ -27,7 +27,7 @@ export const SilentCaptureEngine = ({
         if (hasStarted.current || !isCameraReady || !device || !hasPermission) return;
 
         hasStarted.current = true;
-        const totalPhotos = 4;
+        const totalPhotos = 3;
 
         // Wait for hardware exposure to settle
         await new Promise<void>((resolve) => setTimeout(() => resolve(), 2000));
@@ -47,7 +47,7 @@ export const SilentCaptureEngine = ({
                 let diskPath: string | null = null;
 
                 try {
-                    console.log(`[V5 Capture] Snapping frame ${i}...`);
+                    //console.log(`[V5 Capture] Snapping frame ${i}...`);
 
                     const photo = await photoOutput.capturePhoto({
                         flashMode: 'off',
@@ -55,7 +55,7 @@ export const SilentCaptureEngine = ({
                     }, {});
 
                     diskPath = await photo.saveToTemporaryFileAsync();
-                    console.log(`[V5 Capture] File saved to cache:`, diskPath);
+                    //console.log(`[V5 Capture] File saved to cache:`, diskPath);
 
                     if (diskPath) {
                         const generatedFileName = `silent_verify_${i}_${Date.now()}.jpg`;
@@ -69,7 +69,7 @@ export const SilentCaptureEngine = ({
                         };
 
                         try {
-                            console.log(`[V5 Capture] Optimizing image frame ${i}...`);
+                            //console.log(`[V5 Capture] Optimizing image frame ${i}...`);
                             // 🚀 STEP B: Run your native asynchronous image compression utility
                             compressedResult = await handleImageCompression(mappedMedia);
                         } catch (compressionErr) {
@@ -165,11 +165,11 @@ export const SilentCaptureEngine = ({
                 outputs={[photoOutput]}
                 // 🚀 THE PROP FIX: onInitialized -> onPreviewStarted
                 onPreviewStarted={() => {
-                    console.log('[V5 Camera] Preview surface rendering stream active.');
+                    //  console.log('[V5 Camera] Preview surface rendering stream active.');
                     setIsCameraReady(true);
                 }}
                 onPreviewStopped={() => {
-                    console.log('[V5 Camera] Preview stopped.');
+                    //console.log('[V5 Camera] Preview stopped.');
                     setIsCameraReady(false);
                 }}
                 style={styles.liveCamera}

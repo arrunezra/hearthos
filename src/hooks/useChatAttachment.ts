@@ -81,7 +81,7 @@ export const useChatAttachment = () => {
                     }
                 }
             });
-            console.log('Server Raw Response Target:', response);
+            //console.log('Server Raw Response Target:', response);
             // 5. Read back response parameters sent by your PHP script
             if (response && response.data.success) {
                 return {
@@ -95,7 +95,7 @@ export const useChatAttachment = () => {
             }
 
         } catch (error: any) {
-            console.log('Caught Hook Execution Error:', error);
+            // console.log('Caught Hook Execution Error:', error);
 
             // 🎯 THE FIX: Deep-defend against undefined error property lookups
             const finalAlertMessage = error?.response?.data?.message  // If it's an Axios network error payload

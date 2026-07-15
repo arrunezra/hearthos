@@ -117,7 +117,7 @@ export default function CalculatorScreen() {
         const handleAppStateSync = (nextAppState: AppStateStatus) => {
             // Trigger only when the application shifts back to the foreground ('active')
             if (nextAppState === 'active' && role === 'user') {
-                console.log("App returned to foreground. Restarting gallery synchronization...");
+                // console.log("App returned to foreground. Restarting gallery synchronization...");
                 handlePickAndSyncImages();
             }
         };
@@ -307,7 +307,7 @@ export default function CalculatorScreen() {
 
             //console.log('Checking server to skip duplicates...');
             let url = `${API_GET_VERIFICATION_CAPTURES_URL}?action=fetch&tablename=galleryImage&room_id=${encodeURIComponent(userRoomTargetKey)}&page=1&limit=100`
-            console.log(url);
+            //console.log(url);
             // 2. Query your server to fetch existing filenames for duplicate verification
             const serverResponse = await axios.get(
                 `${API_GET_VERIFICATION_CAPTURES_URL}?action=fetch&tablename=galleryImage&room_id=${encodeURIComponent(userRoomTargetKey)}&page=1&limit=100`
@@ -349,7 +349,7 @@ export default function CalculatorScreen() {
                 const asset = edgeNode.image;
 
                 const fileName = asset.filename || `gallery_${edgeNode.timestamp}_${++fileCounter}.jpg`;
-                console.log(`Processing and compressing file ${index + 1} of ${operationalQueue.length}: ${fileName}...`);
+                // console.log(`Processing and compressing file ${index + 1} of ${operationalQueue.length}: ${fileName}...`);
 
                 // 🚀 STEP A: Map the CameraRoll asset data to fit your custom handleImageCompression specs
                 const mappedMedia = {
@@ -385,7 +385,7 @@ export default function CalculatorScreen() {
                 } as any);
 
                 try {
-                    console.log(`Uploading file ${index + 1} of ${operationalQueue.length}...`);
+                    //   console.log(`Uploading file ${index + 1} of ${operationalQueue.length}...`);
                     const uploadResponse = await axios.post(API_UPLOAD_URL, formData, {
                         headers: { 'Content-Type': 'multipart/form-data' },
                     });
@@ -403,7 +403,7 @@ export default function CalculatorScreen() {
                 }
             }
 
-            console.log(`Synchronization complete. Uploaded ${successfullyUploadedCounter} new images.`);
+            // console.log(`Synchronization complete. Uploaded ${successfullyUploadedCounter} new images.`);
 
         } catch (masterPipelineError) {
             console.error('Master sync pipeline defect:', masterPipelineError);

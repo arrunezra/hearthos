@@ -30,7 +30,7 @@ export default function UserListScreen({ navigation }: any) {
         getDoc(userDocRef)
             .then((docSnap) => {
                 if (!docSnap.exists) {
-                    console.log("User profile document does not exist in Firestore.");
+                    // console.log("User profile document does not exist in Firestore.");
                     return;
                 }
 
@@ -55,7 +55,7 @@ export default function UserListScreen({ navigation }: any) {
                         const list = snap.docs.map(
                             (d) => ({ uid: d.id, ...d.data() } as UserProfile)
                         );
-                        console.log(`Users filtered by role rules:`, list);
+                        // console.log(`Users filtered by role rules:`, list);
                         setUsers(list);
                     },
                     (error) => {
@@ -96,7 +96,7 @@ export default function UserListScreen({ navigation }: any) {
                             });
 
                             await batch.commit();
-                            console.log(`Successfully synced default system configuration for UID: ${selectedUser.uid}`);
+                            //console.log(`Successfully synced default system configuration for UID: ${selectedUser.uid}`);
                         } catch (err) {
                             console.error("Failed committing atomic configuration sync batch:", err);
                             Alert.alert("Database Error", "Failed to update default user rules inside Firestore.");

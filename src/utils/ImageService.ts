@@ -24,7 +24,6 @@ export const handleImageCompression = async (image: any) => {
 
         // Only compress if it exceeds 1MB
         if (finalSize > MAX_SIZE) {
-            console.log("Compressing high-res image payload...");
 
             // Stage 1: Native Auto-Compression (Hardware Accelerated)
             finalUri = await ImageCompressor.compress(image.path, {
@@ -69,7 +68,7 @@ export const cleanupImage = async (uri: string | undefined) => {
             const exists = await ReactNativeBlobUtil.fs.exists(cleanPath);
             if (exists) {
                 await ReactNativeBlobUtil.fs.unlink(cleanPath);
-                console.log("Successfully cleaned up temp cache:", cleanPath);
+                //console.log("Successfully cleaned up temp cache:", cleanPath);
             }
         }
     } catch (error) {

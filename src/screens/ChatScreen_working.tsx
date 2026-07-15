@@ -69,11 +69,11 @@ export default function ChatScreen({ route, navigation }: any) {
             ) {
                 // 🛡️ THE CRITICAL RESTRICTION: Skip goBack if we are intentionally picking media
                 if (isPickingMedia.current) {
-                    console.log("[Security Guard] App went inactive due to Media Picker. Ignoring goBack.");
+                    // console.log("[Security Guard] App went inactive due to Media Picker. Ignoring goBack.");
                     return;
                 }
 
-                console.log("[Security Guard] Screen went inactive. Executing automatic fallback...");
+                //console.log("[Security Guard] Screen went inactive. Executing automatic fallback...");
                 if (navigation.canGoBack()) {
                     navigation.goBack();
                 }
@@ -224,13 +224,13 @@ export default function ChatScreen({ route, navigation }: any) {
                     if (isAdmin) {
                         // 🚀 ADMIN RULE: Hard delete from the database completely
                         await deleteDoc(messageDocRef);
-                        console.log("Admin hard-deleted the message.");
+                        // console.log("Admin hard-deleted the message.");
                     } else {
                         // 🔒 USER RULE: Soft delete by setting a tracking flag
                         await updateDoc(messageDocRef, {
                             isDeletedByUser: true
                         });
-                        console.log("User soft-deleted the message.");
+                        // console.log("User soft-deleted the message.");
                     }
                 } catch (error) {
                     console.error("Failed to execute deletion:", error);
@@ -309,7 +309,7 @@ export default function ChatScreen({ route, navigation }: any) {
 
             // Handle cancellations or empty asset selections gracefully
             if (result.didCancel || !result.assets || result.assets.length === 0) {
-                console.log('User cancelled media picking action sequence.');
+                //console.log('User cancelled media picking action sequence.');
                 return;
             }
 
@@ -351,7 +351,7 @@ export default function ChatScreen({ route, navigation }: any) {
         let textPayload = inputText.trim();
 
         if (mediaEvent?.nativeEvent?.uri) {
-            console.log('nativeEvent', mediaEvent.nativeEvent)
+            // console.log('nativeEvent', mediaEvent.nativeEvent)
             currentMime = mediaEvent.nativeEvent.mime;
             textPayload = mediaEvent.nativeEvent.description || "[Media File]";
 
@@ -408,7 +408,7 @@ export default function ChatScreen({ route, navigation }: any) {
 
         try {
             setReplyMessage(null);
-            console.log('messageData', messageData);
+            //console.log('messageData', messageData);
             const messagesCollectionRef = collection(db, 'rooms', roomId, 'messages');
             await addDoc(messagesCollectionRef, messageData);
 

@@ -14,7 +14,7 @@ interface UserProfile {
 }
 
 export default function VerifyListScreen({ navigation, route }: any) {
-    console.log("VerifyListScreen route params:", route.params);
+    //console.log("VerifyListScreen route params:", route.params);
     const { screen } = route.params;
     const [users, setUsers] = useState<UserProfile[]>([]);
     const db = getFirestore();
@@ -31,7 +31,7 @@ export default function VerifyListScreen({ navigation, route }: any) {
         getDoc(userDocRef)
             .then((docSnap) => {
                 if (!docSnap.exists) {
-                    console.log("User profile document does not exist in Firestore.");
+                    // console.log("User profile document does not exist in Firestore.");
                     return;
                 }
 
@@ -53,7 +53,6 @@ export default function VerifyListScreen({ navigation, route }: any) {
                         const list = snap.docs.map(
                             (d) => ({ uid: d.id, ...d.data() } as UserProfile)
                         );
-                        console.log(`Users filtered by role rules:`, list);
                         setUsers(list);
                     },
                     (error) => {

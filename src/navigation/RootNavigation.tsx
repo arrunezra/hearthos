@@ -17,7 +17,7 @@ import { TabNavigator } from "./TabNavigator";
 const RootStack = createNativeStackNavigator();
 
 export const RootNavigation = ({ currentUser }: any) => {
-    console.log("currentUser", currentUser)
+    // console.log("currentUser", currentUser)
     return (
         <NavigationContainer>
             {/* 🎯 Wraps the active operational flow to listen for events across any screen layout */}

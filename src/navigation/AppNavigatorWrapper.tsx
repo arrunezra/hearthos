@@ -39,7 +39,7 @@ export default function AppNavigatorWrapper({ children, currentUser }: any) {
             if (callData.status === 'ringing' && currentActiveRoom.current !== currentRoomId) {
                 currentActiveRoom.current = currentRoomId;
 
-                console.log(`[Call System] Routing incoming call event for room: ${currentRoomId}`);
+                // console.log(`[Call System] Routing incoming call event for room: ${currentRoomId}`);
 
                 navigation.navigate('CallScreen', {
                     roomId: currentRoomId,

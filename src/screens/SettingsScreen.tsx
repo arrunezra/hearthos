@@ -39,7 +39,7 @@ export default function SettingsScreen() {
                 showUserList: value
             }, { merge: true });
 
-            console.log("System config updated successfully.");
+            // console.log("System config updated successfully.");
         } catch (error: any) {
             // 2. 🚀 THE FIX: Roll back the visual switch state if Firestore blocks the write
             setShowUserList(!value);

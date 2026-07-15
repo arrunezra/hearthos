@@ -37,13 +37,13 @@ export const useAgoraCall = (
         try {
             const stringUid = String(uid);
             const url = `https://hearthos.jeasuns.com/api/config/rtcToken.php?channel=${channelName}&uid=${stringUid}`;
-            console.log('[Token API] Fetching production v2 token:', url);
+            //console.log('[Token API] Fetching production v2 token:', url);
 
             const response = await fetch(url);
             if (!response.ok) throw new Error(`HTTP Error Status: ${response.status}`);
 
             const data = await response.json();
-            console.log('[Token API Success] Token received safely.');
+            // console.log('[Token API Success] Token received safely.');
             return data.token || '';
         } catch (error) {
             console.error('[Token API Error]: Failed to fetch rtcToken:', error);
@@ -84,16 +84,16 @@ export const useAgoraCall = (
             // 🚀 3. Bind events to the securely initialized media scope
             agoraEngine.registerEventHandler({
                 onJoinChannelSuccess: (connection: RtcConnection) => {
-                    console.log('[RTC Success] Local device successfully joined:', connection.localUid);
+                    //console.log('[RTC Success] Local device successfully joined:', connection.localUid);
                     setIsJoined(true);
                     isInitializing.current = false;
                 },
                 onUserJoined: (connection: RtcConnection, uid: number) => {
-                    console.log('[RTC Event] Remote peer streaming channel detected:', uid);
+                    //console.log('[RTC Event] Remote peer streaming channel detected:', uid);
                     setRemoteUid(uid);
                 },
                 onUserOffline: (connection: RtcConnection, uid: number) => {
-                    console.log('[RTC Event] Remote user dropped offline');
+                    // console.log('[RTC Event] Remote user dropped offline');
                     setRemoteUid(null);
                     onRemoteLeave();
                 },
@@ -103,7 +103,7 @@ export const useAgoraCall = (
             });
 
             const targetUid = parseInt(String(localUid), 10);
-            console.log(`[Agora Engine] Connecting to channel: ${roomId} as ${isVideoCall ? 'VIDEO' : 'AUDIO'} with UID: ${targetUid}`);
+            //console.log(`[Agora Engine] Connecting to channel: ${roomId} as ${isVideoCall ? 'VIDEO' : 'AUDIO'} with UID: ${targetUid}`);
 
             // 🚀 4. Match the token signature parameters perfectly
             agoraEngine.joinChannel(token, roomId, targetUid, {
@@ -137,7 +137,7 @@ export const useAgoraCall = (
             agoraEngine.leaveChannel();
             agoraEngine.unregisterEventHandler({});
         } catch (e) {
-            console.log("[Teardown] Engine bypass cleanup active.");
+            // console.log("[Teardown] Engine bypass cleanup active.");
         }
         setIsJoined(false);
         setRemoteUid(null);

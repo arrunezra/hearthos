@@ -88,7 +88,7 @@ const HeaderSession = ({
             // 2. Check Firebase Session Status Safely 
             if (auth().currentUser) {
                 await auth().signOut();
-                console.log('Firebase session cleared cleanly.');
+                // console.log('Firebase session cleared cleanly.');
             } else {
                 console.log('No active Firebase session found, skipping signOut.');
             }
@@ -154,8 +154,6 @@ const HeaderSession = ({
                                     key="logout"
                                     textValue="Log Out Session"
                                     onPress={() => {
-                                        console.log("Menu Item Clicked!");
-                                        // 🎯 FIX: Force close popup immediately on execution thread line before route updates
                                         setIsMenuOpen(false);
                                         handleLogout();
                                     }}
@@ -211,7 +209,6 @@ const HeaderSession = ({
                                     key="exit"
                                     textValue="Exit"
                                     onPress={() => {
-                                        console.log("Menu Item Clicked!");
                                         setIsMenuOpen(false);
                                     }}
                                 >
