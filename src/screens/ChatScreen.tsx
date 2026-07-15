@@ -44,7 +44,6 @@ export default function ChatScreen({ route, navigation }: any) {
     const { targetUser } = route.params;
     const { showAlert, hideAlert } = useAlert();
     const { uploadChatMedia, isUploading, uploadProgress } = useChatAttachment();
-    const { protectionStatus, status } = useCaptureProtection();
     const db = getFirestore();
     const { bottom } = useSafeAreaInsets();
     const isNativeKeyboardOpen = useRef<any>(false);

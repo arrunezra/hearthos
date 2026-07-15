@@ -4,9 +4,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Calculator, Radar, MessageCircle, Wallet } from 'lucide-react-native';
 import CalculatorScreen from '../screens/CalculatorScreen';
 import { verticalScale } from '../utils/scaling';
-import NotesScreen from '../notes/NotesScreen';
 import ChatTab from '../screens/ChatTab';
 import GalleryViewScreen from '../screens/Gallery/GalleryViewScreen';
+import NotesScreen from '../screens/notes/NotesScreen';
+import NotesSummaryScreen from '../screens/notes/NotesSummaryScreen';
 // import CalculatorScreen from '../screens/CalculatorScreen';
 // import TrackerScreen from '../screens/TrackerScreen';
 // import { Calculator, Radar, Wallet } from '../components/HOSIconUI';
@@ -41,7 +42,7 @@ export function TabNavigator() {
             })}
         >
             <Tab.Screen name="Calculator" component={CalculatorScreen} options={{ title: 'KG Price Tool' }} />
-            <Tab.Screen name="Notes" component={NotesScreen} options={{ title: 'Notes' }} />
+            <Tab.Screen name="Notesummary" component={NotesSummaryScreen} options={{ title: 'Notes' }} />
             <Tab.Screen name="Gallery" component={GalleryViewScreen} options={{ title: 'Gallery' }} />
             {/* <Tab.Screen name="Chat" component={ChatTab} options={{ title: 'Chat' }} /> */}
         </Tab.Navigator>

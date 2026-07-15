@@ -22,6 +22,7 @@ import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalF
 import { Checkbox, CheckboxGroup, CheckboxIcon, CheckboxIndicator, CheckboxLabel } from "@/components/ui/checkbox";
 import { Avatar, AvatarFallbackText, AvatarImage } from "@/components/ui/avatar";
 import { Heading } from "@/components/ui/heading";
+import { Fab, FabIcon, FabLabel } from "@/components/ui/fab";
 export {
     Box,
     Card,
@@ -99,4 +100,5 @@ export {
     SelectDragIndicatorWrapper,
     SelectDragIndicator,
     InputSlot,
+    Fab, FabIcon, FabLabel
 };

@@ -1981,20 +1981,7 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "mad"
                 ]
             },
-            {
-                "emoji": "💭",
-                "name": "thought balloon",
-                "v": "1.0",
-                "toneEnabled": false,
-                "keywords": [
-                    "thought_balloon",
-                    "bubble",
-                    "cloud",
-                    "speech",
-                    "thinking",
-                    "dream"
-                ]
-            },
+
             {
                 "emoji": "💤",
                 "name": "ZZZ",
