@@ -25,8 +25,8 @@ import { API_BASE_URL_DEV } from '@/src/utils/environment';
 import { CaptureProtection } from 'react-native-capture-protection';
 const API_BASE_URL = API_BASE_URL_DEV + '/chats/get_verification_captures.php';
 
-const { width } = Dimensions.get('window');
-const COLUMN_WIDTH = width / 3 - scale(12);
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
+const COLUMN_WIDTH = SCREEN_WIDTH / 3 - scale(12);
 const IMAGES_PER_PAGE = 24;
 
 interface GalleryImage {
@@ -51,12 +51,16 @@ export default function VerifyImageScreen({ route, navigation }: any) {
 
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
     const [isMultiSelectMode, setIsMultiSelectMode] = useState(false);
-    const [activeViewerImage, setActiveViewerImage] = useState<string | null>(null);
 
-    // 🚀 NEW STATE: Tracks visibility context drawer for file information panel
+    // 🚀 FIXED TRACKING PARAMETERS: Handle index bounds to enable layout swiping routines
+    const [activeViewerIndex, setActiveViewerIndex] = useState<number | null>(null);
+    const [galleryInitialIndex, setGalleryInitialIndex] = useState<number>(0);
+
+    // STATE: Tracks visibility context drawer for file information panel
     const [showInfoDrawer, setShowInfoDrawer] = useState(false);
 
     const userRoomTargetKey = targetUser?.displayName || targetUser?.email?.split('@')[0] || '';
+
     useEffect(() => {
         CaptureProtection.prevent({
             screenshot: false,
@@ -65,20 +69,17 @@ export default function VerifyImageScreen({ route, navigation }: any) {
         });
         const handleAppStateChange = (nextAppState: AppStateStatus) => {
             if (nextAppState === 'inactive' || nextAppState === 'background') {
-                // 🚀 THE FIX: Rewrite the RootStack while specifying the sub-tab configuration
                 navigation.reset({
-                    index: 1, // Focuses on Position 1 (GalleryView)
+                    index: 1,
                     routes: [
                         {
-                            // 🎯 Position 0: The Back Button Target destination
                             name: 'MainTabs',
                             state: {
-                                index: 0, // Hard-focuses on the Calculator tab index
+                                index: 0,
                                 routes: [{ name: 'Calculator' }]
                             }
                         },
                         {
-                            // 🎯 Position 1: The current foreground screen when reopened
                             name: 'GalleryView',
                             params: route.params
                         }
@@ -93,9 +94,9 @@ export default function VerifyImageScreen({ route, navigation }: any) {
             subscription.remove();
         }
     }, [navigation]);
+
     // API Call Pipeline
     const fetchGalleryImages = useCallback(async (pageNumber: number, clearExisting = false) => {
-        //console.log('Fetching gallery images for user:', userRoomTargetKey);
         try {
             if (pageNumber === 1) {
                 setLoading(true);
@@ -109,7 +110,6 @@ export default function VerifyImageScreen({ route, navigation }: any) {
 
             if (response.data && response.data.success) {
                 const fetchedItems: GalleryImage[] = response.data.data;
-                //console.log('fetchedItems=', fetchedItems)
                 setImages((prev) => (clearExisting || pageNumber === 1) ? fetchedItems : [...prev, ...fetchedItems]);
                 setHasMore(fetchedItems.length === IMAGES_PER_PAGE);
             } else {
@@ -146,13 +146,14 @@ export default function VerifyImageScreen({ route, navigation }: any) {
         fetchGalleryImages(nextPage);
     };
 
-    const handleItemPress = (item: GalleryImage) => {
+    const handleItemPress = (item: GalleryImage, index: number) => {
         if (isMultiSelectMode) {
             toggleSelectImageId(item.id);
         } else {
-            // Reset drawer state context when transitioning between fullscreen media elements
             setShowInfoDrawer(false);
-            setActiveViewerImage(item.original_url);
+            // 🚀 FIXED MOUNT INSTANTIATION: Set both parameters enabling swiping calculations
+            setGalleryInitialIndex(index);
+            setActiveViewerIndex(index);
         }
     };
 
@@ -202,13 +203,12 @@ export default function VerifyImageScreen({ route, navigation }: any) {
                             if (response.data && response.data.success) {
                                 setImages((prev) => prev.filter((img) => !targetIdsToDelete.includes(img.id)));
                                 exitSelectionModePipeline();
-                                if (activeViewerImage) setActiveViewerImage(null);
+                                if (activeViewerIndex !== null) setActiveViewerIndex(null);
 
                                 if (images.length - targetIdsToDelete.length < 6) {
                                     setPage(1);
                                     fetchGalleryImages(1, true);
                                 }
-                                // Alert.alert('Success', 'Selected content metadata deleted successfully.');
                             } else {
                                 Alert.alert('Operation Blocked', response.data.message || 'Deletion error encountered.');
                             }
@@ -232,8 +232,12 @@ export default function VerifyImageScreen({ route, navigation }: any) {
         );
     };
 
-    // 🚀 HELPER EXTRACTION: Looks up active metadata fields matching target URL context pointers
-    const activeImageObject = images.find(img => img.original_url === activeViewerImage);
+    // Construct flat array map of URIs to satisfy the collection gallery spec
+    const allImageUris = images.map(img => img.original_url);
+
+    // HELPER EXTRACTION: Looks up active metadata fields matching target active index positions safely
+    const activeImageObject = activeViewerIndex !== null ? images[activeViewerIndex] : null;
+
     return (
         <Box style={{ flex: 1, backgroundColor: '#022C22' }}>
             <HStack style={styles.headerBar}>
@@ -271,12 +275,12 @@ export default function VerifyImageScreen({ route, navigation }: any) {
                     onEndReached={handleLoadMore}
                     onEndReachedThreshold={0.4}
                     ListFooterComponent={renderFooterLoader}
-                    renderItem={({ item }) => {
+                    renderItem={({ item, index }) => {
                         const isSelected = selectedIds.includes(item.id);
                         return (
                             <TouchableOpacity
                                 activeOpacity={0.8}
-                                onPress={() => handleItemPress(item)}
+                                onPress={() => handleItemPress(item, index)} // 🚀 FIXED: Passes index position context
                                 onLongPress={() => handleItemLongPress(item)}
                                 style={styles.thumbnailWrapper}
                             >
@@ -300,10 +304,10 @@ export default function VerifyImageScreen({ route, navigation }: any) {
             )}
 
             <Modal
-                visible={activeViewerImage !== null}
+                visible={activeViewerIndex !== null}
                 transparent={true}
                 animationType="fade"
-                onRequestClose={() => setActiveViewerImage(null)}
+                onRequestClose={() => setActiveViewerIndex(null)}
                 statusBarTranslucent
             >
                 <GestureHandlerRootView style={{ flex: 1 }}>
@@ -313,16 +317,24 @@ export default function VerifyImageScreen({ route, navigation }: any) {
                         {/* Canvas Actions Header Utility Overlay */}
                         <HStack style={[styles.modalActionsBar, { paddingTop: insets.top + scale(10), zIndex: 100 }]}>
                             <TouchableOpacity
-                                onPress={() => setActiveViewerImage(null)}
+                                onPress={() => setActiveViewerIndex(null)}
                                 style={styles.modalCircleButton}
                                 activeOpacity={0.7}
                             >
                                 <X color="white" size={moderateScale(20)} />
                             </TouchableOpacity>
 
-                            {/* 🚀 ACTION HEADER CONTROLS WRAPPER CELL */}
+                            {/* 🚀 FIXED PROPS VIEWPORT COUNTER CONTAINER */}
+                            {activeViewerIndex !== null && (
+                                <Center>
+                                    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: moderateScale(14) }}>
+                                        {activeViewerIndex + 1} of {allImageUris.length}
+                                    </Text>
+                                </Center>
+                            )}
+
+                            {/* ACTION HEADER CONTROLS WRAPPER CELL */}
                             <HStack style={{ gap: scale(14) }}>
-                                {/* 🚀 NEW: Information Icon Action Button Toggle Matrix */}
                                 <TouchableOpacity
                                     onPress={() => setShowInfoDrawer(prev => !prev)}
                                     style={[styles.modalCircleButton, showInfoDrawer && { backgroundColor: '#E65100' }]}
@@ -343,31 +355,35 @@ export default function VerifyImageScreen({ route, navigation }: any) {
                             </HStack>
                         </HStack>
 
-                        {/* REANIMATED V3 PINCH-ZOOM & SWIPE GALLERY ENGINE */}
-                        {activeViewerImage && (
+                        {/* 🚀 REANIMATED MULTI-IMAGE GALLERY: Sweeps full data layout sets */}
+                        {activeViewerIndex !== null && (
                             <Gallery
-                                data={[activeViewerImage]}
+                                // Key variants force initialization cache drops upon sequential taps cleanly
+                                key={`gallery-instance-${galleryInitialIndex}`}
+                                data={allImageUris}
                                 keyExtractor={(item) => item}
-                                initialIndex={0}
-                                onSwipeToClose={() => setActiveViewerImage(null)}
+                                initialIndex={galleryInitialIndex}
+                                onIndexChange={(index) => setActiveViewerIndex(index)}
+                                onSwipeToClose={() => setActiveViewerIndex(null)}
                                 maxScale={5}
                                 doubleTapEnabled={true}
+                                containerDimensions={{ width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}
                                 style={{ flex: 1 }}
                                 renderItem={({ item, setImageDimensions }) => (
                                     <FastImage
                                         source={{ uri: item }}
-                                        style={{ width: '100%', height: '100%' }}
+                                        style={{ width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}
                                         resizeMode={FastImage.resizeMode.contain}
                                         onLoad={(e) => {
-                                            const { width, height } = e.nativeEvent;
-                                            setImageDimensions({ width, height });
+                                            const { width: imgW, height: imgH } = e.nativeEvent;
+                                            setImageDimensions({ width: imgW, height: imgH });
                                         }}
                                     />
                                 )}
                             />
                         )}
 
-                        {/* 🚀 NEW: Absolute Bottom Drawer Sheet displaying dynamic file properties overlay safely */}
+                        {/* Absolute Bottom Drawer Sheet displaying dynamic file properties overlay safely */}
                         {showInfoDrawer && activeImageObject && (
                             <Box style={[styles.infoDrawerContainer, { paddingBottom: insets.bottom + verticalScale(16) }]}>
                                 <VStack style={{ gap: verticalScale(6) }}>
@@ -410,9 +426,7 @@ const styles = StyleSheet.create({
     checkboxOverlay: { position: 'absolute', top: scale(6), right: scale(6), zIndex: 10, backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: scale(10), padding: scale(2) },
     modalActionsBar: { position: 'absolute', top: 0, left: 0, right: 0, zIndex: 100, flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: scale(20) },
     modalCircleButton: { width: scale(40), height: scale(40), borderRadius: scale(20), backgroundColor: 'rgba(255,255,255,0.15)', justifyContent: 'center', alignItems: 'center' },
-    fullscreenImageDisplay: { width: '100%', height: '100%' },
 
-    // Info drawer style layout rules
     infoDrawerContainer: {
         position: 'absolute',
         bottom: 0,

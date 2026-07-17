@@ -17,7 +17,8 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.d.ts",
-    "nativewind-env.d.ts"
+    "nativewind-env.d.ts",
+    "react-native-share-receiver.d.ts"
   ],
   "exclude": [
     "**/node_modules",

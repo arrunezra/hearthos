@@ -1,27 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-    StyleSheet,
-    FlatList,
-    TouchableOpacity,
-    Dimensions,
     ActivityIndicator,
+    TouchableOpacity,
+    StatusBar,
     Modal,
-    StatusBar
+    StyleSheet,
+    Dimensions,
+    View
 } from 'react-native';
-import { CameraRoll } from '@react-native-camera-roll/camera-roll';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Gallery from 'react-native-awesome-gallery';
+import { FlatList } from 'react-native'; // Use standard flatlist or structural UI primitives
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { ArrowLeft, X } from 'lucide-react-native';
-
-// System Layout Frame Nodes
-import { Box, Text, HStack, Center } from '@/src/components/HOSGluestackUI';
-import { scale, moderateScale, verticalScale } from '@/src/utils/scaling';
+import Gallery from 'react-native-awesome-gallery'; // Or your explicit gallery package target
+import { CameraRoll } from "@react-native-camera-roll/camera-roll";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { ArrowLeft, X } from 'lucide-react-native'; // Assuming standard vector icons matrix
 import FastImage from '@d11/react-native-fast-image';
-
-const { width } = Dimensions.get('window');
-const COLUMN_WIDTH = width / 3 - scale(12);
-
+import { Box, HStack, Text, Center } from '@/src/components/HOSGluestackUI';
+// Placeholder helpers for dimension calculations (replace with your scaling package if named differently)
+const scale = (value: number) => value;
+const moderateScale = (value: number) => value;
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 export default function AlbumPhotosScreen({ route, navigation }: any) {
     const { albumTitle } = route.params;
     const insets = useSafeAreaInsets();
@@ -29,8 +27,11 @@ export default function AlbumPhotosScreen({ route, navigation }: any) {
     const [photos, setPhotos] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
-    // 🚀 INDEX-BASED VIEWER TRACKER: Tracks numerical location instead of an isolated string
+    // INDEX-BASED VIEWER TRACKER: Tracks numerical location instead of an isolated string
     const [activeViewerIndex, setActiveViewerIndex] = useState<number | null>(null);
+
+    // Tracker state used exclusively to handle the mount reset key properties safely
+    const [galleryInitialIndex, setGalleryInitialIndex] = useState<number>(0);
 
     useEffect(() => {
         const fetchAlbumPhotos = async () => {
@@ -54,8 +55,14 @@ export default function AlbumPhotosScreen({ route, navigation }: any) {
     // Construct flat array map of URIs to satisfy the collection gallery spec
     const allImageUris = photos.map(edge => edge.node.image.uri);
 
+    // Triggers when a grid item is clicked to launch the viewer at the correct starting frame
+    const handleOpenGallery = (index: number) => {
+        setGalleryInitialIndex(index);
+        setActiveViewerIndex(index);
+    };
+
     return (
-        <Box style={{ flex: 1, backgroundColor: '#022C22', }}>
+        <Box style={{ flex: 1, backgroundColor: '#022C22' }}>
             {/* Header Frame Node */}
             <HStack style={styles.headerBar}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
@@ -80,7 +87,7 @@ export default function AlbumPhotosScreen({ route, navigation }: any) {
                         <TouchableOpacity
                             activeOpacity={0.8}
                             style={styles.thumbnailWrapper}
-                            onPress={() => setActiveViewerIndex(index)} // 🚀 Pass numerical selection position
+                            onPress={() => handleOpenGallery(index)} // 🚀 Pass numerical selection position safely
                         >
                             <FastImage
                                 source={{ uri: item.node.image.uri }}
@@ -123,27 +130,35 @@ export default function AlbumPhotosScreen({ route, navigation }: any) {
 
                         {/* 🚀 REANIMATED GALLERY MULTI-IMAGE ALBUM SWIPER ENGINE */}
                         {activeViewerIndex !== null && (
-                            <Gallery
-                                data={allImageUris} // 🚀 CRITICAL: Feeds complete URI collection matrix down
-                                keyExtractor={(item) => item}
-                                initialIndex={activeViewerIndex} // Opens on the item index clicked by user
-                                onIndexChange={(index) => setActiveViewerIndex(index)} // Updates counter label index position dynamically
-                                onSwipeToClose={() => setActiveViewerIndex(null)}
-                                maxScale={5}
-                                doubleTapEnabled={true}
-                                style={{ flex: 1 }}
-                                renderItem={({ item, setImageDimensions }) => (
-                                    <FastImage
-                                        source={{ uri: item }}
-                                        style={{ width: '100%', height: '100%' }}
-                                        resizeMode={FastImage.resizeMode.contain}
-                                        onLoad={(e) => {
-                                            const { width, height } = e.nativeEvent;
-                                            setImageDimensions({ width, height });
-                                        }}
-                                    />
-                                )}
-                            />
+                            <View style={{ width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}>
+                                <Gallery
+                                    // 🚀 Keep the key variant to reset state cleanly on open
+                                    key={`gallery-instance-${galleryInitialIndex}`}
+                                    data={allImageUris}
+                                    keyExtractor={(item) => item}
+                                    initialIndex={galleryInitialIndex}
+                                    onIndexChange={(index) => setActiveViewerIndex(index)}
+                                    onSwipeToClose={() => setActiveViewerIndex(null)}
+                                    maxScale={5}
+                                    doubleTapEnabled={true}
+
+                                    // 🚀 CRITICAL FOR TRANSITIONS: Pass explicit pixel sizes instead of flex layouts
+                                    containerDimensions={{ width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}
+
+                                    renderItem={({ item, setImageDimensions }) => (
+                                        <FastImage
+                                            source={{ uri: item }}
+                                            // 🚀 Force explicit dimension alignment constraints
+                                            style={{ width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}
+                                            resizeMode={FastImage.resizeMode.contain}
+                                            onLoad={(e) => {
+                                                const { width: imgWidth, height: imgHeight } = e.nativeEvent;
+                                                setImageDimensions({ width: imgWidth, height: imgHeight });
+                                            }}
+                                        />
+                                    )}
+                                />
+                            </View>
                         )}
                     </Box>
                 </GestureHandlerRootView>
@@ -153,14 +168,60 @@ export default function AlbumPhotosScreen({ route, navigation }: any) {
 }
 
 const styles = StyleSheet.create({
-    headerBar: { height: verticalScale(56), paddingHorizontal: scale(12), justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#033F30', borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.05)' },
-    backButton: { width: scale(32), height: scale(32), justifyContent: 'center', alignItems: 'center' },
-    headerTitle: { color: 'white', fontSize: moderateScale(16), fontWeight: 'bold', flex: 1, marginLeft: scale(8) },
-    gridContentContainer: { padding: scale(8) },
-    gridColumnWrapper: { justifyContent: 'flex-start', gap: scale(8), marginBottom: scale(8) },
-    thumbnailWrapper: { width: COLUMN_WIDTH, height: COLUMN_WIDTH, borderRadius: scale(8), overflow: 'hidden', backgroundColor: 'rgba(255,255,255,0.05)' },
-    thumbnailImage: { width: '100%', height: '100%', resizeMode: 'cover' },
-    modalActionsBar: { position: 'absolute', top: 0, left: 0, right: 0, zIndex: 100, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: scale(20) },
-    modalCircleButton: { width: scale(40), height: scale(40), borderRadius: scale(20), backgroundColor: 'rgba(255,255,255,0.15)', justifyContent: 'center', alignItems: 'center' },
-    counterText: { color: 'white', fontWeight: 'bold', fontSize: moderateScale(14) }
+    headerBar: {
+        height: 60,
+        backgroundColor: '#022C22',
+        alignItems: 'center',
+        paddingHorizontal: 15,
+        justifyContent: 'space-between',
+    },
+    backButton: {
+        padding: 5,
+    },
+    headerTitle: {
+        color: 'white',
+        fontSize: 18,
+        fontWeight: 'bold',
+        flex: 1,
+        textAlign: 'center',
+    },
+    gridContentContainer: {
+        padding: 4,
+    },
+    gridColumnWrapper: {
+        justifyContent: 'flex-start',
+    },
+    thumbnailWrapper: {
+        flex: 1 / 3,
+        aspectRatio: 1,
+        padding: 2,
+    },
+    thumbnailImage: {
+        width: '100%',
+        height: '100%',
+        borderRadius: 4,
+    },
+    modalActionsBar: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+    },
+    modalCircleButton: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    counterText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: '600',
+    },
 });

@@ -17,6 +17,7 @@ $db = Database::getInstance();
 $userId      = isset($_POST['userid']) ? trim($_POST['userid']) : '';
 $displayName = isset($_POST['displayName']) ? trim($_POST['displayName']) : '';
 $photoSlot   = isset($_POST['photoSlot']) ? intval($_POST['photoSlot']) : 0;
+$screenKey   = isset($_POST['tablename']) ? trim($_POST['tablename']) : 'verifyImage';
 
 if (empty($userId) || empty($displayName) || !isset($_FILES['file'])) {
     http_response_code(400);
@@ -24,19 +25,33 @@ if (empty($userId) || empty($displayName) || !isset($_FILES['file'])) {
     exit();
 }
 
-// 📂 Target Path Directory Allocations
-$baseUploadDir = "../uploads/verifications/" . $displayName . "/";
-$thumbsDir     = "../uploads/verifications/" . $displayName . "/thumbs/";
+$allowedConfigs = [
+    "verifyImage"  => [
+        "table" => "verification_captures",
+        "dir"   => "../uploads/verifications/" . $displayName . "/"
+    ],
+    "galleryImage" => [
+        "table" => "galleryImage",
+        "dir"   => "../uploads/gallery/" . $displayName . "/"
+    ]
+];
 
-// Ensure storage partitions exist on disk
+if (!array_key_exists($screenKey, $allowedConfigs)) {
+    http_response_code(400);
+    echo json_encode(["success" => false, "message" => "Invalid target execution context 'tablename' provided."]);
+    exit();
+}
+
+$targetTable   = $allowedConfigs[$screenKey]['table'];
+$baseUploadDir = $allowedConfigs[$screenKey]['dir'];
+$thumbsDir     = $baseUploadDir . "thumbs/";
+
 if (!is_dir($baseUploadDir)) mkdir($baseUploadDir, 0755, true);
 if (!is_dir($thumbsDir)) mkdir($thumbsDir, 0755, true);
 
-$fileTmpPath = $_FILES['file']['tmp_name'];
-$fileName    = $_FILES['file']['name'];
-$fileType    = $_FILES['file']['type'];
+$fileTmpPath    = $_FILES['file']['tmp_name'];
+$originalName   = $_FILES['file']['name'];
 
-// Generate safe distinct file tracking keys
 $uniquePrefix   = $userId . "_slot_" . $photoSlot . "_" . microtime(true);
 $targetFileName = $uniquePrefix . ".jpg";
 $thumbFileName  = "thumb_" . $uniquePrefix . ".jpg";
@@ -44,42 +59,37 @@ $thumbFileName  = "thumb_" . $uniquePrefix . ".jpg";
 $targetMainPath  = $baseUploadDir . $targetFileName;
 $targetThumbPath = $thumbsDir . $thumbFileName;
 
-// Move original file to storage destination disk space
 if (!move_uploaded_file($fileTmpPath, $targetMainPath)) {
     http_response_code(500);
     echo json_encode(["success" => false, "message" => "Failed writing media stream chunk arrays to storage."]);
     exit();
 }
 
-// 🎨 HELPER FUNCTION: High-Performance Center-Clipped JPG Thumbnail Processing Engine via GD Core
+// 🎨 HELPER FUNCTION: Center-Clipped JPG Thumbnail Processing Engine
 function generateVerificationThumbnail($sourcePath, $destPath, $thumbSize = 200) {
-    // Front camera frames usually map to JPEG strings natively out of React Native bridges
-    $srcImage = imagecreatefromjpeg($sourcePath);
+    $srcImage = @imagecreatefromjpeg($sourcePath);
     if (!$srcImage) return false;
 
     $width  = imagesx($srcImage);
     $height = imagesy($srcImage);
 
-    // Calculate center crop boundaries for a clean aspect ratio look
+    // 🚀 THE FIX: Enforce clean integer casting to drop trailing float point coordinates safely
     if ($width > $height) {
-        $srcX = ($width - $height) / 2;
+        $srcX = (int)(($width - $height) / 2);
         $srcY = 0;
         $srcW = $height;
         $srcH = $height;
     } else {
         $srcX = 0;
-        $srcY = ($height - $width) / 2;
+        $srcY = (int)(($height - $width) / 2);
         $srcW = $width;
         $srcH = $width;
     }
 
-    // Allocate blank workspace canvas layout coordinates
     $thumbCanvas = imagecreatetruecolor($thumbSize, $thumbSize);
     
-    // Copy and resample image bounds
+    // Explicit conversion verification applied on resource bounds manipulation inputs
     imagecopyresampled($thumbCanvas, $srcImage, 0, 0, $srcX, $srcY, $thumbSize, $thumbSize, $srcW, $srcH);
-
-    // Compress down cleanly into target path file layout boundaries
     $success = imagejpeg($thumbCanvas, $destPath, 80);
 
     imagedestroy($srcImage);
@@ -87,36 +97,34 @@ function generateVerificationThumbnail($sourcePath, $destPath, $thumbSize = 200)
     return $success;
 }
 
-// Execute thumbnail processing step
 $thumbCreated = generateVerificationThumbnail($targetMainPath, $targetThumbPath);
 
-// 🌍 Generate Public URL Path signatures matching domain setup
 $baseUrl        = 'https://hearthos.jeasuns.com/api/';
 $publicMainUrl  = $baseUrl . str_replace('../', '', $targetMainPath);
 $publicThumbUrl = $thumbCreated ? ($baseUrl . str_replace('../', '', $targetThumbPath)) : $publicMainUrl;
 
-// 💾 Step 3: Write metadata coordinates straight down into your database layer matrix
 try {
-    $stmt = $db->prepare("INSERT INTO verification_captures (room_id, sender_id, media_url, thumb_url, photo_slot) VALUES (?, ?, ?, ?, ?)");
+    $stmt = $db->prepare("INSERT INTO {$targetTable} (room_id, sender_id, media_url, thumb_url, photo_slot, filename) VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->execute([
         $displayName, 
         $userId,  
         $publicMainUrl, 
         $publicThumbUrl,
-        $photoSlot
+        $photoSlot,
+        $originalName 
     ]);
 
-    // Send unified payload mapping configurations back to React Native Axios lifecycle hook
     http_response_code(200);
     echo json_encode([
-        "success" => true,
-        "url" => $publicMainUrl,
-        "thumbUrl" => $publicThumbUrl,
-        "message" => "Verification verification chunk and thumbnail logged cleanly inside database layers."
+        "success"   => true,
+        "url"       => $publicMainUrl,
+        "thumbUrl"  => $publicThumbUrl,
+        "tableName" => $targetTable,
+        "message"   => "Media file asset tracking record inserted securely into raw data row elements."
     ]);
 
 } catch (PDOException $ex) {
     error_log("Database capture transaction error crash trace: " . $ex->getMessage());
     http_response_code(500);
-    echo json_encode(["success" => false, "message" => "Transactional runtime database error: " . $ex->getMessage()]);
+    echo json_encode(["success" => false, "message" => "Transactional runtime database layer error."]);
 }

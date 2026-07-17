@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { scale, moderateScale, verticalScale } from '@/src/utils/scaling';
 import { Box, VStack, Text, HStack } from '@/src/components/HOSGluestackUI';
 import FastImage from '@d11/react-native-fast-image';
-import { TouchableOpacity } from 'react-native';
+import { ActivityIndicator, TouchableOpacity } from 'react-native';
 import { OptimizedChatGif } from '@/src/components/OptimizedChatGif';
 import { ModernImageViewer } from '@/src/components/ModernImageViewer';
 import Clipboard from '@react-native-clipboard/clipboard';
 import SwipeableMessageRow from './SwipeableMessageRow';
-import { Copy, Trash2 } from 'lucide-react-native';
+import { Copy, Languages, Trash2 } from 'lucide-react-native';
+import { translateTextPipeline } from '@/src/utils/translation';
 
 export interface MessageItem {
     id: string;
@@ -36,6 +37,7 @@ interface ChatMessageBubbleProps {
     onReplyTrigger: (item: MessageItem) => void;
     onReplyClick: (replyToId: string) => void;
     onDeleteTrigger: (messageId: string, senderId: string) => void;
+    onTriggerTranslation: (translatedText: string) => void; // 🚀 ADD THIS PROP CALLBACK
 }
 
 // 🚀 1. UNIQUE GLOBAL HELPER DECLARATION: Checked cleanly at the top boundary scope
@@ -65,20 +67,45 @@ const ChatMessageBubble = ({
     isHighlighted = false,
     onReplyTrigger,
     onReplyClick,
-    onDeleteTrigger
+    onDeleteTrigger,
+    onTriggerTranslation
 }: ChatMessageBubbleProps) => {
     const isMe = item.senderId === currentUserId;
     const hasReply = !!item.replyTo;
     const isMedia = !!item.mediaUrl;
     const isGif = item?.mediaType === 'image/gif' || item?.text === '[GIF]';
-
+    const [isTranslating, setIsTranslating] = useState(false);
+    const [translatedText, setTranslatedText] = useState('');
     const [viewerVisible, setViewerVisible] = useState(false);
     const [showActions, setShowActions] = useState(false);
 
     // Resolve dynamic WhatsApp layouts based on the unique utility above
     const emojiStatus = !isMedia && !isDeletedByUser ? checkEmojiOnlyString(item.text) : { isEmojiOnly: false, count: 0 };
     const renderBigEmojiStyle = emojiStatus.isEmojiOnly && emojiStatus.count <= 3;
+    const handleToggleTranslation = async () => {
+        if (isTranslating) return;
+        setShowActions(false);
 
+        const textToTranslate = item.text || '';
+        if (!textToTranslate.trim()) return;
+
+        // If already translated once, just fire the callback immediately to save API quota
+        if (translatedText) {
+            onTriggerTranslation(translatedText);
+            return;
+        }
+
+        setIsTranslating(true);
+        try {
+            const result = await translateTextPipeline(textToTranslate, 'ta');
+            setTranslatedText(result);
+            onTriggerTranslation(result); // 🚀 SEND THE RESULT STRAIGHT UP TO THE CHAT SCREEN
+        } catch (err) {
+            console.error("Chat bubble translation layer error:", err);
+        } finally {
+            setIsTranslating(false);
+        }
+    };
     const getEmojiFontSize = () => {
         if (emojiStatus.count === 1) return moderateScale(44);
         if (emojiStatus.count === 2) return moderateScale(34);
@@ -302,15 +329,34 @@ const ChatMessageBubble = ({
                     alignItems: 'center'
                 }}>
                     {!isMedia && (
-                        <TouchableOpacity
-                            onPress={handleCopyText}
-                            activeOpacity={0.7}
-                            style={{ padding: scale(4) }}
-                        >
-                            <Copy color="#94A3B8" size={moderateScale(16)} />
-                        </TouchableOpacity>
+                        <HStack style={{ gap: scale(14), alignItems: 'center' }}>
+                            {/* 🚀 COPY BUTTON ACTION */}
+                            <TouchableOpacity
+                                onPress={handleCopyText}
+                                activeOpacity={0.7}
+                                style={{ padding: scale(4) }}
+                            >
+                                <Copy color="#94A3B8" size={moderateScale(16)} />
+                            </TouchableOpacity>
+
+                            {/* 🚀 TRANSLATION TRIGGER BUTTON */}
+                            {isAdmin && <TouchableOpacity
+                                onPress={handleToggleTranslation}
+                                activeOpacity={0.7}
+                                style={{ padding: scale(4) }}
+                                disabled={isTranslating}
+                            >
+                                {isTranslating ? (
+                                    <ActivityIndicator size="small" color="#E65100" style={{ transform: [{ scale: 0.8 }] }} />
+                                ) : (
+                                    <Languages color="#94A3B8" size={moderateScale(16)} />
+                                )}
+                            </TouchableOpacity>
+                            }
+                        </HStack>
                     )}
 
+                    {/* 🚀 DELETE BUTTON ACTION */}
                     <TouchableOpacity
                         onPress={() => {
                             setShowActions(false);

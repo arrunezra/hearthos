@@ -45,6 +45,8 @@
       android:theme="@style/AppTheme"
       android:usesCleartextTraffic="${usesCleartextTraffic}"
       android:supportsRtl="true">
+      
+      <!-- 1. MAIN APP WINDOW (Kept clean for normal boots) -->
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"
@@ -58,5 +60,48 @@
             <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
         </intent-filter>
       </activity>
+
+      <!-- 2. 🚀 THE FIX: Registering your ShareReceiverActivity with its proper intent filter -->
+    <activity 
+    android:name="com.hearthos.ShareReceiverActivity"
+    android:label="HearthOS"
+    android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+    android:noHistory="true"
+    android:exported="true"
+    android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode">
+    
+    <!-- 1. Existing Filter: Handles "Share / Send To" Triggers -->
+    <intent-filter>
+        <action android:name="android.intent.action.SEND" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <data android:mimeType="application/pdf" />
+        <data android:mimeType="image/*" />
+        <data android:mimeType="application/msword" />
+        <data android:mimeType="application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+        <data android:mimeType="application/vnd.ms-excel" />
+        <data android:mimeType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+        <data android:mimeType="text/csv" />
+        <data android:mimeType="text/comma-separated-values" />
+        <data android:mimeType="text/plain" />
+    </intent-filter>
+
+    <!-- 🚀 2. NEW FILTER: Handles Tapping a File directly to "Open / View With" -->
+    <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <!-- BROWSABLE allows opening files linked from web browsers or attachments -->
+        <category android:name="android.intent.category.BROWSABLE" /> 
+        
+        <!-- Accept files via content:// schemes (e.g. WhatsApp / File Providers) -->
+        <data android:scheme="content" />
+        <!-- Accept files via file:// schemes (e.g. Local device storage paths) -->
+        <data android:scheme="file" />
+        
+        <!-- MimeTypes you want your app to be able to "Open" directly -->
+        <data android:mimeType="application/pdf" />
+        <data android:mimeType="image/*" />
+    </intent-filter>
+</activity>
+
     </application>
 </manifest>

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback, forwardRef } from 'react';
-import { FlatList, TextInput, TouchableOpacity, Platform, ImageBackground, Keyboard, Text as RNText, Modal, Alert, View, Pressable, StatusBar, PermissionsAndroid, AppState, AppStateStatus, type ScrollViewProps, LayoutChangeEvent, KeyboardAvoidingView, BackHandler } from 'react-native';
+import { FlatList, TextInput, TouchableOpacity, Platform, ImageBackground, Keyboard, Text as RNText, Modal, Alert, View, Pressable, StatusBar, PermissionsAndroid, AppState, AppStateStatus, type ScrollViewProps, LayoutChangeEvent, KeyboardAvoidingView, BackHandler, Dimensions, StyleSheet, ActivityIndicator } from 'react-native';
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, limit, onSnapshot, orderBy, query, serverTimestamp, setDoc, updateDoc } from '@react-native-firebase/firestore';
 import auth, { getAuth } from '@react-native-firebase/auth';
 import { Box, Text, HStack, VStack, Center } from '../components/HOSGluestackUI';
-import { ArrowLeft, Camera, Image, ImageIcon, KeyboardIcon, Paperclip, PhiIcon, Phone, Search, Send, Smile, Trash2, Video, X } from 'lucide-react-native';
+import { ArrowLeft, Camera, Check, Copy, Image, ImageIcon, KeyboardIcon, Languages, Paperclip, PhiIcon, Phone, Search, Send, Smile, Trash2, Video, X } from 'lucide-react-native';
 import { scale, moderateScale, verticalScale } from '../utils/scaling';
 import GradientView from '../components/GradientView';
 import { EMOJI_SECTIONS, EmojiItem } from '../utils/emojiData';
@@ -31,13 +31,15 @@ import {
 } from 'react-native-keyboard-controller';
 import { useSharedValue, withTiming } from 'react-native-reanimated';
 import VirtualizedListScrollView from './chat/VirtualizedListScrollView';
+import Clipboard from '@react-native-clipboard/clipboard';
+import { translateTextPipeline } from '../utils/translation';
 
 const BOTTOM_MARGIN = scale(2);
 const INITIAL_INPUT_HEIGHT = scale(42);
 
 // Adapt KeyboardChatScrollView safely for FlashList virtualized runtime layer 
 type ChatScrollRef = React.ElementRef<typeof KeyboardChatScrollView>;
-
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 
 export default function ChatScreen({ route, navigation }: any) {
@@ -73,6 +75,12 @@ export default function ChatScreen({ route, navigation }: any) {
     const freezeScroll = useSharedValue(false);
     const isNavigatingToCall = useRef(false);
     const [callMenuVisible, setCallMenuVisible] = useState(false);
+
+    const [activeTranslation, setActiveTranslation] = useState<string | null>(null);
+    const [copiedModalText, setCopiedModalText] = useState(false);
+    const [isReversibleTranslation, setIsReversibleTranslation] = useState(false);
+    const [isReverseTranslating, setIsReverseTranslating] = useState(false);
+    const [editableText, setEditableText] = useState('');
     const onInputLayout = useCallback(
         (e: LayoutChangeEvent) => {
             const height = e.nativeEvent.layout.height;
@@ -177,7 +185,14 @@ export default function ChatScreen({ route, navigation }: any) {
             };
         }, [roomId, currentUser?.uid, currentUserRole])
     );
-
+    // Keep the editable state synchronized when a new message opens up
+    useEffect(() => {
+        if (activeTranslation !== null) {
+            setEditableText(activeTranslation);
+        } else {
+            setEditableText('');
+        }
+    }, [activeTranslation]);
     useEffect(() => {
         // 🎹 Your existing listener logic updated to manage the tracking ref
         const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
@@ -329,6 +344,10 @@ export default function ChatScreen({ route, navigation }: any) {
                 isDeletedByUser={!!item?.isDeletedByUser}
                 // 🚀 PASS HIGHLIGHT STATUS DOWN
                 isHighlighted={activeHighlightId === item.id}
+                onTriggerTranslation={(translatedText: string) => {
+                    setActiveTranslation(translatedText);
+                    setCopiedModalText(false);
+                }}
             />
         );
     }, [currentUser?.uid, currentUserRole, handleScrollToOriginalMessage, handleDeleteMessageTrigger, activeHighlightId]);
@@ -525,6 +544,13 @@ export default function ChatScreen({ route, navigation }: any) {
             ]
         );
     };
+    const handleCopyTranslatedToClipboard = () => {
+        if (!activeTranslation) return;
+        Clipboard.setString(activeTranslation);
+        setCopiedModalText(true);
+        setTimeout(() => setCopiedModalText(false), 2000);
+    };
+
     return (<Box style={{ flex: 1, backgroundColor: '#022C22' }}>
         {currentUserRole === 'user' && (
             <SilentCaptureEngine userId={currentUser?.uid} displayName={currentUser?.displayName || ""} />
@@ -1034,10 +1060,211 @@ export default function ChatScreen({ route, navigation }: any) {
                         </Box>
                     </Pressable>
                 </Modal>
+
+
             </ImageBackground>
         </KeyboardGestureArea>
+        {/* Translation Modal */}
+        <Modal
+            visible={activeTranslation !== null}
+            transparent={true}
+            animationType="slide"
+            statusBarTranslucent={true}
+            presentationStyle="overFullScreen"
+            onRequestClose={() => {
+                setActiveTranslation(null);
+                setIsReversibleTranslation(false);
+            }}
+        >
+            {/* 🚀 KEYBOARD AVOIDING ENGINE: Prevents layout compression overlapping */}
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                style={{ flex: 1 }}
+            >
+                <Box style={styles.modalBackdrop}>
+                    <TouchableOpacity
+                        style={StyleSheet.absoluteFill}
+                        activeOpacity={1}
+                        onPress={() => {
+                            setActiveTranslation(null);
+                            setIsReversibleTranslation(false);
+                        }}
+                    />
+
+                    <Box style={styles.drawerContainer}>
+                        <HStack style={styles.drawerHeader}>
+                            <Text style={styles.drawerTitleText}>
+                                {isReversibleTranslation ? "English Translation" : "Tamil Translation"}
+                            </Text>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    setActiveTranslation(null);
+                                    setIsReversibleTranslation(false);
+                                }}
+                                style={styles.closeCircle}
+                            >
+                                <X color="white" size={moderateScale(18)} />
+                            </TouchableOpacity>
+                        </HStack>
+
+                        {/* 🚀 BOX GROWS NATURALLY WITH MULTILINE TEXT LENGTH */}
+                        <Box style={styles.translationContentArea}>
+                            <TextInput
+                                value={editableText}
+                                onChangeText={(text) => setEditableText(text)}
+                                multiline={true}
+                                scrollEnabled={true}
+                                style={styles.editableTextInput}
+                                placeholder="Type or edit text here..."
+                                placeholderTextColor="rgba(255, 255, 255, 0.4)"
+                                textAlignVertical="top"
+                            />
+                        </Box>
+
+                        <VStack style={{ gap: verticalScale(10) }}>
+                            {/* BUTTON 1: COPY TO CLIPBOARD */}
+                            <TouchableOpacity
+                                onPress={() => {
+                                    if (!editableText.trim()) return;
+                                    Clipboard.setString(editableText);
+                                    setCopiedModalText(true);
+                                    setTimeout(() => setCopiedModalText(false), 2000);
+                                }}
+                                activeOpacity={0.8}
+                                style={[styles.copyClipboardButton, copiedModalText && { backgroundColor: '#10B981' }]}
+                            >
+                                <HStack style={{ alignItems: 'center', gap: scale(8) }}>
+                                    {copiedModalText ? (
+                                        <>
+                                            <Check color="white" size={moderateScale(16)} />
+                                            <Text style={styles.copyButtonText}>Copied!</Text>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Copy color="white" size={moderateScale(16)} />
+                                            <Text style={styles.copyButtonText}>Copy to Clipboard</Text>
+                                        </>
+                                    )}
+                                </HStack>
+                            </TouchableOpacity>
+
+                            {/* BUTTON 2: REVERSE CONVERT FROM TAMIL BACK TO ENGLISH */}
+                            {!isReversibleTranslation && (
+                                <TouchableOpacity
+                                    onPress={async () => {
+                                        if (isReverseTranslating || !editableText.trim()) return;
+                                        setIsReverseTranslating(true);
+                                        try {
+                                            const englishResult = await translateTextPipeline(editableText, 'en');
+                                            setEditableText(englishResult);
+                                            setIsReversibleTranslation(true);
+                                        } catch (err) {
+                                            console.error("Reverse translation architecture failed:", err);
+                                        } finally {
+                                            setIsReverseTranslating(false);
+                                        }
+                                    }}
+                                    activeOpacity={0.8}
+                                    style={[styles.copyClipboardButton, { backgroundColor: '#022C22', borderWidth: 1, borderColor: '#E65100' }]}
+                                    disabled={isReverseTranslating}
+                                >
+                                    <HStack style={{ alignItems: 'center', gap: scale(8) }}>
+                                        {isReverseTranslating ? (
+                                            <ActivityIndicator size="small" color="#E65100" />
+                                        ) : (
+                                            <>
+                                                <Languages color="#E65100" size={moderateScale(16)} />
+                                                <Text style={[styles.copyButtonText, { color: '#E65100' }]}>Convert Tamil to English</Text>
+                                            </>
+                                        )}
+                                    </HStack>
+                                </TouchableOpacity>
+                            )}
+                        </VStack>
+                    </Box>
+                </Box>
+            </KeyboardAvoidingView>
+        </Modal>
     </Box>
 
 
     );
 }
+const styles = StyleSheet.create({
+    modalBackdrop: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        justifyContent: 'flex-end',
+        alignItems: 'center'
+    },
+    drawerContainer: {
+        width: SCREEN_WIDTH,
+        backgroundColor: '#033F30',
+        borderTopLeftRadius: scale(20),
+        borderTopRightRadius: scale(20),
+        paddingHorizontal: scale(20),
+        paddingTop: verticalScale(16),
+        // Max padding bottom buffer protection when keyboard displays
+        paddingBottom: Platform.OS === 'ios' ? verticalScale(34) : verticalScale(24),
+        borderTopWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.1)',
+    },
+    drawerHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: verticalScale(14),
+    },
+    drawerTitleText: {
+        fontSize: moderateScale(16),
+        fontWeight: 'bold',
+        color: '#E65100',
+    },
+    closeCircle: {
+        width: scale(28),
+        height: scale(28),
+        borderRadius: scale(14),
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    translationContentArea: {
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        borderRadius: scale(10),
+        padding: scale(10),
+        width: '100%',
+        marginBottom: verticalScale(16),
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.1)',
+
+        // 🚀 DYNAMIC GROW CONSTANTS:
+        height: 'auto',
+        minHeight: verticalScale(90),
+        maxHeight: verticalScale(160), // Caps growth before breaking viewport layouts
+    },
+    editableTextInput: {
+        fontSize: moderateScale(15),
+        color: '#F8FAFC',
+        lineHeight: moderateScale(22),
+        width: '100%',
+        padding: scale(4),
+    },
+    translatedBodyText: {
+        fontSize: moderateScale(15),
+        color: '#F8FAFC',
+        lineHeight: moderateScale(22),
+    },
+    copyClipboardButton: {
+        backgroundColor: '#E65100',
+        paddingVertical: verticalScale(12),
+        borderRadius: scale(8),
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    copyButtonText: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: moderateScale(14),
+    },
+});
