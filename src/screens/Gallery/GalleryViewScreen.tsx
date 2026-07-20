@@ -165,6 +165,7 @@ export default function GalleryViewScreen({ navigation }: any) {
                         </TouchableOpacity>
                     )}
                 />
+
             )}
         </Box>
     );

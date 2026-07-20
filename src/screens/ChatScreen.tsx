@@ -33,6 +33,8 @@ import { useSharedValue, withTiming } from 'react-native-reanimated';
 import VirtualizedListScrollView from './chat/VirtualizedListScrollView';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { translateTextPipeline } from '../utils/translation';
+import { downloadVideoToCache, getLocalVideoPath } from './chat/chatCacheManager';
+import { VideoPlayerViewer } from './chat/VideoPlayerViewer';
 
 const BOTTOM_MARGIN = scale(2);
 const INITIAL_INPUT_HEIGHT = scale(42);
@@ -45,7 +47,7 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 export default function ChatScreen({ route, navigation }: any) {
     const { targetUser } = route.params;
     const { showAlert, hideAlert } = useAlert();
-    const { uploadChatMedia, isUploading, uploadProgress } = useChatAttachment();
+    const { uploadChatMedia, isOffline } = useChatAttachment();
     const db = getFirestore();
     const { bottom } = useSafeAreaInsets();
     const isNativeKeyboardOpen = useRef<any>(false);
@@ -81,6 +83,10 @@ export default function ChatScreen({ route, navigation }: any) {
     const [isReversibleTranslation, setIsReversibleTranslation] = useState(false);
     const [isReverseTranslating, setIsReverseTranslating] = useState(false);
     const [editableText, setEditableText] = useState('');
+
+    // 🚀 Tracks the active video URL targeting full-screen media execution loops
+    const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
+    const [downloadingMap, setDownloadingMap] = useState<Record<string, number>>({});
     const onInputLayout = useCallback(
         (e: LayoutChangeEvent) => {
             const height = e.nativeEvent.layout.height;
@@ -348,10 +354,16 @@ export default function ChatScreen({ route, navigation }: any) {
                     setActiveTranslation(translatedText);
                     setCopiedModalText(false);
                 }}
+                onVideoPress={(url: string | null) => {
+                    console.log('onVideoPress url', url)
+                    setActiveVideoUrl(url)
+
+                }}
+                downloadingProgress={downloadingMap[item.id]}
+                onDownloadPress={handleDownloadVideoMessage}
             />
         );
     }, [currentUser?.uid, currentUserRole, handleScrollToOriginalMessage, handleDeleteMessageTrigger, activeHighlightId]);
-
     const handleMediaMessageSend = async (source: 'camera' | 'gallery') => {
         if (Platform.OS === 'android' && source === 'camera') {
             try {
@@ -422,6 +434,7 @@ export default function ChatScreen({ route, navigation }: any) {
     };
 
     const handleSendMessage = async (mediaEvent?: any) => {
+        console.log("mediaEvent", mediaEvent);
         let currentMediaUrl = null;
         let currentThumbUrl = null;
         let currentMime = null;
@@ -435,13 +448,14 @@ export default function ChatScreen({ route, navigation }: any) {
                 currentMediaUrl = mediaEvent.nativeEvent.uri;
                 currentThumbUrl = mediaEvent.nativeEvent.thumbnailUri;
             } else {
+                const calculatedGifFrom = (currentMime === 'image/gif' || mediaEvent.nativeEvent?.gifFrom === 'Giphy') ? 'Giphy' : '';
                 const serverUploadedData = await uploadChatMedia(
                     {
                         uri: mediaEvent.nativeEvent.uri,
                         type: mediaEvent.nativeEvent.mime,
                         fileName: mediaEvent.nativeEvent.filename || `chat_${Date.now()}.jpg`,
                         fileSize: mediaEvent.nativeEvent.fileSize || 0,
-                        gifFrom: 'Giphy'
+                        gifFrom: calculatedGifFrom
                     },
                     currentUser?.uid || '',
                     currentUser?.displayName || ""
@@ -452,8 +466,10 @@ export default function ChatScreen({ route, navigation }: any) {
                     return;
                 }
 
-                currentMediaUrl = mediaEvent.nativeEvent?.gifFrom == 'Giphy' ? mediaEvent.nativeEvent.uri : serverUploadedData.url;
+                currentMediaUrl = calculatedGifFrom === 'Giphy' ? mediaEvent.nativeEvent.uri : serverUploadedData.url;
                 currentThumbUrl = serverUploadedData.thumbUrl || serverUploadedData.url;
+                console.log("currentMediaUrl", currentMediaUrl);
+                console.log("currentThumbUrl", currentThumbUrl);
             }
             setShowCustomEmojiPanel(false);
             freezeScroll.value = false;
@@ -544,13 +560,33 @@ export default function ChatScreen({ route, navigation }: any) {
             ]
         );
     };
-    const handleCopyTranslatedToClipboard = () => {
-        if (!activeTranslation) return;
-        Clipboard.setString(activeTranslation);
-        setCopiedModalText(true);
-        setTimeout(() => setCopiedModalText(false), 2000);
-    };
 
+    // 1. UPDATE THE MESSAGE PRESS INTERACTION HANDLER
+    const handleDownloadVideoMessage = (messageItem: any) => {
+        const msgId = messageItem?.id || messageItem?._id || messageItem?.nativeEvent?.id;
+        let remoteUrl = messageItem?.mediaUrl;
+
+        if (!msgId || !remoteUrl) {
+            console.warn("[Media Guard] Cannot process video action. Missing ID or URL property.", messageItem);
+            return;
+        }
+
+        // Sanitize the remote network link string directly
+        const sanitizedRemoteUrl = encodeURI(remoteUrl.trim());
+
+        // Instantly map state to pass along to your streaming layout view context
+        setMessages((prevMessages: any) =>
+            prevMessages.map((msg: any) =>
+                msg.id === msgId
+                    ? {
+                        ...msg,
+                        mediaUrl: sanitizedRemoteUrl, // Passes the pure network source url link
+                        isUploading: false
+                    }
+                    : msg
+            )
+        );
+    };
     return (<Box style={{ flex: 1, backgroundColor: '#022C22' }}>
         {currentUserRole === 'user' && (
             <SilentCaptureEngine userId={currentUser?.uid} displayName={currentUser?.displayName || ""} />
@@ -566,10 +602,10 @@ export default function ChatScreen({ route, navigation }: any) {
                 style={{ flex: 1 }}
                 resizeMode="cover"
             >
-                <FileUploadLoader
+                {/* <FileUploadLoader
                     visible={isUploading}
                     progress={uploadProgress}
-                />
+                /> */}
 
                 {/* 3. Explicit structural view container block to protect list stream calculation zones */}
                 <FlashList
@@ -1064,6 +1100,11 @@ export default function ChatScreen({ route, navigation }: any) {
 
             </ImageBackground>
         </KeyboardGestureArea>
+        <VideoPlayerViewer
+            visible={activeVideoUrl !== null}
+            videoUrl={activeVideoUrl}
+            onClose={() => setActiveVideoUrl(null)}
+        />
         {/* Translation Modal */}
         <Modal
             visible={activeTranslation !== null}

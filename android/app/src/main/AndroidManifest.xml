@@ -71,7 +71,7 @@
     android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode">
     
     <!-- 1. Existing Filter: Handles "Share / Send To" Triggers -->
-    <intent-filter>
+     <intent-filter>
         <action android:name="android.intent.action.SEND" />
         <category android:name="android.intent.category.DEFAULT" />
         <data android:mimeType="application/pdf" />
@@ -85,21 +85,32 @@
         <data android:mimeType="text/plain" />
     </intent-filter>
 
-    <!-- 🚀 2. NEW FILTER: Handles Tapping a File directly to "Open / View With" -->
+    <!-- 🚀 2. UPDATED VIEW FILTER: Specifically handles general Image opening tasks -->
     <intent-filter>
         <action android:name="android.intent.action.VIEW" />
         <category android:name="android.intent.category.DEFAULT" />
-        <!-- BROWSABLE allows opening files linked from web browsers or attachments -->
+        <category android:name="android.intent.category.BROWSABLE" /> 
+        <data android:scheme="content" />
+        <data android:scheme="file" />
+        <data android:mimeType="image/*" />
+    </intent-filter>
+
+    <!-- 🚀 3. NEW DEBRIS SHIELD FILTER: Explicitly targets WhatsApp & Provider PDF clicks -->
+    <intent-filter xmlns:tools="http://schemas.android.com/tools" tools:ignore="AppLinkUrlError">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" /> 
         
-        <!-- Accept files via content:// schemes (e.g. WhatsApp / File Providers) -->
+        <!-- Accept streams from content systems and local storage targets -->
         <data android:scheme="content" />
-        <!-- Accept files via file:// schemes (e.g. Local device storage paths) -->
         <data android:scheme="file" />
         
-        <!-- MimeTypes you want your app to be able to "Open" directly -->
+        <!-- Trap explicit PDF signatures -->
         <data android:mimeType="application/pdf" />
-        <data android:mimeType="image/*" />
+        
+        <!-- 💡 THE CRITICAL FIX: Forces Android to match content paths from external apps -->
+        <data android:host="*" />
+        <data android:pathPattern=".*\\.pdf" />
     </intent-filter>
 </activity>
 

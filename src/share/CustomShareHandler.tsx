@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ActivityIndicator, StyleSheet, Dimensions, TouchableOpacity, BackHandler, Platform, Alert } from 'react-native';
+import { View, Text, ActivityIndicator, StyleSheet, Dimensions, TouchableOpacity, BackHandler, Platform, Alert, Linking } from 'react-native';
 import { getSharedData } from 'react-native-share-receiver';
 import Pdf from 'react-native-pdf';
 import ReactNativeBlobUtil from 'react-native-blob-util';
 import FastImage from '@d11/react-native-fast-image';
 import Gallery from 'react-native-awesome-gallery';
 
-// 🚀 FIXED TRANSITIONS: Compute exact screen bounds to map into the gesture viewer engine
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 export default function CustomShareHandler() {
@@ -16,93 +15,116 @@ export default function CustomShareHandler() {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [activeViewerIndex, setActiveViewerIndex] = useState<number>(0);
 
-    // Wrap your local file path inside an array for the Gallery component
     const allImageUris = localFilePath ? [localFilePath] : [];
 
     useEffect(() => {
         const processIncomingShare = async () => {
             try {
-                const result = await getSharedData();
-                if (result && Array.isArray(result) && result.length > 0) {
-                    const sharedItem = result[0];
+                let sharedDataTarget: string | null = null;
+                let targetMimeType: string | null = null;
 
-                    if (sharedItem && sharedItem.data && sharedItem.type) {
-                        const mimeTypeFromStream = sharedItem.type.toLowerCase();
-                        let inferredExtension = '.bin';
-                        let typeMarker: 'pdf' | 'image' | 'office' | null = null;
+                try {
+                    // 🚀 STEP 1: Attempt standard share extraction via plugin receiver
+                    const result = await getSharedData();
+                    if (result && Array.isArray(result) && result.length > 0 && result[0]?.data) {
+                        sharedDataTarget = result[0].data;
+                        targetMimeType = result[0].type?.toLowerCase() || '';
+                    }
+                } catch (intentError: any) {
+                    // 🚀 STEP 2: FALLBACK TO SYSTEM LINK PIPELINE IF "VIEW" INTENT CRASHES PLUGIN
+                    console.log("Caught native intent type mismatch exception. Swapping to system stream router...");
 
-                        // 1. Identify the file category and pick a proper extension mapping
-                        if (mimeTypeFromStream.includes('pdf')) {
-                            typeMarker = 'pdf';
-                            inferredExtension = '.pdf';
-                        } else if (mimeTypeFromStream.includes('image')) {
-                            typeMarker = 'image';
-                            inferredExtension = mimeTypeFromStream.includes('png') ? '.png' : '.jpg';
-                        } else if (
-                            mimeTypeFromStream.includes('word') ||
-                            mimeTypeFromStream.includes('msword') ||
-                            mimeTypeFromStream.includes('excel') ||
-                            mimeTypeFromStream.includes('spreadsheet') ||
-                            mimeTypeFromStream.includes('powerpoint') ||
-                            mimeTypeFromStream.includes('presentation') ||
-                            mimeTypeFromStream.includes('text') ||
-                            mimeTypeFromStream.includes('csv')
-                        ) {
-                            typeMarker = 'office';
-
-                            if (mimeTypeFromStream.includes('word') || mimeTypeFromStream.includes('msword')) inferredExtension = '.docx';
-                            else if (mimeTypeFromStream.includes('excel') || mimeTypeFromStream.includes('spreadsheet')) inferredExtension = '.xlsx';
-                            else if (mimeTypeFromStream.includes('powerpoint') || mimeTypeFromStream.includes('presentation')) inferredExtension = '.pptx';
-                            else if (mimeTypeFromStream.includes('csv') || mimeTypeFromStream.includes('comma-separated')) inferredExtension = '.csv';
-                            else if (mimeTypeFromStream.includes('text')) inferredExtension = '.txt';
+                    const initialUrl = await Linking.getInitialURL();
+                    if (initialUrl) {
+                        sharedDataTarget = initialUrl;
+                        // Inspect string to dynamically infer mimetype if system channel passes raw stream
+                        if (initialUrl.toLowerCase().includes('.pdf')) {
+                            targetMimeType = 'application/pdf';
+                        } else if (initialUrl.toLowerCase().match(/\.(jpg|jpeg|png|webp)$/)) {
+                            targetMimeType = 'image/jpeg';
+                        } else {
+                            targetMimeType = 'application/pdf'; // Default fallback assumption for target WhatsApp document frames
                         }
+                    }
+                }
 
-                        if (!typeMarker) {
-                            setErrorMessage(`Unsupported format type: ${mimeTypeFromStream}`);
-                            setLoading(false);
-                            return;
-                        }
+                if (!sharedDataTarget) {
+                    setErrorMessage("No valid content data detected in the share stream window.");
+                    setLoading(false);
+                    return;
+                }
 
-                        // 2. Clone the raw content:// stream directly into your secure cache directory
-                        const cacheDir = ReactNativeBlobUtil.fs.dirs.CacheDir;
-                        const finalPath = `${cacheDir}/shared_received_document_${Date.now()}${inferredExtension}`;
+                // 🚀 STEP 3: RUN RESOLUTION INTERACTION MATRICES
+                const mimeTypeFromStream = (targetMimeType || '').toLowerCase();
+                let inferredExtension = '.bin';
+                let typeMarker: 'pdf' | 'image' | 'office' | null = null;
 
-                        await ReactNativeBlobUtil.fs.cp(sharedItem.data, finalPath);
-                        console.log("Successfully mirrored to internal sandbox path:", finalPath);
+                if (mimeTypeFromStream.includes('pdf') || sharedDataTarget.toLowerCase().includes('.pdf')) {
+                    typeMarker = 'pdf';
+                    inferredExtension = '.pdf';
+                } else if (mimeTypeFromStream.includes('image')) {
+                    typeMarker = 'image';
+                    inferredExtension = mimeTypeFromStream.includes('png') ? '.png' : '.jpg';
+                } else if (
+                    mimeTypeFromStream.includes('word') ||
+                    mimeTypeFromStream.includes('msword') ||
+                    mimeTypeFromStream.includes('excel') ||
+                    mimeTypeFromStream.includes('spreadsheet') ||
+                    mimeTypeFromStream.includes('powerpoint') ||
+                    mimeTypeFromStream.includes('presentation') ||
+                    mimeTypeFromStream.includes('text') ||
+                    mimeTypeFromStream.includes('csv')
+                ) {
+                    typeMarker = 'office';
+                    if (mimeTypeFromStream.includes('word') || mimeTypeFromStream.includes('msword')) inferredExtension = '.docx';
+                    else if (mimeTypeFromStream.includes('excel') || mimeTypeFromStream.includes('spreadsheet')) inferredExtension = '.xlsx';
+                    else if (mimeTypeFromStream.includes('powerpoint') || mimeTypeFromStream.includes('presentation')) inferredExtension = '.pptx';
+                    else if (mimeTypeFromStream.includes('csv') || mimeTypeFromStream.includes('comma-separated')) inferredExtension = '.csv';
+                    else if (mimeTypeFromStream.includes('text')) inferredExtension = '.txt';
+                }
 
-                        // 3. ROUTE ACTION METHOD DEPENDING ON FILE TYPE DEFINITION
-                        if (typeMarker === 'pdf' || typeMarker === 'image') {
-                            setDetectedType(typeMarker);
-                            setLocalFilePath(`file://${finalPath}`);
-                        } else if (typeMarker === 'office') {
-                            const targetExtension = finalPath.split('.').pop()?.toLowerCase();
-                            let targetMime = 'application/octet-stream';
+                if (!typeMarker) {
+                    setErrorMessage(`Unsupported format type: ${mimeTypeFromStream}`);
+                    setLoading(false);
+                    return;
+                }
 
-                            if (['doc', 'docx'].includes(targetExtension!)) targetMime = 'application/msword';
-                            else if (['xls', 'xlsx'].includes(targetExtension!)) targetMime = 'application/vnd.ms-excel';
-                            else if (['ppt', 'pptx'].includes(targetExtension!)) targetMime = 'application/vnd.ms-powerpoint';
-                            else if (targetExtension === 'csv') targetMime = 'text/csv';
-                            else if (targetExtension === 'txt') targetMime = 'text/plain';
+                // 🚀 STEP 4: CLONE SECURE INTERNAL DATA STRINGS VIA ABSOLUTE PATH READERS
+                const cacheDir = ReactNativeBlobUtil.fs.dirs.CacheDir;
+                const finalPath = `${cacheDir}/shared_received_document_${Date.now()}${inferredExtension}`;
 
-                            if (Platform.OS === 'ios') {
-                                await ReactNativeBlobUtil.ios.previewDocument(finalPath);
-                                BackHandler.exitApp();
-                            } else {
-                                try {
-                                    await ReactNativeBlobUtil.android.actionViewIntent(finalPath, targetMime);
-                                    BackHandler.exitApp();
-                                } catch (error) {
-                                    console.error("No app installed to open this format", error);
-                                    Alert.alert(
-                                        "No Application Found",
-                                        "Please install an application capable of reading this file format to continue.",
-                                        [{ text: "OK", onPress: () => BackHandler.exitApp() }]
-                                    );
-                                }
-                            }
-                        }
+                // Use copy mapping tools to safely extract protected shared stream tracks
+                await ReactNativeBlobUtil.fs.cp(sharedDataTarget, finalPath);
+                console.log("Successfully mirrored to internal sandbox path:", finalPath);
+
+                // 🚀 STEP 5: VIEWPORT INLINE ROUTING SIGNATURES
+                if (typeMarker === 'pdf' || typeMarker === 'image') {
+                    setDetectedType(typeMarker);
+                    setLocalFilePath(`file://${finalPath}`);
+                } else if (typeMarker === 'office') {
+                    const targetExtension = finalPath.split('.').pop()?.toLowerCase();
+                    let targetMime = 'application/octet-stream';
+
+                    if (['doc', 'docx'].includes(targetExtension!)) targetMime = 'application/msword';
+                    else if (['xls', 'xlsx'].includes(targetExtension!)) targetMime = 'application/vnd.ms-excel';
+                    else if (['ppt', 'pptx'].includes(targetExtension!)) targetMime = 'application/vnd.ms-powerpoint';
+                    else if (targetExtension === 'csv') targetMime = 'text/csv';
+                    else if (targetExtension === 'txt') targetMime = 'text/plain';
+
+                    if (Platform.OS === 'ios') {
+                        await ReactNativeBlobUtil.ios.previewDocument(finalPath);
+                        BackHandler.exitApp();
                     } else {
-                        setErrorMessage("No valid content data detected in the share stream window.");
+                        try {
+                            await ReactNativeBlobUtil.android.actionViewIntent(finalPath, targetMime);
+                            BackHandler.exitApp();
+                        } catch (error) {
+                            Alert.alert(
+                                "No Application Found",
+                                "Please install an application capable of reading this file format to continue.",
+                                [{ text: "OK", onPress: () => BackHandler.exitApp() }]
+                            );
+                        }
                     }
                 }
             } catch (error) {
@@ -139,7 +161,6 @@ export default function CustomShareHandler() {
 
             {localFilePath ? (
                 <View style={{ flex: 1 }}>
-                    {/* 🚀 CASE 1: RENDER INLINE PDF WITH PLATFORM CONDITIONAL PROPS */}
                     {detectedType === 'pdf' && (
                         <Pdf
                             source={{ uri: localFilePath }}
@@ -154,7 +175,6 @@ export default function CustomShareHandler() {
                         />
                     )}
 
-                    {/* 🚀 CASE 2: UPGRADED IMAGE LAYOUT WITH EXPLICIT DIMENSIONS FOR TRANSITIONS */}
                     {detectedType === 'image' && allImageUris.length > 0 && (
                         <View style={styles.galleryWrapper}>
                             <Gallery
@@ -162,17 +182,13 @@ export default function CustomShareHandler() {
                                 keyExtractor={(item) => item}
                                 initialIndex={activeViewerIndex}
                                 onIndexChange={(index) => setActiveViewerIndex(index)}
-                                onSwipeToClose={() => {
-                                    BackHandler.exitApp();
-                                }}
+                                onSwipeToClose={() => BackHandler.exitApp()}
                                 maxScale={5}
                                 doubleTapEnabled={true}
-                                // 🚀 FIXED SIDE-SWIPING: Forces exact layout scaling configuration boundaries
                                 containerDimensions={{ width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 100 }}
                                 renderItem={({ item, setImageDimensions }) => (
                                     <FastImage
                                         source={{ uri: item }}
-                                        // 🚀 FIXED CLIPPING: Guarantees image spans viewport limits securely
                                         style={{ width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 100 }}
                                         resizeMode={FastImage.resizeMode.contain}
                                         onLoad={(e) => {

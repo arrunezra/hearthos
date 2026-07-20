@@ -26,7 +26,7 @@ import { KeyboardAvoidingView, KeyboardChatScrollView } from 'react-native-keybo
 export default function ChatScreen({ route, navigation }: any) {
     const { targetUser } = route.params;
     const { showAlert, hideAlert } = useAlert();
-    const { uploadChatMedia, isUploading, uploadProgress } = useChatAttachment();
+    //const { uploadChatMedia, isUploading, uploadProgress } = useChatAttachment();
     const { protectionStatus, status } = useCaptureProtection();
     const db = getFirestore(); // Returns the initialized instance configuration target
     const { bottom } = useSafeAreaInsets();
@@ -244,25 +244,25 @@ export default function ChatScreen({ route, navigation }: any) {
     }, [currentUser?.uid, currentUserRole, roomId]);
 
 
-    const renderMessageItem = useCallback(({ item }: { item: any }) => {
-        // 🎯 CREATE A DYNAMIC UNIQUE KEY COMBINATION
-        // If the message is soft-deleted, appending '-deleted' breaks FlashList's row cache
-        const itemKey = item.isDeletedByUser ? `${item.id}-deleted` : item.id;
+    // const renderMessageItem = useCallback(({ item }: { item: any }) => {
+    //     // 🎯 CREATE A DYNAMIC UNIQUE KEY COMBINATION
+    //     // If the message is soft-deleted, appending '-deleted' breaks FlashList's row cache
+    //     const itemKey = item.isDeletedByUser ? `${item.id}-deleted` : item.id;
 
-        return (
-            <ChatMessageBubble
-                key={itemKey} // 🚀 FORCES RE-RENDER IN THE LIST
-                item={item}
-                currentUserId={currentUser?.uid}
-                timeString={formatMessageTime(item.createdAt)}
-                onReplyTrigger={setReplyMessage}
-                onReplyClick={handleScrollToOriginalMessage}
-                onDeleteTrigger={handleDeleteMessageTrigger}
-                isAdmin={currentUserRole === 'admin'}
-                isDeletedByUser={!!item?.isDeletedByUser}
-            />
-        );
-    }, [currentUser?.uid, currentUserRole, handleScrollToOriginalMessage, handleDeleteMessageTrigger]);
+    //     return (
+    //         // <ChatMessageBubble
+    //         //     key={itemKey} // 🚀 FORCES RE-RENDER IN THE LIST
+    //         //     item={item}
+    //         //     currentUserId={currentUser?.uid}
+    //         //     timeString={formatMessageTime(item.createdAt)}
+    //         //     onReplyTrigger={setReplyMessage}
+    //         //     onReplyClick={handleScrollToOriginalMessage}
+    //         //     onDeleteTrigger={handleDeleteMessageTrigger}
+    //         //     isAdmin={currentUserRole === 'admin'}
+    //         //     isDeletedByUser={!!item?.isDeletedByUser}
+    //         // />
+    //     );
+    // }, [currentUser?.uid, currentUserRole, handleScrollToOriginalMessage, handleDeleteMessageTrigger]);
 
     const handleMediaMessageSend = async (source: 'camera' | 'gallery') => {
         // 🤖 1. HANDSHAKE PERMISSIONS ON ANDROID
@@ -362,25 +362,25 @@ export default function ChatScreen({ route, navigation }: any) {
                 currentThumbUrl = mediaEvent.nativeEvent.thumbnailUri; // Puts the crisp static Giphy thumbnail format here!
             } else {
                 // Run your regular photo/video file upload flow for local files
-                const serverUploadedData = await uploadChatMedia(
-                    {
-                        uri: mediaEvent.nativeEvent.uri,
-                        type: mediaEvent.nativeEvent.mime,
-                        fileName: mediaEvent.nativeEvent.filename || `chat_${Date.now()}.jpg`,
-                        fileSize: mediaEvent.nativeEvent.fileSize || 0,
-                        gifFrom: 'Giphy'
-                    },
-                    currentUser?.uid || '',
-                    currentUser?.displayName || ""
-                );
+                // const serverUploadedData = await uploadChatMedia(
+                //     {
+                //         uri: mediaEvent.nativeEvent.uri,
+                //         type: mediaEvent.nativeEvent.mime,
+                //         fileName: mediaEvent.nativeEvent.filename || `chat_${Date.now()}.jpg`,
+                //         fileSize: mediaEvent.nativeEvent.fileSize || 0,
+                //         gifFrom: 'Giphy'
+                //     },
+                //     currentUser?.uid || '',
+                //     currentUser?.displayName || ""
+                // );
 
-                if (!serverUploadedData) {
-                    console.warn("Media upload failed. Firestore documentation write aborted.");
-                    return;
-                }
+                // if (!serverUploadedData) {
+                //     console.warn("Media upload failed. Firestore documentation write aborted.");
+                //     return;
+                // }
 
-                currentMediaUrl = mediaEvent.nativeEvent?.gifFrom == 'Giphy' ? mediaEvent.nativeEvent.uri : serverUploadedData.url;
-                currentThumbUrl = serverUploadedData.thumbUrl || serverUploadedData.url;
+                // currentMediaUrl = mediaEvent.nativeEvent?.gifFrom == 'Giphy' ? mediaEvent.nativeEvent.uri : serverUploadedData.url;
+                // currentThumbUrl = serverUploadedData.thumbUrl || serverUploadedData.url;
             }
             setShowCustomEmojiPanel(false)
         } else {
@@ -437,24 +437,24 @@ export default function ChatScreen({ route, navigation }: any) {
                     style={{ flex: 1 }}
                     resizeMode="cover"
                 >
-                    <FileUploadLoader
+                    {/* <FileUploadLoader
                         visible={isUploading}
                         progress={uploadProgress}
-                    />
+                    /> */}
 
-                    <FlashList
+                    {/* <FlashList
                         ref={flashListRef}
                         data={messages}
                         // 🚀 UPDATE KEYEXTRACTOR HERE TO MATCH
                         keyExtractor={(item) => (item.isDeletedByUser ? `${item.id}-deleted` : item.id)}
                         inverted
-                        renderItem={renderMessageItem}
+                       // renderItem={renderMessageItem}
                         extraData={[messages, currentUserRole]}
                         drawDistance={500}
                         maintainVisibleContentPosition={{
                             autoscrollToTopThreshold: scale(50),
                         }}
-                    />
+                    /> */}
 
                     {/* Bottom Bar Matrix Container Controls Layout */}
                     <GradientView colors={['#064E3B', '#022C22']} horizontal={false}>

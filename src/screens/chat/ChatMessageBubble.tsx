@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { scale, moderateScale, verticalScale } from '@/src/utils/scaling';
-import { Box, VStack, Text, HStack } from '@/src/components/HOSGluestackUI';
+import { Box, VStack, Text, HStack, Center } from '@/src/components/HOSGluestackUI';
 import FastImage from '@d11/react-native-fast-image';
-import { ActivityIndicator, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, Platform, StyleSheet, TouchableOpacity } from 'react-native';
 import { OptimizedChatGif } from '@/src/components/OptimizedChatGif';
 import { ModernImageViewer } from '@/src/components/ModernImageViewer';
 import Clipboard from '@react-native-clipboard/clipboard';
 import SwipeableMessageRow from './SwipeableMessageRow';
-import { Copy, Languages, Trash2 } from 'lucide-react-native';
+import { Copy, Trash2, Languages, Play, Download } from 'lucide-react-native';
 import { translateTextPipeline } from '@/src/utils/translation';
-
+import { checkVideoCacheExists, getLocalVideoPath } from './chatCacheManager';
 export interface MessageItem {
     id: string;
     senderId: string;
@@ -25,6 +25,9 @@ export interface MessageItem {
     };
     isDeletedByUser?: boolean;
     mediaType?: string;
+    // 🚀 NEW BACKGROUND UPLOAD INTERFACE PARAMS
+    isUploading?: boolean;
+    uploadProgress?: number;
 }
 
 interface ChatMessageBubbleProps {
@@ -37,19 +40,18 @@ interface ChatMessageBubbleProps {
     onReplyTrigger: (item: MessageItem) => void;
     onReplyClick: (replyToId: string) => void;
     onDeleteTrigger: (messageId: string, senderId: string) => void;
-    onTriggerTranslation: (translatedText: string) => void; // 🚀 ADD THIS PROP CALLBACK
+    onTriggerTranslation: (translatedText: string) => void;
+    onVideoPress: (url: string | null) => void; // 🚀 New callback for full-screen video launch
+    onDownloadPress: (item: MessageItem) => void;
+    downloadingProgress?: number;
+
 }
 
-// 🚀 1. UNIQUE GLOBAL HELPER DECLARATION: Checked cleanly at the top boundary scope
 const checkEmojiOnlyString = (str: string) => {
     if (!str) return { isEmojiOnly: false, count: 0 };
-
-    // const emojiRegex = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g;
     const emojiRegex = /(\u00a9|\u00ae|[\u2000-\u3300]|[\u2700-\u27BF]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]|\uFE0F)/g;
     const cleanStr = str.replace(/\s/g, '');
-    //console.log("cleanStr", cleanStr);
     const match = cleanStr.match(emojiRegex);
-
     const isEmojiOnly = match !== null && match.join('') === cleanStr;
     return {
         isEmojiOnly,
@@ -57,7 +59,6 @@ const checkEmojiOnlyString = (str: string) => {
     };
 };
 
-// 🚀 2. CORE RENDERING ENGINE
 const ChatMessageBubble = ({
     item,
     currentUserId,
@@ -68,7 +69,10 @@ const ChatMessageBubble = ({
     onReplyTrigger,
     onReplyClick,
     onDeleteTrigger,
-    onTriggerTranslation
+    onTriggerTranslation,
+    onVideoPress,
+    onDownloadPress,
+    downloadingProgress
 }: ChatMessageBubbleProps) => {
     const isMe = item.senderId === currentUserId;
     const hasReply = !!item.replyTo;
@@ -79,17 +83,42 @@ const ChatMessageBubble = ({
     const [viewerVisible, setViewerVisible] = useState(false);
     const [showActions, setShowActions] = useState(false);
 
-    // Resolve dynamic WhatsApp layouts based on the unique utility above
     const emojiStatus = !isMedia && !isDeletedByUser ? checkEmojiOnlyString(item.text) : { isEmojiOnly: false, count: 0 };
     const renderBigEmojiStyle = emojiStatus.isEmojiOnly && emojiStatus.count <= 3;
+    const [isLocalCacheReady, setIsLocalCacheReady] = useState(false);
+    const [resolvedVideoUrl, setResolvedVideoUrl] = useState(item.mediaUrl);
+
+    useEffect(() => {
+        const evaluateCacheStatus = async () => {
+            if (item.mediaType?.startsWith('video/') && item.mediaUrl) {
+                // 1. If it's already a native device asset path reference, validate instantly
+                if (item.mediaUrl.startsWith('file://') || item.mediaUrl.startsWith('/')) {
+                    setIsLocalCacheReady(true);
+                    setResolvedVideoUrl(item.mediaUrl);
+                    return;
+                }
+
+                // 2. Look up inside deep disk storage parameters to check if downloaded
+                const doesFileExist = await checkVideoCacheExists(item.mediaUrl);
+                setIsLocalCacheReady(doesFileExist);
+
+                if (doesFileExist) {
+                    const targetDiskLocation = getLocalVideoPath(item.mediaUrl);
+                    // 🚀 FORCE LOCAL ASSIGNMENT: Direct Android/iOS storage mapping
+                    setResolvedVideoUrl(Platform.OS === 'android' ? `file://${targetDiskLocation}` : targetDiskLocation);
+                } else {
+                    setResolvedVideoUrl(item.mediaUrl);
+                }
+            }
+        };
+        evaluateCacheStatus();
+    }, [item.mediaUrl, item.isUploading]);
     const handleToggleTranslation = async () => {
         if (isTranslating) return;
         setShowActions(false);
-
         const textToTranslate = item.text || '';
         if (!textToTranslate.trim()) return;
 
-        // If already translated once, just fire the callback immediately to save API quota
         if (translatedText) {
             onTriggerTranslation(translatedText);
             return;
@@ -99,13 +128,14 @@ const ChatMessageBubble = ({
         try {
             const result = await translateTextPipeline(textToTranslate, 'ta');
             setTranslatedText(result);
-            onTriggerTranslation(result); // 🚀 SEND THE RESULT STRAIGHT UP TO THE CHAT SCREEN
+            onTriggerTranslation(result);
         } catch (err) {
             console.error("Chat bubble translation layer error:", err);
         } finally {
             setIsTranslating(false);
         }
     };
+
     const getEmojiFontSize = () => {
         if (emojiStatus.count === 1) return moderateScale(44);
         if (emojiStatus.count === 2) return moderateScale(34);
@@ -116,7 +146,6 @@ const ChatMessageBubble = ({
         if (item.text) {
             Clipboard.setString(item.text);
             setShowActions(false);
-            //console.log("[Clipboard] Text string copied successfully.");
         }
     };
 
@@ -131,17 +160,29 @@ const ChatMessageBubble = ({
         return '#00000066';
     };
 
+
+
     return (
         <VStack style={{ alignItems: isMe ? 'flex-end' : 'flex-start', marginBottom: verticalScale(12) }}>
             <SwipeableMessageRow isMe={isMe} onReplyTrigger={() => onReplyTrigger(item)}>
                 <TouchableOpacity
                     onLongPress={() => {
-                        setShowActions(!showActions);
+                        if (!item.isUploading) setShowActions(!showActions);
                     }}
                     onPress={() => {
-                        if (isMedia) {
+                        if (item.isUploading) return;
+
+                        if (item.mediaType?.startsWith('video/')) {
+                            // 🚀 STEP 1: Pass the remote URL straight to the parent viewer context state
+                            if (item.mediaUrl) {
+                                onVideoPress(item.mediaUrl);
+                            }
+                        }
+                        else if (isMedia && !item.isUploading) {
+                            // For standard images / static graphics
                             setViewerVisible(true);
-                        } else {
+                        }
+                        else {
                             setShowActions(false);
                         }
                     }}
@@ -167,7 +208,6 @@ const ChatMessageBubble = ({
                         alignSelf: isMe ? 'flex-end' : 'flex-start'
                     }}>
 
-                        {/* 🎯 NESTED WHATSAPP REPLY DECORATOR */}
                         {hasReply && item.replyTo && (
                             <TouchableOpacity
                                 onPress={() => onReplyClick(item.replyTo!.messageId)}
@@ -197,7 +237,6 @@ const ChatMessageBubble = ({
                         )}
 
                         {isMedia ? (
-                            /* 🎬 MEDIA VIEW LAYOUT WITH INTEGRATED BLINK HIGHLIGHT */
                             <Box style={{
                                 position: 'relative',
                                 marginTop: hasReply ? scale(4) : 0,
@@ -214,28 +253,61 @@ const ChatMessageBubble = ({
                                         isMe={isMe}
                                     />
                                 ) : (
-                                    <Box style={{ position: 'relative' }}>
+                                    <Box style={{ position: 'relative', width: scale(220), height: verticalScale(180) }}>
                                         <FastImage
                                             source={{ uri: item.mediaUrl! }}
-                                            style={{ width: scale(220), height: verticalScale(180) }}
+                                            style={{ width: '100%', height: '100%' }}
                                             resizeMode={FastImage.resizeMode.cover}
                                         />
-                                        <Box style={{
-                                            position: 'absolute',
-                                            bottom: scale(6),
-                                            right: scale(8),
-                                            backgroundColor: getReplyColor(),
-                                            paddingHorizontal: scale(6),
-                                            paddingVertical: verticalScale(2),
-                                            borderRadius: scale(10),
-                                            flexDirection: 'row',
-                                            alignItems: 'center',
-                                            gap: scale(4)
-                                        }}>
-                                            <Text style={{ fontSize: moderateScale(11), color: 'rgba(255, 255, 255, 0.8)' }}>
-                                                {timeString}
-                                            </Text>
-                                        </Box>
+
+                                        {/* VIDEO STATUS OVERLAY: Simplified down to a clean Play icon */}
+                                        {item.mediaType?.startsWith('video/') && !item.isUploading && (
+                                            <Box style={StyleSheet.absoluteFill}>
+                                                <Center style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.35)' }}>
+                                                    <Box style={styles.playButtonCircle}>
+                                                        <Play
+                                                            color="white"
+                                                            size={moderateScale(20)}
+                                                            fill="white"
+                                                            style={{ marginLeft: scale(2) }}
+                                                        />
+                                                    </Box>
+                                                </Center>
+                                            </Box>
+                                        )}
+
+                                        {/* 🚀 THE INLINE UPLOAD PROGRESS OVERLAY */}
+                                        {item.isUploading && (
+                                            <Box style={StyleSheet.absoluteFill}>
+                                                <Center style={styles.uploadOverlayBackdrop}>
+                                                    <Box style={styles.progressCircleContainer}>
+                                                        <ActivityIndicator size="small" color="#FFFFFF" style={{ marginBottom: 2 }} />
+                                                        <Text style={styles.progressPercentageText}>
+                                                            {item.uploadProgress || 0}%
+                                                        </Text>
+                                                    </Box>
+                                                </Center>
+                                            </Box>
+                                        )}
+
+                                        {!item.isUploading && (
+                                            <Box style={{
+                                                position: 'absolute',
+                                                bottom: scale(6),
+                                                right: scale(8),
+                                                backgroundColor: getReplyColor(),
+                                                paddingHorizontal: scale(6),
+                                                paddingVertical: verticalScale(2),
+                                                borderRadius: scale(10),
+                                                flexDirection: 'row',
+                                                alignItems: 'center',
+                                                gap: scale(4)
+                                            }}>
+                                                <Text style={{ fontSize: moderateScale(11), color: 'rgba(255, 255, 255, 0.8)' }}>
+                                                    {timeString}
+                                                </Text>
+                                            </Box>
+                                        )}
                                     </Box>
                                 )}
 
@@ -252,18 +324,17 @@ const ChatMessageBubble = ({
                                 )}
                             </Box>
                         ) : renderBigEmojiStyle ? (
-                            /* 🚀 WHATSAPP BIG STANDALONE EMOJI LAYOUT CONTAINER */
                             <Box style={{
                                 flexDirection: 'column',
                                 alignItems: isMe ? 'flex-end' : 'flex-start',
-                                padding: scale(4) // 🚀 Added a small buffer padding so the OS font boundary doesn't clip
+                                padding: scale(4)
                             }}>
                                 <Text
                                     style={{
                                         fontSize: getEmojiFontSize(),
-                                        lineHeight: getEmojiFontSize() * 1.2, // 🚀 THE FIX: Dynamic line height stops clipping completely
+                                        lineHeight: getEmojiFontSize() * 1.2,
                                         textAlign: 'center',
-                                        includeFontPadding: false // 🚀 Android Fix: Removes extra hidden system font padding
+                                        includeFontPadding: false
                                     }}
                                 >
                                     {item.text}
@@ -280,7 +351,6 @@ const ChatMessageBubble = ({
                                 </Text>
                             </Box>
                         ) : (
-                            /* 💬 STANDARD TEXT WRAPPER & ANTI-OVERLAP ENGINE */
                             <Box style={{
                                 flexDirection: 'row',
                                 flexWrap: 'wrap',
@@ -298,7 +368,6 @@ const ChatMessageBubble = ({
                                 >
                                     {item.text}
                                 </Text>
-
                                 <Box style={{
                                     position: 'absolute',
                                     bottom: 0,
@@ -319,7 +388,6 @@ const ChatMessageBubble = ({
                 </TouchableOpacity>
             </SwipeableMessageRow>
 
-            {/* 🚀 SUB-BUBBLE ACTION MENU LAYOUT MATRIX */}
             {showActions && (
                 <HStack style={{
                     marginTop: verticalScale(6),
@@ -330,7 +398,6 @@ const ChatMessageBubble = ({
                 }}>
                     {!isMedia && (
                         <HStack style={{ gap: scale(14), alignItems: 'center' }}>
-                            {/* 🚀 COPY BUTTON ACTION */}
                             <TouchableOpacity
                                 onPress={handleCopyText}
                                 activeOpacity={0.7}
@@ -339,24 +406,23 @@ const ChatMessageBubble = ({
                                 <Copy color="#94A3B8" size={moderateScale(16)} />
                             </TouchableOpacity>
 
-                            {/* 🚀 TRANSLATION TRIGGER BUTTON */}
-                            {isAdmin && <TouchableOpacity
-                                onPress={handleToggleTranslation}
-                                activeOpacity={0.7}
-                                style={{ padding: scale(4) }}
-                                disabled={isTranslating}
-                            >
-                                {isTranslating ? (
-                                    <ActivityIndicator size="small" color="#E65100" style={{ transform: [{ scale: 0.8 }] }} />
-                                ) : (
-                                    <Languages color="#94A3B8" size={moderateScale(16)} />
-                                )}
-                            </TouchableOpacity>
-                            }
+                            {isAdmin && (
+                                <TouchableOpacity
+                                    onPress={handleToggleTranslation}
+                                    activeOpacity={0.7}
+                                    style={{ padding: scale(4) }}
+                                    disabled={isTranslating}
+                                >
+                                    {isTranslating ? (
+                                        <ActivityIndicator size="small" color="#E65100" style={{ transform: [{ scale: 0.8 }] }} />
+                                    ) : (
+                                        <Languages color="#94A3B8" size={moderateScale(16)} />
+                                    )}
+                                </TouchableOpacity>
+                            )}
                         </HStack>
                     )}
 
-                    {/* 🚀 DELETE BUTTON ACTION */}
                     <TouchableOpacity
                         onPress={() => {
                             setShowActions(false);
@@ -369,6 +435,7 @@ const ChatMessageBubble = ({
                     </TouchableOpacity>
                 </HStack>
             )}
+
             <ModernImageViewer
                 visible={viewerVisible}
                 imageUrl={item.mediaUrl!}
@@ -377,6 +444,57 @@ const ChatMessageBubble = ({
         </VStack >
     );
 };
+
+// Internal Layout Overlay Styles sheet configurations
+const styles = StyleSheet.create({
+    uploadOverlayBackdrop: {
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    },
+    progressCircleContainer: {
+        width: scale(50),
+        height: scale(50),
+        borderRadius: scale(25),
+        backgroundColor: 'rgba(15, 23, 42, 0.85)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1.5,
+        borderColor: 'rgba(255, 255, 255, 0.2)',
+    },
+    progressPercentageText: {
+        color: '#FFFFFF',
+        fontSize: moderateScale(11),
+        fontWeight: '700',
+        textAlign: 'center',
+    },
+    playButtonCircle: {
+        width: scale(44),
+        height: scale(44),
+        borderRadius: scale(22),
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.3)',
+        // Shadow elevation specs
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.4,
+        shadowRadius: 3,
+        elevation: 4,
+    },
+    downloadTrackCircle: {
+        width: scale(64),
+        height: scale(64),
+        borderRadius: scale(32),
+        backgroundColor: 'rgba(15, 23, 42, 0.85)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1.5,
+        borderColor: 'rgba(255, 255, 255, 0.3)',
+    }
+});
 
 export default React.memo(ChatMessageBubble, (prevProps, nextProps) => {
     return (
@@ -387,7 +505,8 @@ export default React.memo(ChatMessageBubble, (prevProps, nextProps) => {
         prevProps.isDeletedByUser === nextProps.isDeletedByUser &&
         prevProps.isAdmin === nextProps.isAdmin &&
         !!prevProps.isHighlighted === !!nextProps.isHighlighted &&
+        prevProps.item.isUploading === nextProps.item.isUploading &&
+        prevProps.item.uploadProgress === nextProps.item.uploadProgress &&
         prevProps.onDeleteTrigger === nextProps.onDeleteTrigger
     );
 });
-
