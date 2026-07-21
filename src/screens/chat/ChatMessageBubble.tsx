@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { scale, moderateScale, verticalScale } from '@/src/utils/scaling';
 import { Box, VStack, Text, HStack, Center } from '@/src/components/HOSGluestackUI';
 import FastImage from '@d11/react-native-fast-image';
-import { ActivityIndicator, Platform, StyleSheet, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, Alert, Platform, StyleSheet, TouchableOpacity } from 'react-native';
 import { OptimizedChatGif } from '@/src/components/OptimizedChatGif';
 import { ModernImageViewer } from '@/src/components/ModernImageViewer';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -10,12 +10,15 @@ import SwipeableMessageRow from './SwipeableMessageRow';
 import { Copy, Trash2, Languages, Play, Download } from 'lucide-react-native';
 import { translateTextPipeline } from '@/src/utils/translation';
 import { checkVideoCacheExists, getLocalVideoPath } from './chatCacheManager';
+import { AnimatedStickerItem } from './AnimatedStickerItem';
+import { checkEmojiOnlyString } from '@/src/utils/tools';
 export interface MessageItem {
     id: string;
     senderId: string;
     text: string;
     createdAt: any;
     mediaUrl?: string;
+    originalEmoji?: string;
     thumbUrl?: string;
     replyTo?: {
         messageId: string;
@@ -47,17 +50,7 @@ interface ChatMessageBubbleProps {
 
 }
 
-const checkEmojiOnlyString = (str: string) => {
-    if (!str) return { isEmojiOnly: false, count: 0 };
-    const emojiRegex = /(\u00a9|\u00ae|[\u2000-\u3300]|[\u2700-\u27BF]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]|\uFE0F)/g;
-    const cleanStr = str.replace(/\s/g, '');
-    const match = cleanStr.match(emojiRegex);
-    const isEmojiOnly = match !== null && match.join('') === cleanStr;
-    return {
-        isEmojiOnly,
-        count: isEmojiOnly ? match.length : 0
-    };
-};
+
 
 const ChatMessageBubble = ({
     item,
@@ -85,34 +78,34 @@ const ChatMessageBubble = ({
 
     const emojiStatus = !isMedia && !isDeletedByUser ? checkEmojiOnlyString(item.text) : { isEmojiOnly: false, count: 0 };
     const renderBigEmojiStyle = emojiStatus.isEmojiOnly && emojiStatus.count <= 3;
-    const [isLocalCacheReady, setIsLocalCacheReady] = useState(false);
-    const [resolvedVideoUrl, setResolvedVideoUrl] = useState(item.mediaUrl);
+    const [stickerPlayKey, setStickerPlayKey] = useState<number>(0);
+    // useEffect(() => {
+    //     const evaluateCacheStatus = async () => {
+    //         if (item.mediaType?.startsWith('video/') && item.mediaUrl) {
+    //             // 1. If it's already a native device asset path reference, validate instantly
+    //             if (item.mediaUrl.startsWith('file://') || item.mediaUrl.startsWith('/')) {
+    //                 setIsLocalCacheReady(true);
+    //                 setResolvedVideoUrl(item.mediaUrl);
+    //                 return;
+    //             }
 
-    useEffect(() => {
-        const evaluateCacheStatus = async () => {
-            if (item.mediaType?.startsWith('video/') && item.mediaUrl) {
-                // 1. If it's already a native device asset path reference, validate instantly
-                if (item.mediaUrl.startsWith('file://') || item.mediaUrl.startsWith('/')) {
-                    setIsLocalCacheReady(true);
-                    setResolvedVideoUrl(item.mediaUrl);
-                    return;
-                }
+    //             // 2. Look up inside deep disk storage parameters to check if downloaded
+    //             const doesFileExist = await checkVideoCacheExists(item.mediaUrl);
+    //             setIsLocalCacheReady(doesFileExist);
 
-                // 2. Look up inside deep disk storage parameters to check if downloaded
-                const doesFileExist = await checkVideoCacheExists(item.mediaUrl);
-                setIsLocalCacheReady(doesFileExist);
+    //             if (doesFileExist) {
+    //                 const targetDiskLocation = getLocalVideoPath(item.mediaUrl);
+    //                 // 🚀 FORCE LOCAL ASSIGNMENT: Direct Android/iOS storage mapping
+    //                 setResolvedVideoUrl(Platform.OS === 'android' ? `file://${targetDiskLocation}` : targetDiskLocation);
+    //             } else {
+    //                 setResolvedVideoUrl(item.mediaUrl);
+    //             }
+    //         }
+    //     };
+    //     evaluateCacheStatus();
+    // }, [item.mediaUrl, item.isUploading]);
 
-                if (doesFileExist) {
-                    const targetDiskLocation = getLocalVideoPath(item.mediaUrl);
-                    // 🚀 FORCE LOCAL ASSIGNMENT: Direct Android/iOS storage mapping
-                    setResolvedVideoUrl(Platform.OS === 'android' ? `file://${targetDiskLocation}` : targetDiskLocation);
-                } else {
-                    setResolvedVideoUrl(item.mediaUrl);
-                }
-            }
-        };
-        evaluateCacheStatus();
-    }, [item.mediaUrl, item.isUploading]);
+
     const handleToggleTranslation = async () => {
         if (isTranslating) return;
         setShowActions(false);
@@ -160,7 +153,7 @@ const ChatMessageBubble = ({
         return '#00000066';
     };
 
-
+    const isSticker = item.mediaType?.startsWith('sticker/') || item.text === '[Animation]';
 
     return (
         <VStack style={{ alignItems: isMe ? 'flex-end' : 'flex-start', marginBottom: verticalScale(12) }}>
@@ -180,7 +173,10 @@ const ChatMessageBubble = ({
                         }
                         else if (isMedia && !item.isUploading) {
                             // For standard images / static graphics
-                            setViewerVisible(true);
+                            if (isSticker) {
+                                setStickerPlayKey((prev) => prev + 1);
+                            } else setViewerVisible(true);
+
                         }
                         else {
                             setShowActions(false);
@@ -195,13 +191,13 @@ const ChatMessageBubble = ({
                     }}
                 >
                     <Box style={{
-                        paddingHorizontal: isMedia || renderBigEmojiStyle ? 0 : scale(12),
-                        paddingTop: isMedia || renderBigEmojiStyle ? 0 : verticalScale(8),
-                        paddingBottom: isMedia || renderBigEmojiStyle ? 0 : verticalScale(6),
+                        paddingHorizontal: isMedia || renderBigEmojiStyle || isSticker ? 0 : scale(12),
+                        paddingTop: isMedia || renderBigEmojiStyle || isSticker ? 0 : verticalScale(8),
+                        paddingBottom: isMedia || renderBigEmojiStyle || isSticker ? 0 : verticalScale(6),
                         borderRadius: scale(16),
                         borderBottomRightRadius: isMe ? scale(4) : scale(16),
                         borderBottomLeftRadius: !isMe ? scale(4) : scale(16),
-                        backgroundColor: renderBigEmojiStyle ? 'transparent' : getBubbleColor(),
+                        backgroundColor: renderBigEmojiStyle || isSticker ? 'transparent' : getBubbleColor(),
                         overflow: 'hidden',
                         borderWidth: isMedia ? 1 : 0,
                         borderColor: isMe ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)',
@@ -236,7 +232,18 @@ const ChatMessageBubble = ({
                             </TouchableOpacity>
                         )}
 
-                        {isMedia ? (
+                        {isSticker ? (
+                            /* 🚀 COMPACT STICKER CONTAINER (No background bubble, reduced dimensions) */
+                            <AnimatedStickerItem
+                                mediaUrl={item.mediaUrl!}
+                                originalEmojiText={item.originalEmoji} // Raw emoji character (e.g., "😀") for the 5-sec fallback
+                                timeString={timeString}
+                                isMe={isMe}
+                                playKey={stickerPlayKey}
+                                mediaType={item.mediaType}
+
+                            />
+                        ) : isMedia ? (
                             <Box style={{
                                 position: 'relative',
                                 marginTop: hasReply ? scale(4) : 0,

@@ -3,14 +3,14 @@ import { FlatList, TextInput, TouchableOpacity, Platform, ImageBackground, Keybo
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, limit, onSnapshot, orderBy, query, serverTimestamp, setDoc, updateDoc } from '@react-native-firebase/firestore';
 import auth, { getAuth } from '@react-native-firebase/auth';
 import { Box, Text, HStack, VStack, Center } from '../components/HOSGluestackUI';
-import { ArrowLeft, Camera, Check, Copy, Image, ImageIcon, KeyboardIcon, Languages, Paperclip, PhiIcon, Phone, Search, Send, Smile, Trash2, Video, X } from 'lucide-react-native';
+import { ArrowLeft, Camera, Check, Copy, Image, ImageIcon, KeyboardIcon, Languages, Paperclip, PhiIcon, Phone, Plus, Search, Send, Smile, Sticker, Trash2, Video, X } from 'lucide-react-native';
 import { scale, moderateScale, verticalScale } from '../utils/scaling';
 import GradientView from '../components/GradientView';
 import { EMOJI_SECTIONS, EmojiItem } from '../utils/emojiData';
 const COLUMNS_COUNT = 8;
 import { GiphyGridView, GiphyContent } from '@giphy/react-native-sdk';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { formatMessageTime, isSingleEmojiOnly } from '../utils/tools';
+import { formatMessageTime, getStickerMimeType, getStickerUrlForEmoji, isSingleEmojiOnly } from '../utils/tools';
 import SwipeableMessageRow from './chat/SwipeableMessageRow';
 import ChatMessageBubble, { MessageItem } from './chat/ChatMessageBubble';
 import { FlashList, FlashListRef } from '@shopify/flash-list';
@@ -35,6 +35,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { translateTextPipeline } from '../utils/translation';
 import { downloadVideoToCache, getLocalVideoPath } from './chat/chatCacheManager';
 import { VideoPlayerViewer } from './chat/VideoPlayerViewer';
+import { StickerDrawerTab } from './chat/StickerDrawerTab';
 
 const BOTTOM_MARGIN = scale(2);
 const INITIAL_INPUT_HEIGHT = scale(42);
@@ -58,7 +59,7 @@ export default function ChatScreen({ route, navigation }: any) {
     const flashListRef = useRef<FlashListRef<any>>(null);
     const textInputRef = useRef<TextInput>(null);
     const roomId = [currentUser?.uid, targetUser.uid].sort().join('_');
-    const [activeDrawerMode, setActiveDrawerMode] = useState<'EMOJI' | 'GIF'>('EMOJI');
+    const [activeDrawerMode, setActiveDrawerMode] = useState<'EMOJI' | 'GIF' | 'STICKER' | 'ADD_STICKER'>('EMOJI');
     const [isGifModalVisible, setIsGifModalVisible] = useState(false);
     const [giphyMediaType, setGiphyMediaType] = useState<'gif' | 'sticker' | 'text' | 'video'>('gif');
     const [replyMessage, setReplyMessage] = useState<any | null>(null);
@@ -87,6 +88,7 @@ export default function ChatScreen({ route, navigation }: any) {
     // 🚀 Tracks the active video URL targeting full-screen media execution loops
     const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
     const [downloadingMap, setDownloadingMap] = useState<Record<string, number>>({});
+
     const onInputLayout = useCallback(
         (e: LayoutChangeEvent) => {
             const height = e.nativeEvent.layout.height;
@@ -434,13 +436,13 @@ export default function ChatScreen({ route, navigation }: any) {
     };
 
     const handleSendMessage = async (mediaEvent?: any) => {
-        console.log("mediaEvent", mediaEvent);
         let currentMediaUrl = null;
         let currentThumbUrl = null;
         let currentMime = null;
         let textPayload = inputText.trim();
+        let originalEmojiChar: string | null = null;
 
-        if (mediaEvent?.nativeEvent?.uri) {
+        if (mediaEvent?.nativeEvent?.uri && mediaEvent?.nativeEvent?.gifFrom != 'Sticker') {
             currentMime = mediaEvent.nativeEvent.mime;
             textPayload = mediaEvent.nativeEvent.description || "[Media File]";
 
@@ -476,6 +478,25 @@ export default function ChatScreen({ route, navigation }: any) {
         } else {
             if (!textPayload && !currentUser) return;
             setInputText('');
+
+            // 🚀 NEW: Check if the typed text matches a single emoji with a dynamic WebP sticker URL
+            if (mediaEvent?.nativeEvent?.gifFrom == 'Sticker') {
+                textPayload = '[Sticker]';
+                currentMediaUrl = mediaEvent.nativeEvent.uri;
+                currentThumbUrl = mediaEvent.nativeEvent.uri;
+                currentMime = mediaEvent?.nativeEvent?.mime || 'sticker/lottie';
+            }
+            else {
+                const matchedStickerUrl = getStickerUrlForEmoji(textPayload);
+
+                if (matchedStickerUrl) {
+                    currentMediaUrl = matchedStickerUrl;
+                    currentThumbUrl = matchedStickerUrl;
+                    currentMime = 'sticker/lottie';
+                    originalEmojiChar = textPayload; // Store the original raw emoji (e.g. "😀")
+                    textPayload = '[Animation]';       // Clean fallback description for push notifications / previews
+                }
+            }
         }
 
         const db = getFirestore();
@@ -487,6 +508,7 @@ export default function ChatScreen({ route, navigation }: any) {
             thumbUrl: currentThumbUrl,
             mediaType: currentMime,
             isDeletedByUser: false,
+            originalEmoji: originalEmojiChar || null, // 🚀 Saves the raw emoji character only when a sticker is sent
             replyTo: replyMessage ? {
                 messageId: replyMessage.id,
                 text: replyMessage.text,
@@ -722,10 +744,15 @@ export default function ChatScreen({ route, navigation }: any) {
                         {showCustomEmojiPanel && (
                             <Box style={{ height: verticalScale(330), backgroundColor: '#022C22' }} className="border-t border-emerald-900">
                                 {activeDrawerMode === 'EMOJI' ? (
+                                    /* ---------------- 1. EMOJI DRAWER MODE ---------------- */
                                     <VStack style={{ flex: 1 }}>
                                         <HStack style={{ height: verticalScale(40), backgroundColor: '#033F30' }}>
                                             {EMOJI_SECTIONS.map((category, index) => (
-                                                <TouchableOpacity key={category.title} onPress={() => setActiveCategoryIndex(index)} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: activeCategoryIndex === index ? '#022C22' : 'transparent' }}>
+                                                <TouchableOpacity
+                                                    key={category.title}
+                                                    onPress={() => setActiveCategoryIndex(index)}
+                                                    style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: activeCategoryIndex === index ? '#022C22' : 'transparent' }}
+                                                >
                                                     <RNText style={{ fontSize: moderateScale(18) }}>{category.icon}</RNText>
                                                 </TouchableOpacity>
                                             ))}
@@ -740,7 +767,10 @@ export default function ChatScreen({ route, navigation }: any) {
                                                 if (item === 'PAD_EMPTY_CELL') return <Box style={{ flex: 1, margin: scale(4) }} />;
                                                 return (
                                                     <Box style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                                                        <TouchableOpacity onPress={() => setInputText(prev => prev + item.emoji)} style={{ width: scale(42), height: scale(42), justifyContent: 'center', alignItems: 'center', marginVertical: verticalScale(4) }}>
+                                                        <TouchableOpacity
+                                                            onPress={() => setInputText(prev => prev + item.emoji)}
+                                                            style={{ width: scale(42), height: scale(42), justifyContent: 'center', alignItems: 'center', marginVertical: verticalScale(4) }}
+                                                        >
                                                             <RNText style={{ fontSize: moderateScale(26), includeFontPadding: false }}>{item.emoji}</RNText>
                                                         </TouchableOpacity>
                                                     </Box>
@@ -748,13 +778,40 @@ export default function ChatScreen({ route, navigation }: any) {
                                             }}
                                         />
                                     </VStack>
+                                ) : activeDrawerMode === 'STICKER' ? (
+                                    /* ---------------- 2. STICKER DRAWER MODE (NEW) ---------------- */
+                                    <Box style={{ flex: 1 }}>
+                                        <StickerDrawerTab
+                                            onSelectSticker={(selectedSticker) => {
+                                                console.log('selectedSticker', selectedSticker)
+                                                // 🚀 Handle sending the sticker when tapped
+                                                const computedMime = getStickerMimeType(selectedSticker.type, selectedSticker.url);
+                                                console.log('computedMime', computedMime)
+                                                handleSendMessage({
+                                                    nativeEvent: {
+                                                        uri: selectedSticker.url,
+                                                        mime: computedMime,
+                                                        description: `[Sticker] ${selectedSticker.name}`,
+                                                        gifFrom: 'Sticker'
+                                                    }
+                                                });
+
+                                                // Close drawer panel after sending sticker
+                                                setShowCustomEmojiPanel(false);
+                                            }}
+                                        />
+                                    </Box>
                                 ) : (
+                                    /* ---------------- 3. GIF DRAWER MODE ---------------- */
                                     <VStack style={{ flex: 1 }}>
                                         <Box style={{ paddingHorizontal: scale(12), paddingVertical: verticalScale(8), backgroundColor: '#033F30' }}>
-                                            <TouchableOpacity onPress={() => {
-                                                setShowCustomEmojiPanel(false)
-                                                setIsGifModalVisible(true)
-                                            }} style={{ flexDirection: 'row', backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: scale(18), paddingHorizontal: scale(14), paddingVertical: verticalScale(8), alignItems: 'center', gap: scale(8), borderWidth: 1, borderColor: 'rgba(255, 255, 255, 0.1)' }}>
+                                            <TouchableOpacity
+                                                onPress={() => {
+                                                    setShowCustomEmojiPanel(false);
+                                                    setIsGifModalVisible(true);
+                                                }}
+                                                style={{ flexDirection: 'row', backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: scale(18), paddingHorizontal: scale(14), paddingVertical: verticalScale(8), alignItems: 'center', gap: scale(8), borderWidth: 1, borderColor: 'rgba(255, 255, 255, 0.1)' }}
+                                            >
                                                 <Search color="#94A3B8" size={moderateScale(18)} />
                                             </TouchableOpacity>
                                         </Box>
@@ -783,14 +840,33 @@ export default function ChatScreen({ route, navigation }: any) {
                                     </VStack>
                                 )}
 
-                                {/* TABS SWITCHER CONTROLS FOOTER ROW */}
-                                <HStack style={{ height: verticalScale(46), backgroundColor: '#011F18', borderTopWidth: 1, borderTopColor: 'rgba(255,255,255,0.05)', justifyContent: 'center', alignItems: 'center', gap: scale(40) }}>
-                                    <TouchableOpacity onPress={() => setActiveDrawerMode('EMOJI')} style={{ paddingHorizontal: scale(20), paddingVertical: verticalScale(6), borderBottomWidth: activeDrawerMode === 'EMOJI' ? 2 : 0, borderBottomColor: '#E65100' }}>
+                                {/* 🚀 TABS SWITCHER CONTROLS FOOTER ROW WITH 3 ICONS (EMOJI, STICKER, GIF) */}
+                                <HStack style={{ height: verticalScale(46), backgroundColor: '#011F18', borderTopWidth: 1, borderTopColor: 'rgba(255,255,255,0.05)', justifyContent: 'center', alignItems: 'center', gap: scale(28) }}>
+                                    {/* 1. Emoji Tab */}
+                                    <TouchableOpacity
+                                        onPress={() => setActiveDrawerMode('EMOJI')}
+                                        style={{ paddingHorizontal: scale(16), paddingVertical: verticalScale(6), borderBottomWidth: activeDrawerMode === 'EMOJI' ? 2 : 0, borderBottomColor: '#E65100' }}
+                                    >
                                         <Smile color={activeDrawerMode === 'EMOJI' ? '#E65100' : '#94A3B8'} size={moderateScale(22)} />
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => setActiveDrawerMode('GIF')} style={{ paddingHorizontal: scale(20), paddingVertical: verticalScale(6), borderBottomWidth: activeDrawerMode === 'GIF' ? 2 : 0, borderBottomColor: '#E65100' }}>
+
+                                    {/* 2. GIF Tab */}
+                                    <TouchableOpacity
+                                        onPress={() => setActiveDrawerMode('GIF')}
+                                        style={{ paddingHorizontal: scale(16), paddingVertical: verticalScale(6), borderBottomWidth: activeDrawerMode === 'GIF' ? 2 : 0, borderBottomColor: '#E65100' }}
+                                    >
                                         <ImageIcon color={activeDrawerMode === 'GIF' ? '#E65100' : '#94A3B8'} size={moderateScale(22)} />
                                     </TouchableOpacity>
+
+                                    {/* 3. Sticker Tab (NEW) */}
+                                    <TouchableOpacity
+                                        onPress={() => setActiveDrawerMode('STICKER')}
+                                        style={{ paddingHorizontal: scale(16), paddingVertical: verticalScale(6), borderBottomWidth: activeDrawerMode === 'STICKER' ? 2 : 0, borderBottomColor: '#E65100' }}
+                                    >
+                                        <Sticker color={activeDrawerMode === 'STICKER' ? '#E65100' : '#94A3B8'} size={moderateScale(22)} />
+                                    </TouchableOpacity>
+
+
                                 </HStack>
                             </Box>
                         )}

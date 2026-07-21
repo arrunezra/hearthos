@@ -14,6 +14,7 @@ import CallScreen from "../screens/call/CallScreen";
 import AppNavigatorWrapper from "./AppNavigatorWrapper";
 import { TabNavigator } from "./TabNavigator";
 import NoteViewScreen from "../screens/notes/NotesScreen";
+import { AddStickerScreen } from "../screens/chat/AddStickerScreen";
 
 const RootStack = createNativeStackNavigator();
 
@@ -39,6 +40,7 @@ export const RootNavigation = ({ currentUser }: any) => {
                     <RootStack.Screen name="AlbumPhotosScreen" component={AlbumPhotosScreen} />
                     <RootStack.Screen name="GalleryView" component={GalleryViewScreen} />
                     <RootStack.Screen name="NoteViewScreen" component={NoteViewScreen} />
+                    <RootStack.Screen name="AddSticker" component={AddStickerScreen} />
                     {/* Crucial Call Interface Panel Configuration */}
                     <RootStack.Screen
                         name="CallScreen"

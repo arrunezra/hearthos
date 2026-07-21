@@ -1,5 +1,6 @@
 export interface EmojiItem {
     emoji: string;
+    url: string;
     name: string;
     v: string;
     toneEnabled: boolean;
@@ -21,6 +22,7 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
         "data": [
             {
                 "emoji": "😀",
+
                 "name": "grinning face",
                 "v": "1.0",
                 "toneEnabled": false,
@@ -32,7 +34,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "joy",
                     ":D",
                     "grin"
-                ]
+                ],
+                url: "smile_1f600",
             },
             {
                 "emoji": "😃",
@@ -49,7 +52,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     ":)",
                     "smile",
                     "funny"
-                ]
+                ],
+                url: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f609/lottie.json"
             },
             {
                 "emoji": "😄",
@@ -68,7 +72,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     ":D",
                     ":)",
                     "smile"
-                ]
+                ],
+                url: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f60d/512.webp",
             },
             {
                 "emoji": "😁",
@@ -82,7 +87,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "smile",
                     "joy",
                     "kawaii"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😆",
@@ -100,7 +106,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "glad",
                     "XD",
                     "laugh"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😅",
@@ -116,7 +123,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sweat",
                     "smile",
                     "relief"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤣",
@@ -132,7 +140,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "lol",
                     "haha",
                     "rofl"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😂",
@@ -148,7 +157,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "happy",
                     "happytears",
                     "haha"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙂",
@@ -159,7 +169,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "slightly_smiling_face",
                     "face",
                     "smile"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙃",
@@ -172,7 +183,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "flipped",
                     "silly",
                     "smile"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😉",
@@ -188,7 +200,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     ";)",
                     "smile",
                     "eye"
-                ]
+                ],
+                url: "wink_1f600",
             },
             {
                 "emoji": "😊",
@@ -205,7 +218,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "embarrassed",
                     "shy",
                     "joy"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😇",
@@ -219,7 +233,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "heaven",
                     "halo",
                     "innocent"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥰",
@@ -237,7 +252,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "crush",
                     "hearts",
                     "adore"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😍",
@@ -254,7 +270,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "infatuation",
                     "crush",
                     "heart"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤩",
@@ -268,7 +285,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "starry",
                     "eyes",
                     "grinning"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😘",
@@ -284,7 +302,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "valentines",
                     "infatuation",
                     "kiss"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😗",
@@ -300,7 +319,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "valentines",
                     "infatuation",
                     "kiss"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "☺️",
@@ -313,7 +333,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blush",
                     "massage",
                     "happiness"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😚",
@@ -329,7 +350,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "valentines",
                     "infatuation",
                     "kiss"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😙",
@@ -343,7 +365,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "valentines",
                     "infatuation",
                     "kiss"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😋",
@@ -362,7 +385,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nom",
                     "delicious",
                     "savouring"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😛",
@@ -378,7 +402,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "mischievous",
                     "smile",
                     "tongue"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😜",
@@ -395,7 +420,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "smile",
                     "wink",
                     "tongue"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤪",
@@ -407,7 +433,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "face",
                     "goofy",
                     "crazy"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😝",
@@ -422,7 +449,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "mischievous",
                     "smile",
                     "tongue"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤑",
@@ -435,7 +463,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "rich",
                     "dollar",
                     "money"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤗",
@@ -447,7 +476,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "face",
                     "smile",
                     "hug"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤭",
@@ -460,7 +490,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "whoops",
                     "shock",
                     "surprise"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤫",
@@ -472,7 +503,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "face",
                     "quiet",
                     "shhh"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤔",
@@ -485,7 +517,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hmmm",
                     "think",
                     "consider"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤐",
@@ -498,7 +531,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sealed",
                     "zipper",
                     "secret"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤨",
@@ -513,7 +547,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "disapproval",
                     "disbelief",
                     "surprise"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😐",
@@ -526,7 +561,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "meh",
                     ":|",
                     "neutral"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😑",
@@ -540,7 +576,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "-_-",
                     "meh",
                     "deadpan"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😶",
@@ -551,7 +588,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "face_without_mouth",
                     "face",
                     "hellokitty"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😏",
@@ -566,7 +604,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "prank",
                     "smug",
                     "sarcasm"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😒",
@@ -584,7 +623,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "skeptical",
                     "dubious",
                     "side_eye"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙄",
@@ -596,7 +636,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "face",
                     "eyeroll",
                     "frustrated"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😬",
@@ -608,7 +649,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "face",
                     "grimace",
                     "teeth"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤥",
@@ -620,7 +662,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "face",
                     "lie",
                     "pinocchio"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😌",
@@ -634,7 +677,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "phew",
                     "massage",
                     "happiness"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😔",
@@ -647,7 +691,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sad",
                     "depressed",
                     "upset"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😪",
@@ -660,7 +705,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "tired",
                     "rest",
                     "nap"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤤",
@@ -670,7 +716,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "drooling_face",
                     "face"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😴",
@@ -684,7 +731,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sleepy",
                     "night",
                     "zzz"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😷",
@@ -698,7 +746,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "ill",
                     "disease",
                     "covid"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤒",
@@ -713,7 +762,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cold",
                     "fever",
                     "covid"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤕",
@@ -726,7 +776,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "clumsy",
                     "bandage",
                     "hurt"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤢",
@@ -742,7 +793,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sick",
                     "throw up",
                     "ill"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤮",
@@ -753,7 +805,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "face_vomiting",
                     "face",
                     "sick"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤧",
@@ -767,7 +820,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sneeze",
                     "sick",
                     "allergy"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥵",
@@ -781,7 +835,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "heat",
                     "red",
                     "sweating"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥶",
@@ -796,7 +851,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "frozen",
                     "frostbite",
                     "icicles"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥴",
@@ -810,7 +866,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "intoxicated",
                     "tipsy",
                     "wavy"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😵",
@@ -823,7 +880,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "unconscious",
                     "xox",
                     "dizzy"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤯",
@@ -836,7 +894,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "shocked",
                     "mind",
                     "blown"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤠",
@@ -848,7 +907,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "face",
                     "cowgirl",
                     "hat"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥳",
@@ -860,7 +920,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "face",
                     "celebration",
                     "woohoo"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😎",
@@ -875,7 +936,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "summer",
                     "beach",
                     "sunglass"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤓",
@@ -888,7 +950,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nerdy",
                     "geek",
                     "dork"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧐",
@@ -900,7 +963,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "face",
                     "stuffy",
                     "wealthy"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😕",
@@ -915,7 +979,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "weird",
                     "hmmm",
                     ":/"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😟",
@@ -928,7 +993,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "concern",
                     "nervous",
                     ":("
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙁",
@@ -942,7 +1008,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "disappointed",
                     "sad",
                     "upset"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "☹️",
@@ -955,7 +1022,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sad",
                     "upset",
                     "frown"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😮",
@@ -970,7 +1038,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "wow",
                     "whoa",
                     ":O"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😯",
@@ -982,7 +1051,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "face",
                     "woo",
                     "shh"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😲",
@@ -995,7 +1065,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "xox",
                     "surprised",
                     "poisoned"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😳",
@@ -1008,7 +1079,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blush",
                     "shy",
                     "flattered"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥺",
@@ -1024,7 +1096,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "tears",
                     "sad",
                     "grievance"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😦",
@@ -1036,7 +1109,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "face",
                     "aw",
                     "what"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😧",
@@ -1048,7 +1122,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "face",
                     "stunned",
                     "nervous"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😨",
@@ -1061,7 +1136,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "scared",
                     "terrified",
                     "nervous"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😰",
@@ -1073,7 +1149,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "face",
                     "nervous",
                     "sweat"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😥",
@@ -1086,7 +1163,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "phew",
                     "sweat",
                     "nervous"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😢",
@@ -1101,7 +1179,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "depressed",
                     "upset",
                     ":'("
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😭",
@@ -1116,7 +1195,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sad",
                     "upset",
                     "depressed"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😱",
@@ -1129,7 +1209,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "munch",
                     "scared",
                     "omg"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😖",
@@ -1144,7 +1225,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "unwell",
                     "oops",
                     ":S"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😣",
@@ -1158,7 +1240,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "no",
                     "upset",
                     "oops"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😞",
@@ -1172,7 +1255,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "upset",
                     "depressed",
                     ":("
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😓",
@@ -1186,7 +1270,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sad",
                     "tired",
                     "exercise"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😩",
@@ -1201,7 +1286,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sad",
                     "frustrated",
                     "upset"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😫",
@@ -1214,7 +1300,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "whine",
                     "upset",
                     "frustrated"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😤",
@@ -1228,7 +1315,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "phew",
                     "proud",
                     "pride"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😡",
@@ -1241,7 +1329,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "mad",
                     "hate",
                     "despise"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😠",
@@ -1254,7 +1343,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "face",
                     "annoyed",
                     "frustrated"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤬",
@@ -1269,7 +1359,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cussing",
                     "profanity",
                     "expletive"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😈",
@@ -1280,7 +1371,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "smiling_face_with_horns",
                     "devil",
                     "horns"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👿",
@@ -1292,7 +1384,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "devil",
                     "angry",
                     "horns"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💀",
@@ -1305,7 +1398,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "skeleton",
                     "creepy",
                     "death"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "☠️",
@@ -1321,7 +1415,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "death",
                     "pirate",
                     "evil"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💩",
@@ -1335,7 +1430,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fail",
                     "turd",
                     "shit"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤡",
@@ -1345,7 +1441,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "clown_face",
                     "face"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👹",
@@ -1364,7 +1461,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "demon",
                     "japanese",
                     "ogre"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👺",
@@ -1381,7 +1479,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "creepy",
                     "japanese",
                     "goblin"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👻",
@@ -1393,7 +1492,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "halloween",
                     "spooky",
                     "scary"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👽",
@@ -1406,7 +1506,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "paul",
                     "weird",
                     "outer_space"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👾",
@@ -1418,7 +1519,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "game",
                     "arcade",
                     "play"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤖",
@@ -1430,7 +1532,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "computer",
                     "machine",
                     "bot"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😺",
@@ -1443,7 +1546,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cats",
                     "happy",
                     "smile"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😸",
@@ -1455,7 +1559,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "cats",
                     "smile"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😹",
@@ -1469,7 +1574,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "haha",
                     "happy",
                     "tears"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😻",
@@ -1485,7 +1591,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cats",
                     "valentines",
                     "heart"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😼",
@@ -1497,7 +1604,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "cats",
                     "smirk"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😽",
@@ -1509,7 +1617,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "cats",
                     "kiss"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙀",
@@ -1523,7 +1632,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "munch",
                     "scared",
                     "scream"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😿",
@@ -1539,7 +1649,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cats",
                     "upset",
                     "cry"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "😾",
@@ -1550,7 +1661,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "pouting_cat",
                     "animal",
                     "cats"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙈",
@@ -1563,7 +1675,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "nature",
                     "haha"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙉",
@@ -1575,7 +1688,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "monkey",
                     "nature"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙊",
@@ -1588,7 +1702,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "nature",
                     "omg"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💌",
@@ -1602,7 +1717,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "affection",
                     "envelope",
                     "valentines"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💘",
@@ -1616,7 +1732,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "heart",
                     "affection",
                     "valentines"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💝",
@@ -1627,7 +1744,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "heart_with_ribbon",
                     "love",
                     "valentines"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💖",
@@ -1640,7 +1758,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "like",
                     "affection",
                     "valentines"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💗",
@@ -1654,7 +1773,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "affection",
                     "valentines",
                     "pink"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💓",
@@ -1669,7 +1789,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "valentines",
                     "pink",
                     "heart"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💞",
@@ -1682,7 +1803,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "like",
                     "affection",
                     "valentines"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💕",
@@ -1696,7 +1818,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "affection",
                     "valentines",
                     "heart"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💟",
@@ -1708,7 +1831,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "purple-square",
                     "love",
                     "like"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "❣️",
@@ -1719,7 +1843,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "heart_exclamation",
                     "decoration",
                     "love"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💔",
@@ -1733,7 +1858,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "break",
                     "heart",
                     "heartbreak"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "❤️",
@@ -1745,7 +1871,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "love",
                     "like",
                     "valentines"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧡",
@@ -1758,7 +1885,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "like",
                     "affection",
                     "valentines"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💛",
@@ -1771,7 +1899,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "like",
                     "affection",
                     "valentines"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💚",
@@ -1784,7 +1913,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "like",
                     "affection",
                     "valentines"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💙",
@@ -1797,7 +1927,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "like",
                     "affection",
                     "valentines"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💜",
@@ -1810,7 +1941,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "like",
                     "affection",
                     "valentines"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🖤",
@@ -1820,7 +1952,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "black_heart",
                     "evil"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💋",
@@ -1835,7 +1968,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "like",
                     "affection",
                     "valentines"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💯",
@@ -1853,7 +1987,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "test",
                     "pass",
                     "hundred"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💢",
@@ -1864,7 +1999,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "anger_symbol",
                     "angry",
                     "mad"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💥",
@@ -1878,7 +2014,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "explosion",
                     "collision",
                     "blown"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💫",
@@ -1891,7 +2028,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sparkle",
                     "shoot",
                     "magic"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💦",
@@ -1903,7 +2041,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "water",
                     "drip",
                     "oops"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💨",
@@ -1919,7 +2058,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fart",
                     "smoke",
                     "puff"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕳️",
@@ -1929,7 +2069,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "hole",
                     "embarrassing"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💬",
@@ -1943,7 +2084,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "message",
                     "talk",
                     "chatting"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👁️‍🗨️",
@@ -1953,7 +2095,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "eye_in_speech_bubble",
                     "info"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🗨️",
@@ -1966,7 +2109,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "message",
                     "talk",
                     "chatting"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🗯️",
@@ -1979,7 +2123,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "speech",
                     "thinking",
                     "mad"
-                ]
+                ],
+                url: ""
             },
 
             {
@@ -1992,7 +2137,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sleepy",
                     "tired",
                     "dream"
-                ]
+                ],
+                url: ""
             }
         ]
     },
@@ -2015,7 +2161,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hello",
                     "hi",
                     "palm"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤚",
@@ -2027,7 +2174,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fingers",
                     "raised",
                     "backhand"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "c",
@@ -2039,7 +2187,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hand",
                     "fingers",
                     "palm"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "✋",
@@ -2053,7 +2202,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "highfive",
                     "palm",
                     "ban"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🖖",
@@ -2066,7 +2216,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fingers",
                     "spock",
                     "star trek"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👌",
@@ -2080,7 +2231,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "perfect",
                     "ok",
                     "okay"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "✌️",
@@ -2095,7 +2247,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "peace",
                     "victory",
                     "two"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤞",
@@ -2106,7 +2259,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "crossed_fingers",
                     "good",
                     "lucky"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤟",
@@ -2118,7 +2272,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hand",
                     "fingers",
                     "gesture"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤘",
@@ -2132,7 +2287,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "evil_eye",
                     "sign_of_horns",
                     "rock_on"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤙",
@@ -2144,7 +2300,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hands",
                     "gesture",
                     "shaka"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👈",
@@ -2157,7 +2314,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fingers",
                     "hand",
                     "left"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👉",
@@ -2170,7 +2328,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hand",
                     "direction",
                     "right"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👆",
@@ -2183,7 +2342,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hand",
                     "direction",
                     "up"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🖕",
@@ -2197,7 +2357,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "rude",
                     "middle",
                     "flipping"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👇",
@@ -2210,7 +2371,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hand",
                     "direction",
                     "down"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "☝️",
@@ -2223,7 +2385,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fingers",
                     "direction",
                     "up"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👍",
@@ -2242,7 +2405,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hand",
                     "like",
                     "+1"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👎",
@@ -2256,7 +2420,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "dislike",
                     "hand",
                     "-1"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "✊",
@@ -2268,7 +2433,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fingers",
                     "hand",
                     "grasp"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👊",
@@ -2283,7 +2449,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hit",
                     "attack",
                     "hand"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤛",
@@ -2294,7 +2461,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "left_facing_fist",
                     "hand",
                     "fistbump"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤜",
@@ -2305,7 +2473,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "right_facing_fist",
                     "hand",
                     "fistbump"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👏",
@@ -2319,7 +2488,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "applause",
                     "congrats",
                     "yay"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙌",
@@ -2333,7 +2503,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "yea",
                     "celebration",
                     "hands"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👐",
@@ -2346,7 +2517,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "butterfly",
                     "hands",
                     "open"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤲",
@@ -2359,7 +2531,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "gesture",
                     "cupped",
                     "prayer"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤝",
@@ -2370,7 +2543,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "handshake",
                     "agreement",
                     "shake"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙏",
@@ -2388,7 +2562,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "thank you",
                     "thanks",
                     "appreciate"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "✍️",
@@ -2401,7 +2576,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "stationery",
                     "write",
                     "compose"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💅",
@@ -2415,7 +2591,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "finger",
                     "fashion",
                     "nail"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤳",
@@ -2426,7 +2603,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "selfie",
                     "camera",
                     "phone"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💪",
@@ -2441,7 +2619,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "summer",
                     "strong",
                     "biceps"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦵",
@@ -2452,7 +2631,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "leg",
                     "kick",
                     "limb"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦶",
@@ -2463,7 +2643,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "foot",
                     "kick",
                     "stomp"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👂",
@@ -2476,7 +2657,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hear",
                     "sound",
                     "listen"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👃",
@@ -2487,7 +2669,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nose",
                     "smell",
                     "sniff"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧠",
@@ -2498,7 +2681,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "brain",
                     "smart",
                     "intelligent"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦷",
@@ -2509,7 +2693,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "tooth",
                     "teeth",
                     "dentist"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦴",
@@ -2519,7 +2704,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "bone",
                     "skeleton"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👀",
@@ -2533,7 +2719,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "stalk",
                     "peek",
                     "see"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👁️",
@@ -2547,7 +2734,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "see",
                     "watch",
                     "stare"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👅",
@@ -2558,7 +2746,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "tongue",
                     "mouth",
                     "playful"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👄",
@@ -2569,7 +2758,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "mouth",
                     "mouth",
                     "kiss"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👶",
@@ -2582,7 +2772,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "boy",
                     "girl",
                     "toddler"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧒",
@@ -2593,7 +2784,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "child",
                     "gender-neutral",
                     "young"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👦",
@@ -2606,7 +2798,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "male",
                     "guy",
                     "teenager"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👧",
@@ -2618,7 +2811,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "female",
                     "woman",
                     "teenager"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧑",
@@ -2629,7 +2823,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "person",
                     "gender-neutral",
                     "person"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👱",
@@ -2639,7 +2834,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "person_blond_hair",
                     "hairstyle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨",
@@ -2655,7 +2851,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "classy",
                     "sir",
                     "moustache"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧔",
@@ -2666,7 +2863,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "man_beard",
                     "person",
                     "bewhiskered"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍🦰",
@@ -2676,7 +2874,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "man_red_hair",
                     "hairstyle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍🦱",
@@ -2686,7 +2885,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "man_curly_hair",
                     "hairstyle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍🦳",
@@ -2697,7 +2897,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "man_white_hair",
                     "old",
                     "elder"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍🦲",
@@ -2707,7 +2908,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "man_bald",
                     "hairless"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩",
@@ -2719,7 +2921,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "female",
                     "girls",
                     "lady"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍🦰",
@@ -2729,7 +2932,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "woman_red_hair",
                     "hairstyle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍🦱",
@@ -2739,7 +2943,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "woman_curly_hair",
                     "hairstyle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍🦳",
@@ -2750,7 +2955,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "woman_white_hair",
                     "old",
                     "elder"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍🦲",
@@ -2760,7 +2966,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "woman_bald",
                     "hairless"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👱‍♀️",
@@ -2774,7 +2981,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "girl",
                     "blonde",
                     "person"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👱‍♂️",
@@ -2789,7 +2997,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blonde",
                     "guy",
                     "person"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧓",
@@ -2802,7 +3011,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "elder",
                     "senior",
                     "gender-neutral"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👴",
@@ -2817,7 +3027,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "old",
                     "elder",
                     "senior"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👵",
@@ -2833,7 +3044,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "old",
                     "elder",
                     "senior"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙍",
@@ -2843,7 +3055,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "person_frowning",
                     "worried"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙍‍♂️",
@@ -2859,7 +3072,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "depressed",
                     "discouraged",
                     "unhappy"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙍‍♀️",
@@ -2875,7 +3089,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "depressed",
                     "discouraged",
                     "unhappy"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙎",
@@ -2885,7 +3100,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "person_pouting",
                     "upset"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙎‍♂️",
@@ -2897,7 +3113,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "male",
                     "boy",
                     "man"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙎‍♀️",
@@ -2909,7 +3126,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "female",
                     "girl",
                     "woman"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙅",
@@ -2919,7 +3137,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "person_gesturing_no",
                     "decline"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙅‍♂️",
@@ -2932,7 +3151,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "boy",
                     "man",
                     "nope"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙅‍♀️",
@@ -2945,7 +3165,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "girl",
                     "woman",
                     "nope"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙆",
@@ -2955,7 +3176,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "person_gesturing_ok",
                     "agree"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙆‍♂️",
@@ -2970,7 +3192,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blue",
                     "human",
                     "man"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙆‍♀️",
@@ -2985,7 +3208,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "pink",
                     "human",
                     "woman"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💁",
@@ -2995,7 +3219,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "person_tipping_hand",
                     "information"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💁‍♂️",
@@ -3009,7 +3234,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "man",
                     "human",
                     "information"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💁‍♀️",
@@ -3023,7 +3249,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "woman",
                     "human",
                     "information"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙋",
@@ -3033,7 +3260,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "person_raising_hand",
                     "question"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙋‍♂️",
@@ -3045,7 +3273,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "male",
                     "boy",
                     "man"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙋‍♀️",
@@ -3057,7 +3286,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "female",
                     "girl",
                     "woman"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙇",
@@ -3067,7 +3297,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "person_bowing",
                     "respectiful"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙇‍♂️",
@@ -3079,7 +3310,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "man",
                     "male",
                     "boy"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🙇‍♀️",
@@ -3091,7 +3323,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "woman",
                     "female",
                     "girl"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤦",
@@ -3101,7 +3334,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "person_facepalming",
                     "disappointed"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤦‍♂️",
@@ -3114,7 +3348,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "male",
                     "boy",
                     "disbelief"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤦‍♀️",
@@ -3127,7 +3362,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "female",
                     "girl",
                     "disbelief"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤷",
@@ -3137,7 +3373,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "person_shrugging",
                     "regardless"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤷‍♂️",
@@ -3152,7 +3389,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "confused",
                     "indifferent",
                     "doubt"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤷‍♀️",
@@ -3167,7 +3405,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "confused",
                     "indifferent",
                     "doubt"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍⚕️",
@@ -3182,7 +3421,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "healthcare",
                     "man",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍⚕️",
@@ -3197,7 +3437,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "healthcare",
                     "woman",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍🎓",
@@ -3209,7 +3450,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "graduate",
                     "man",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍🎓",
@@ -3221,7 +3463,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "graduate",
                     "woman",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍🏫",
@@ -3234,7 +3477,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "professor",
                     "man",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍🏫",
@@ -3247,7 +3491,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "professor",
                     "woman",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍⚖️",
@@ -3260,7 +3505,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "court",
                     "man",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍⚖️",
@@ -3273,7 +3519,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "court",
                     "woman",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍🌾",
@@ -3286,7 +3533,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "gardener",
                     "man",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍🌾",
@@ -3299,7 +3547,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "gardener",
                     "woman",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍🍳",
@@ -3311,7 +3560,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "chef",
                     "man",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍🍳",
@@ -3323,7 +3573,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "chef",
                     "woman",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍🔧",
@@ -3336,7 +3587,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "man",
                     "human",
                     "wrench"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍🔧",
@@ -3349,7 +3601,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "woman",
                     "human",
                     "wrench"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍🏭",
@@ -3362,7 +3615,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "industrial",
                     "man",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍🏭",
@@ -3375,7 +3629,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "industrial",
                     "woman",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍💼",
@@ -3388,7 +3643,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "manager",
                     "man",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍💼",
@@ -3401,7 +3657,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "manager",
                     "woman",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍🔬",
@@ -3416,7 +3673,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "physicist",
                     "man",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍🔬",
@@ -3431,7 +3689,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "physicist",
                     "woman",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍💻",
@@ -3449,7 +3708,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "human",
                     "laptop",
                     "computer"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍💻",
@@ -3467,7 +3727,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "human",
                     "laptop",
                     "computer"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍🎤",
@@ -3480,7 +3741,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "entertainer",
                     "man",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍🎤",
@@ -3493,7 +3755,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "entertainer",
                     "woman",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍🎨",
@@ -3505,7 +3768,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "painter",
                     "man",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍🎨",
@@ -3517,7 +3781,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "painter",
                     "woman",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍✈️",
@@ -3530,7 +3795,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "plane",
                     "man",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍✈️",
@@ -3543,7 +3809,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "plane",
                     "woman",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍🚀",
@@ -3556,7 +3823,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "rocket",
                     "man",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍🚀",
@@ -3569,7 +3837,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "rocket",
                     "woman",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍🚒",
@@ -3581,7 +3850,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fireman",
                     "man",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍🚒",
@@ -3593,7 +3863,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fireman",
                     "woman",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👮",
@@ -3603,7 +3874,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "police_officer",
                     "cop"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👮‍♂️",
@@ -3619,7 +3891,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "enforcement",
                     "arrest",
                     "911"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👮‍♀️",
@@ -3636,7 +3909,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "arrest",
                     "911",
                     "female"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕵️",
@@ -3648,7 +3922,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "human",
                     "spy",
                     "detective"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕵️‍♂️",
@@ -3658,7 +3933,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "man_detective",
                     "crime"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕵️‍♀️",
@@ -3672,7 +3948,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "detective",
                     "female",
                     "woman"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💂",
@@ -3682,7 +3959,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "guard",
                     "protect"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💂‍♂️",
@@ -3697,7 +3975,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "male",
                     "guy",
                     "royal"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💂‍♀️",
@@ -3712,7 +3991,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "female",
                     "royal",
                     "woman"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👷",
@@ -3723,7 +4003,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "construction_worker",
                     "labor",
                     "build"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👷‍♂️",
@@ -3740,7 +4021,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "construction",
                     "worker",
                     "labor"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👷‍♀️",
@@ -3757,7 +4039,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "worker",
                     "labor",
                     "woman"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤴",
@@ -3772,7 +4055,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "crown",
                     "royal",
                     "king"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👸",
@@ -3788,7 +4072,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "crown",
                     "royal",
                     "queen"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👳",
@@ -3798,7 +4083,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "person_wearing_turban",
                     "headdress"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👳‍♂️",
@@ -3811,7 +4097,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "indian",
                     "hinduism",
                     "arabs"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👳‍♀️",
@@ -3825,7 +4112,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hinduism",
                     "arabs",
                     "woman"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👲",
@@ -3837,7 +4125,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "male",
                     "boy",
                     "chinese"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧕",
@@ -3850,7 +4139,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hijab",
                     "mantilla",
                     "tichel"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤵",
@@ -3863,7 +4153,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "marriage",
                     "wedding",
                     "groom"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👰",
@@ -3877,7 +4168,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "wedding",
                     "woman",
                     "bride"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤰",
@@ -3887,7 +4179,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "pregnant_woman",
                     "baby"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤱",
@@ -3898,7 +4191,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "breast_feeding",
                     "nursing",
                     "baby"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👼",
@@ -3910,7 +4204,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "heaven",
                     "wings",
                     "halo"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎅",
@@ -3924,7 +4219,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "male",
                     "xmas",
                     "father christmas"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤶",
@@ -3937,7 +4233,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "female",
                     "xmas",
                     "mother christmas"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦸",
@@ -3947,7 +4244,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "superhero",
                     "marvel"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦸‍♂️",
@@ -3961,7 +4259,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "good",
                     "hero",
                     "superpowers"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦸‍♀️",
@@ -3975,7 +4274,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "good",
                     "heroine",
                     "superpowers"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦹",
@@ -3985,7 +4285,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "supervillain",
                     "marvel"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦹‍♂️",
@@ -4001,7 +4302,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "criminal",
                     "hero",
                     "superpowers"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦹‍♀️",
@@ -4017,7 +4319,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "criminal",
                     "heroine",
                     "superpowers"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧙",
@@ -4027,7 +4330,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "mage",
                     "magic"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧙‍♂️",
@@ -4040,7 +4344,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "male",
                     "mage",
                     "sorcerer"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧙‍♀️",
@@ -4053,7 +4358,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "female",
                     "mage",
                     "witch"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧚",
@@ -4064,7 +4370,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fairy",
                     "wings",
                     "magical"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧚‍♂️",
@@ -4075,7 +4382,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "man_fairy",
                     "man",
                     "male"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧚‍♀️",
@@ -4086,7 +4394,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "woman_fairy",
                     "woman",
                     "female"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧛",
@@ -4097,7 +4406,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "vampire",
                     "blood",
                     "twilight"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧛‍♂️",
@@ -4109,7 +4419,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "man",
                     "male",
                     "dracula"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧛‍♀️",
@@ -4120,7 +4431,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "woman_vampire",
                     "woman",
                     "female"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧜",
@@ -4130,7 +4442,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "merperson",
                     "sea"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧜‍♂️",
@@ -4142,7 +4455,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "man",
                     "male",
                     "triton"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧜‍♀️",
@@ -4155,7 +4469,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "female",
                     "merwoman",
                     "ariel"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧝",
@@ -4165,7 +4480,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "elf",
                     "magical"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧝‍♂️",
@@ -4176,7 +4492,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "man_elf",
                     "man",
                     "male"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧝‍♀️",
@@ -4187,7 +4504,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "woman_elf",
                     "woman",
                     "female"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧞",
@@ -4198,7 +4516,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "genie",
                     "magical",
                     "wishes"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧞‍♂️",
@@ -4209,7 +4528,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "man_genie",
                     "man",
                     "male"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧞‍♀️",
@@ -4220,7 +4540,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "woman_genie",
                     "woman",
                     "female"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧟",
@@ -4230,7 +4551,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "zombie",
                     "dead"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧟‍♂️",
@@ -4244,7 +4566,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "dracula",
                     "undead",
                     "walking dead"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧟‍♀️",
@@ -4257,7 +4580,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "female",
                     "undead",
                     "walking dead"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💆",
@@ -4267,7 +4591,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "person_getting_massage",
                     "relax"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💆‍♂️",
@@ -4280,7 +4605,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "boy",
                     "man",
                     "head"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💆‍♀️",
@@ -4293,7 +4619,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "girl",
                     "woman",
                     "head"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💇",
@@ -4303,7 +4630,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "person_getting_haircut",
                     "hairstyle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💇‍♂️",
@@ -4315,7 +4643,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "male",
                     "boy",
                     "man"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💇‍♀️",
@@ -4327,7 +4656,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "female",
                     "girl",
                     "woman"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚶",
@@ -4337,7 +4667,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "person_walking",
                     "move"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚶‍♂️",
@@ -4349,7 +4680,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "human",
                     "feet",
                     "steps"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚶‍♀️",
@@ -4363,7 +4695,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "steps",
                     "woman",
                     "female"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏃",
@@ -4373,7 +4706,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "person_running",
                     "move"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏃‍♂️",
@@ -4387,7 +4721,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "exercise",
                     "race",
                     "running"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏃‍♀️",
@@ -4402,7 +4737,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "race",
                     "running",
                     "female"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💃",
@@ -4415,7 +4751,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "girl",
                     "woman",
                     "fun"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕺",
@@ -4428,7 +4765,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "boy",
                     "fun",
                     "dancer"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕴️",
@@ -4442,7 +4780,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "levitate",
                     "hover",
                     "jump"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👯",
@@ -4453,7 +4792,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "people_with_bunny_ears",
                     "perform",
                     "costume"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👯‍♂️",
@@ -4466,7 +4806,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "bunny",
                     "men",
                     "boys"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👯‍♀️",
@@ -4479,7 +4820,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "bunny",
                     "women",
                     "girls"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧖",
@@ -4490,7 +4832,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "person_in_steamy_room",
                     "relax",
                     "spa"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧖‍♂️",
@@ -4504,7 +4847,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "spa",
                     "steamroom",
                     "sauna"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧖‍♀️",
@@ -4518,7 +4862,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "spa",
                     "steamroom",
                     "sauna"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧗",
@@ -4528,7 +4873,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "person_climbing",
                     "sport"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧗‍♂️",
@@ -4542,7 +4888,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "man",
                     "male",
                     "rock"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧗‍♀️",
@@ -4556,7 +4903,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "woman",
                     "female",
                     "rock"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤺",
@@ -4568,7 +4916,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sports",
                     "fencing",
                     "sword"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏇",
@@ -4582,7 +4931,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "competition",
                     "gambling",
                     "luck"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⛷️",
@@ -4594,7 +4944,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sports",
                     "winter",
                     "snow"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏂",
@@ -4605,7 +4956,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "snowboarder",
                     "sports",
                     "winter"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏌️",
@@ -4616,7 +4968,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "person_golfing",
                     "sports",
                     "business"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏌️‍♂️",
@@ -4626,7 +4979,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "man_golfing",
                     "sport"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏌️‍♀️",
@@ -4639,7 +4993,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "business",
                     "woman",
                     "female"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏄",
@@ -4650,7 +5005,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "person_surfing",
                     "sport",
                     "sea"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏄‍♂️",
@@ -4664,7 +5020,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sea",
                     "summer",
                     "beach"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏄‍♀️",
@@ -4680,7 +5037,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "beach",
                     "woman",
                     "female"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚣",
@@ -4691,7 +5049,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "person_rowing_boat",
                     "sport",
                     "move"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚣‍♂️",
@@ -4704,7 +5063,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hobby",
                     "water",
                     "ship"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚣‍♀️",
@@ -4719,7 +5079,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "ship",
                     "woman",
                     "female"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏊",
@@ -4730,7 +5091,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "person_swimming",
                     "sport",
                     "pool"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏊‍♂️",
@@ -4745,7 +5107,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "athlete",
                     "water",
                     "summer"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏊‍♀️",
@@ -4762,7 +5125,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "summer",
                     "woman",
                     "female"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⛹️",
@@ -4773,7 +5137,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "person_bouncing_ball",
                     "sports",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⛹️‍♂️",
@@ -4783,7 +5148,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "man_bouncing_ball",
                     "sport"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⛹️‍♀️",
@@ -4796,7 +5162,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "human",
                     "woman",
                     "female"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏋️",
@@ -4808,7 +5175,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sports",
                     "training",
                     "exercise"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏋️‍♂️",
@@ -4818,7 +5186,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "man_lifting_weights",
                     "sport"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏋️‍♀️",
@@ -4832,7 +5201,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "exercise",
                     "woman",
                     "female"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚴",
@@ -4843,7 +5213,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "person_biking",
                     "sport",
                     "move"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚴‍♂️",
@@ -4856,7 +5227,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "bike",
                     "exercise",
                     "hipster"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚴‍♀️",
@@ -4871,7 +5243,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hipster",
                     "woman",
                     "female"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚵",
@@ -4882,7 +5255,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "person_mountain_biking",
                     "sport",
                     "move"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚵‍♂️",
@@ -4896,7 +5270,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "human",
                     "race",
                     "bike"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚵‍♀️",
@@ -4912,7 +5287,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "bike",
                     "woman",
                     "female"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤸",
@@ -4923,7 +5299,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "person_cartwheeling",
                     "sport",
                     "gymnastic"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤸‍♂️",
@@ -4933,7 +5310,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "man_cartwheeling",
                     "gymnastics"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤸‍♀️",
@@ -4943,7 +5321,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "woman_cartwheeling",
                     "gymnastics"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤼",
@@ -4953,7 +5332,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "people_wrestling",
                     "sport"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤼‍♂️",
@@ -4964,7 +5344,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "men_wrestling",
                     "sports",
                     "wrestlers"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤼‍♀️",
@@ -4975,7 +5356,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "women_wrestling",
                     "sports",
                     "wrestlers"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤽",
@@ -4985,7 +5367,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "person_playing_water_polo",
                     "sport"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤽‍♂️",
@@ -4996,7 +5379,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "man_playing_water_polo",
                     "sports",
                     "pool"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤽‍♀️",
@@ -5007,7 +5391,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "woman_playing_water_polo",
                     "sports",
                     "pool"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤾",
@@ -5017,7 +5402,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "person_playing_handball",
                     "sport"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤾‍♂️",
@@ -5027,7 +5413,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "man_playing_handball",
                     "sports"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤾‍♀️",
@@ -5037,7 +5424,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "woman_playing_handball",
                     "sports"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤹",
@@ -5048,7 +5436,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "person_juggling",
                     "performance",
                     "balance"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤹‍♂️",
@@ -5061,7 +5450,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "balance",
                     "skill",
                     "multitask"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🤹‍♀️",
@@ -5074,7 +5464,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "balance",
                     "skill",
                     "multitask"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧘",
@@ -5084,7 +5475,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "person_in_lotus_position",
                     "meditate"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧘‍♂️",
@@ -5100,7 +5492,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "serenity",
                     "zen",
                     "mindfulness"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧘‍♀️",
@@ -5116,7 +5509,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "serenity",
                     "zen",
                     "mindfulness"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛀",
@@ -5128,7 +5522,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "clean",
                     "shower",
                     "bathroom"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛌",
@@ -5139,7 +5534,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "person_in_bed",
                     "bed",
                     "rest"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👭",
@@ -5156,7 +5552,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "female",
                     "people",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👫",
@@ -5175,7 +5572,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "affection",
                     "valentines",
                     "marriage"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👬",
@@ -5192,7 +5590,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "friendship",
                     "people",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💏",
@@ -5207,7 +5606,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "like",
                     "dating",
                     "marriage"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍❤️‍💋‍👨",
@@ -5217,7 +5617,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "kiss_woman_man",
                     "love"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍❤️‍💋‍👨",
@@ -5232,7 +5633,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "like",
                     "dating",
                     "marriage"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍❤️‍💋‍👩",
@@ -5247,7 +5649,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "like",
                     "dating",
                     "marriage"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💑",
@@ -5264,7 +5667,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "dating",
                     "valentines",
                     "marriage"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍❤️‍👨",
@@ -5274,7 +5678,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "couple_with_heart_woman_man",
                     "love"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍❤️‍👨",
@@ -5291,7 +5696,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "dating",
                     "valentines",
                     "marriage"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍❤️‍👩",
@@ -5308,7 +5714,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "dating",
                     "valentines",
                     "marriage"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👪",
@@ -5326,7 +5733,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "mother",
                     "people",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍👩‍👦",
@@ -5336,7 +5744,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "family_man_woman_boy",
                     "love"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍👩‍👧",
@@ -5350,7 +5759,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "people",
                     "human",
                     "child"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍👩‍👧‍👦",
@@ -5364,7 +5774,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "people",
                     "human",
                     "children"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍👩‍👦‍👦",
@@ -5378,7 +5789,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "people",
                     "human",
                     "children"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍👩‍👧‍👧",
@@ -5392,7 +5804,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "people",
                     "human",
                     "children"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍👨‍👦",
@@ -5406,7 +5819,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "people",
                     "human",
                     "children"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍👨‍👧",
@@ -5420,7 +5834,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "people",
                     "human",
                     "children"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍👨‍👧‍👦",
@@ -5434,7 +5849,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "people",
                     "human",
                     "children"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍👨‍👦‍👦",
@@ -5448,7 +5864,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "people",
                     "human",
                     "children"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍👨‍👧‍👧",
@@ -5462,7 +5879,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "people",
                     "human",
                     "children"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍👩‍👦",
@@ -5476,7 +5894,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "people",
                     "human",
                     "children"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍👩‍👧",
@@ -5490,7 +5909,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "people",
                     "human",
                     "children"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍👩‍👧‍👦",
@@ -5504,7 +5924,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "people",
                     "human",
                     "children"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍👩‍👦‍👦",
@@ -5518,7 +5939,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "people",
                     "human",
                     "children"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍👩‍👧‍👧",
@@ -5532,7 +5954,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "people",
                     "human",
                     "children"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍👦",
@@ -5546,7 +5969,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "people",
                     "human",
                     "child"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍👦‍👦",
@@ -5560,7 +5984,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "people",
                     "human",
                     "children"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍👧",
@@ -5574,7 +5999,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "people",
                     "human",
                     "child"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍👧‍👦",
@@ -5588,7 +6014,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "people",
                     "human",
                     "children"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👨‍👧‍👧",
@@ -5602,7 +6029,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "people",
                     "human",
                     "children"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍👦",
@@ -5616,7 +6044,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "people",
                     "human",
                     "child"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍👦‍👦",
@@ -5630,7 +6059,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "people",
                     "human",
                     "children"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍👧",
@@ -5644,7 +6074,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "people",
                     "human",
                     "child"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍👧‍👦",
@@ -5658,7 +6089,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "people",
                     "human",
                     "children"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👩‍👧‍👧",
@@ -5672,7 +6104,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "people",
                     "human",
                     "children"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🗣️",
@@ -5687,7 +6120,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sing",
                     "say",
                     "talk"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👤",
@@ -5699,7 +6133,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "user",
                     "person",
                     "human"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👥",
@@ -5713,7 +6148,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "human",
                     "group",
                     "team"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👣",
@@ -5726,7 +6162,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "tracking",
                     "walking",
                     "beach"
-                ]
+                ],
+                url: ""
             }
         ]
     },
@@ -5744,7 +6181,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "nature",
                     "circus"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐒",
@@ -5757,7 +6195,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "banana",
                     "circus"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦍",
@@ -5769,7 +6208,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "nature",
                     "circus"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐶",
@@ -5785,7 +6225,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "puppy",
                     "pet",
                     "faithful"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐕",
@@ -5800,7 +6241,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "doge",
                     "pet",
                     "faithful"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐩",
@@ -5814,7 +6256,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "101",
                     "nature",
                     "pet"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐺",
@@ -5826,7 +6269,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "nature",
                     "wild"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦊",
@@ -5838,7 +6282,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "nature",
                     "face"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦝",
@@ -5849,7 +6294,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "raccoon",
                     "animal",
                     "nature"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐱",
@@ -5863,7 +6309,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "pet",
                     "kitten"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐈",
@@ -5876,7 +6323,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "meow",
                     "pet",
                     "cats"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦁",
@@ -5887,7 +6335,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "lion",
                     "animal",
                     "nature"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐯",
@@ -5902,7 +6351,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "wild",
                     "nature",
                     "roar"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐅",
@@ -5914,7 +6364,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "nature",
                     "roar"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐆",
@@ -5925,7 +6376,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "leopard",
                     "animal",
                     "nature"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐴",
@@ -5937,7 +6389,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "brown",
                     "nature"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐎",
@@ -5949,7 +6402,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "gamble",
                     "luck"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦄",
@@ -5961,7 +6415,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "nature",
                     "mystical"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦓",
@@ -5974,7 +6429,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "stripes",
                     "safari"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦌",
@@ -5987,7 +6443,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "horns",
                     "venison"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐮",
@@ -6002,7 +6459,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "moo",
                     "milk"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐂",
@@ -6014,7 +6472,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "cow",
                     "beef"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐃",
@@ -6027,7 +6486,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "ox",
                     "cow"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐄",
@@ -6042,7 +6502,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "moo",
                     "milk"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐷",
@@ -6054,7 +6515,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "oink",
                     "nature"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐖",
@@ -6065,7 +6527,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "pig",
                     "animal",
                     "nature"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐗",
@@ -6076,7 +6539,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "boar",
                     "animal",
                     "nature"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐽",
@@ -6087,7 +6551,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "pig_nose",
                     "animal",
                     "oink"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐏",
@@ -6099,7 +6564,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "sheep",
                     "nature"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐑",
@@ -6112,7 +6578,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "wool",
                     "shipit"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐐",
@@ -6123,7 +6590,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "goat",
                     "animal",
                     "nature"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐪",
@@ -6136,7 +6604,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hot",
                     "desert",
                     "hump"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐫",
@@ -6150,7 +6619,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hot",
                     "desert",
                     "hump"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦙",
@@ -6162,7 +6632,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "nature",
                     "alpaca"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦒",
@@ -6175,7 +6646,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "spots",
                     "safari"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐘",
@@ -6189,7 +6661,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nose",
                     "th",
                     "circus"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦏",
@@ -6201,7 +6674,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "nature",
                     "horn"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦛",
@@ -6212,7 +6686,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hippopotamus",
                     "animal",
                     "nature"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐭",
@@ -6225,7 +6700,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "cheese_wedge",
                     "rodent"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐁",
@@ -6237,7 +6713,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "nature",
                     "rodent"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐀",
@@ -6249,7 +6726,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "mouse",
                     "rodent"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐹",
@@ -6260,7 +6738,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hamster",
                     "animal",
                     "nature"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐰",
@@ -6275,7 +6754,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "spring",
                     "magic",
                     "bunny"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐇",
@@ -6289,7 +6769,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "pet",
                     "magic",
                     "spring"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐿️",
@@ -6302,7 +6783,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "rodent",
                     "squirrel"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦔",
@@ -6314,7 +6796,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "nature",
                     "spiny"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦇",
@@ -6327,7 +6810,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "blind",
                     "vampire"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐻",
@@ -6339,7 +6823,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "nature",
                     "wild"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐨",
@@ -6350,7 +6835,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "koala",
                     "animal",
                     "nature"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐼",
@@ -6362,7 +6848,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "nature",
                     "panda"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦘",
@@ -6377,7 +6864,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "joey",
                     "hop",
                     "marsupial"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦡",
@@ -6389,7 +6877,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "nature",
                     "honey"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐾",
@@ -6405,7 +6894,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cat",
                     "pet",
                     "feet"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦃",
@@ -6416,7 +6906,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "turkey",
                     "animal",
                     "bird"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐔",
@@ -6429,7 +6920,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cluck",
                     "nature",
                     "bird"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐓",
@@ -6441,7 +6933,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "nature",
                     "chicken"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐣",
@@ -6456,7 +6949,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "born",
                     "baby",
                     "bird"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐤",
@@ -6468,7 +6962,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "chicken",
                     "bird"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐥",
@@ -6481,7 +6976,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "chicken",
                     "baby",
                     "bird"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐦",
@@ -6495,7 +6991,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fly",
                     "tweet",
                     "spring"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐧",
@@ -6506,7 +7003,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "penguin",
                     "animal",
                     "nature"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕊️",
@@ -6517,7 +7015,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "dove",
                     "animal",
                     "bird"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦅",
@@ -6529,7 +7028,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "nature",
                     "bird"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦆",
@@ -6542,7 +7042,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "bird",
                     "mallard"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦢",
@@ -6554,7 +7055,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "nature",
                     "bird"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦉",
@@ -6567,7 +7069,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "bird",
                     "hoot"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦚",
@@ -6580,7 +7083,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "peahen",
                     "bird"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦜",
@@ -6594,7 +7098,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "bird",
                     "pirate",
                     "talk"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐸",
@@ -6607,7 +7112,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "croak",
                     "toad"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐊",
@@ -6621,7 +7127,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "reptile",
                     "lizard",
                     "alligator"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐢",
@@ -6634,7 +7141,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "slow",
                     "nature",
                     "tortoise"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦎",
@@ -6646,7 +7154,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "nature",
                     "reptile"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐍",
@@ -6660,7 +7169,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "hiss",
                     "python"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐲",
@@ -6674,7 +7184,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "chinese",
                     "green"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐉",
@@ -6688,7 +7199,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "chinese",
                     "green"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦕",
@@ -6704,7 +7216,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "brontosaurus",
                     "diplodocus",
                     "extinct"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦖",
@@ -6718,7 +7231,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "dinosaur",
                     "tyrannosaurus",
                     "extinct"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐳",
@@ -6731,7 +7245,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "sea",
                     "ocean"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐋",
@@ -6744,7 +7259,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "sea",
                     "ocean"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐬",
@@ -6761,7 +7277,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "flipper",
                     "fins",
                     "beach"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐟",
@@ -6773,7 +7290,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "food",
                     "nature"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐠",
@@ -6787,7 +7305,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "ocean",
                     "beach",
                     "nemo"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐡",
@@ -6801,7 +7320,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "food",
                     "sea",
                     "ocean"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦈",
@@ -6818,7 +7338,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "jaws",
                     "fins",
                     "beach"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐙",
@@ -6833,7 +7354,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sea",
                     "nature",
                     "beach"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐚",
@@ -6845,7 +7367,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "sea",
                     "beach"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐌",
@@ -6857,7 +7380,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "slow",
                     "animal",
                     "shell"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦋",
@@ -6870,7 +7394,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "insect",
                     "nature",
                     "caterpillar"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐛",
@@ -6883,7 +7408,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "insect",
                     "nature",
                     "worm"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐜",
@@ -6896,7 +7422,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "insect",
                     "nature",
                     "bug"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐝",
@@ -6911,7 +7438,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "bug",
                     "spring",
                     "honey"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🐞",
@@ -6924,7 +7452,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "insect",
                     "nature",
                     "ladybug"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦗",
@@ -6936,7 +7465,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "cricket",
                     "chirp"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕷️",
@@ -6947,7 +7477,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "spider",
                     "animal",
                     "arachnid"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕸️",
@@ -6960,7 +7491,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "insect",
                     "arachnid",
                     "silk"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦂",
@@ -6971,7 +7503,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "scorpion",
                     "animal",
                     "arachnid"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦟",
@@ -6984,7 +7517,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "insect",
                     "malaria"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦠",
@@ -6998,7 +7532,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "germs",
                     "virus",
                     "covid"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💐",
@@ -7010,7 +7545,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "flowers",
                     "nature",
                     "spring"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌸",
@@ -7023,7 +7559,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "plant",
                     "spring",
                     "flower"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💮",
@@ -7034,7 +7571,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "white_flower",
                     "japanese",
                     "spring"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏵️",
@@ -7046,7 +7584,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "flower",
                     "decoration",
                     "military"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌹",
@@ -7059,7 +7598,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "valentines",
                     "love",
                     "spring"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥀",
@@ -7072,7 +7612,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "flower",
                     "rose"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌺",
@@ -7085,7 +7626,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "vegetable",
                     "flowers",
                     "beach"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌻",
@@ -7097,7 +7639,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "plant",
                     "fall"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌼",
@@ -7109,7 +7652,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "flowers",
                     "yellow"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌷",
@@ -7123,7 +7667,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "summer",
                     "spring"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌱",
@@ -7137,7 +7682,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "grass",
                     "lawn",
                     "spring"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌲",
@@ -7148,7 +7694,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "evergreen_tree",
                     "plant",
                     "nature"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌳",
@@ -7159,7 +7706,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "deciduous_tree",
                     "plant",
                     "nature"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌴",
@@ -7175,7 +7723,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "beach",
                     "mojito",
                     "tropical"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌵",
@@ -7187,7 +7736,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "vegetable",
                     "plant",
                     "nature"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌾",
@@ -7198,7 +7748,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sheaf_of_rice",
                     "nature",
                     "plant"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌿",
@@ -7213,7 +7764,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "weed",
                     "grass",
                     "lawn"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "☘️",
@@ -7227,7 +7779,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "irish",
                     "clover"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍀",
@@ -7241,7 +7794,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "lucky",
                     "irish"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍁",
@@ -7255,7 +7809,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "vegetable",
                     "ca",
                     "fall"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍂",
@@ -7268,7 +7823,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "plant",
                     "vegetable",
                     "leaves"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍃",
@@ -7284,7 +7840,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "grass",
                     "lawn",
                     "spring"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍄",
@@ -7295,7 +7852,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "mushroom",
                     "plant",
                     "vegetable"
-                ]
+                ],
+                url: ""
             }
         ]
     },
@@ -7313,7 +7871,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fruit",
                     "food",
                     "wine"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍈",
@@ -7325,7 +7884,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fruit",
                     "nature",
                     "food"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍉",
@@ -7338,7 +7898,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "food",
                     "picnic",
                     "summer"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍊",
@@ -7351,7 +7912,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fruit",
                     "nature",
                     "orange"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍋",
@@ -7362,7 +7924,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "lemon",
                     "fruit",
                     "nature"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍌",
@@ -7374,7 +7937,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fruit",
                     "food",
                     "monkey"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍍",
@@ -7386,7 +7950,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fruit",
                     "nature",
                     "food"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥭",
@@ -7398,7 +7963,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fruit",
                     "food",
                     "tropical"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍎",
@@ -7410,7 +7976,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fruit",
                     "mac",
                     "school"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍏",
@@ -7421,7 +7988,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "green_apple",
                     "fruit",
                     "nature"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍐",
@@ -7433,7 +8001,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fruit",
                     "nature",
                     "food"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍑",
@@ -7445,7 +8014,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fruit",
                     "nature",
                     "food"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍒",
@@ -7456,7 +8026,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cherries",
                     "food",
                     "fruit"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍓",
@@ -7468,7 +8039,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fruit",
                     "food",
                     "nature"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥝",
@@ -7479,7 +8051,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "kiwi_fruit",
                     "fruit",
                     "food"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍅",
@@ -7492,7 +8065,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "vegetable",
                     "nature",
                     "food"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥥",
@@ -7505,7 +8079,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "food",
                     "palm"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥑",
@@ -7516,7 +8091,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "avocado",
                     "fruit",
                     "food"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍆",
@@ -7529,7 +8105,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "food",
                     "aubergine"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥔",
@@ -7542,7 +8119,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "tuber",
                     "vegatable",
                     "starch"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥕",
@@ -7554,7 +8132,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "vegetable",
                     "food",
                     "orange"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌽",
@@ -7566,7 +8145,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "food",
                     "vegetable",
                     "plant"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌶️",
@@ -7579,7 +8159,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "spicy",
                     "chilli",
                     "chili"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥒",
@@ -7591,7 +8172,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fruit",
                     "food",
                     "pickle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥬",
@@ -7607,7 +8189,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cabbage",
                     "kale",
                     "lettuce"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥦",
@@ -7619,7 +8202,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fruit",
                     "food",
                     "vegetable"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥜",
@@ -7630,7 +8214,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "peanuts",
                     "food",
                     "nut"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌰",
@@ -7641,7 +8226,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "chestnut",
                     "food",
                     "squirrel"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍞",
@@ -7654,7 +8240,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "wheat",
                     "breakfast",
                     "toast"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥐",
@@ -7666,7 +8253,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "food",
                     "bread",
                     "french"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥖",
@@ -7680,7 +8268,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "french",
                     "france",
                     "bakery"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥨",
@@ -7694,7 +8283,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "twisted",
                     "germany",
                     "bakery"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥯",
@@ -7709,7 +8299,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "schmear",
                     "jewish",
                     "bakery"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥞",
@@ -7723,7 +8314,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "flapjacks",
                     "hotcakes",
                     "brunch"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧀",
@@ -7735,7 +8327,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "food",
                     "chadder",
                     "swiss"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍖",
@@ -7747,7 +8340,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "good",
                     "food",
                     "drumstick"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍗",
@@ -7762,7 +8356,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "bird",
                     "chicken",
                     "turkey"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥩",
@@ -7778,7 +8373,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "chop",
                     "lambchop",
                     "porkchop"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥓",
@@ -7793,7 +8389,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "pig",
                     "meat",
                     "brunch"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍔",
@@ -7808,7 +8405,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cheeseburger",
                     "mcdonalds",
                     "burger king"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍟",
@@ -7821,7 +8419,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "snack",
                     "fast food",
                     "potato"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍕",
@@ -7833,7 +8432,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "food",
                     "party",
                     "italy"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌭",
@@ -7845,7 +8445,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "food",
                     "frankfurter",
                     "america"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥪",
@@ -7859,7 +8460,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "bread",
                     "toast",
                     "bakery"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌮",
@@ -7870,7 +8472,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "taco",
                     "food",
                     "mexican"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌯",
@@ -7881,7 +8484,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "burrito",
                     "food",
                     "mexican"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥙",
@@ -7895,7 +8499,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "stuffed",
                     "gyro",
                     "mediterranean"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥚",
@@ -7907,7 +8512,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "food",
                     "chicken",
                     "breakfast"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍳",
@@ -7921,7 +8527,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "kitchen",
                     "egg",
                     "skillet"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥘",
@@ -7935,7 +8542,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "casserole",
                     "paella",
                     "skillet"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍲",
@@ -7948,7 +8556,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "meat",
                     "soup",
                     "hot pot"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥣",
@@ -7962,7 +8571,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cereal",
                     "oatmeal",
                     "porridge"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥗",
@@ -7975,7 +8585,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "healthy",
                     "lettuce",
                     "vegetable"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍿",
@@ -7989,7 +8600,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "films",
                     "snack",
                     "drama"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧂",
@@ -8000,7 +8612,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "salt",
                     "condiment",
                     "shaker"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥫",
@@ -8012,7 +8625,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "food",
                     "soup",
                     "tomatoes"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍱",
@@ -8025,7 +8639,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "japanese",
                     "box",
                     "lunch"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍘",
@@ -8037,7 +8652,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "food",
                     "japanese",
                     "snack"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍙",
@@ -8048,7 +8664,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "rice_ball",
                     "food",
                     "japanese"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍚",
@@ -8059,7 +8676,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cooked_rice",
                     "food",
                     "asian"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍛",
@@ -8072,7 +8690,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "spicy",
                     "hot",
                     "indian"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍜",
@@ -8086,7 +8705,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "noodle",
                     "chopsticks",
                     "ramen"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍝",
@@ -8099,7 +8719,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "italian",
                     "pasta",
                     "noodle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍠",
@@ -8111,7 +8732,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "food",
                     "nature",
                     "plant"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍢",
@@ -8122,7 +8744,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "oden",
                     "food",
                     "japanese"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍣",
@@ -8135,7 +8758,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fish",
                     "japanese",
                     "rice"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍤",
@@ -8148,7 +8772,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "animal",
                     "appetizer",
                     "summer"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍥",
@@ -8167,7 +8792,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "kamaboko",
                     "surimi",
                     "ramen"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥮",
@@ -8179,7 +8805,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "food",
                     "autumn",
                     "dessert"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍡",
@@ -8194,7 +8821,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "japanese",
                     "barbecue",
                     "meat"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥟",
@@ -8208,7 +8836,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "pierogi",
                     "potsticker",
                     "gyoza"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥠",
@@ -8220,7 +8849,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "food",
                     "prophecy",
                     "dessert"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥡",
@@ -8231,7 +8861,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "takeout_box",
                     "food",
                     "leftovers"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦀",
@@ -8242,7 +8873,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "crab",
                     "animal",
                     "crustacean"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦞",
@@ -8256,7 +8888,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "bisque",
                     "claws",
                     "seafood"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦐",
@@ -8269,7 +8902,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "ocean",
                     "nature",
                     "seafood"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🦑",
@@ -8282,7 +8916,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "ocean",
                     "sea"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍦",
@@ -8295,7 +8930,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hot",
                     "dessert",
                     "summer"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍧",
@@ -8307,7 +8943,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hot",
                     "dessert",
                     "summer"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍨",
@@ -8319,7 +8956,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "food",
                     "hot",
                     "dessert"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍩",
@@ -8333,7 +8971,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "snack",
                     "sweet",
                     "donut"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍪",
@@ -8348,7 +8987,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "chocolate",
                     "sweet",
                     "dessert"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎂",
@@ -8360,7 +9000,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "food",
                     "dessert",
                     "cake"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍰",
@@ -8371,7 +9012,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "shortcake",
                     "food",
                     "dessert"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧁",
@@ -8384,7 +9026,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "dessert",
                     "bakery",
                     "sweet"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥧",
@@ -8396,7 +9039,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "food",
                     "dessert",
                     "pastry"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍫",
@@ -8409,7 +9053,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "snack",
                     "dessert",
                     "sweet"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍬",
@@ -8422,7 +9067,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "dessert",
                     "sweet",
                     "lolly"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍭",
@@ -8435,7 +9081,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "snack",
                     "search",
                     "sweet"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍮",
@@ -8446,7 +9093,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "custard",
                     "dessert",
                     "food"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍯",
@@ -8458,7 +9106,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "bees",
                     "sweet",
                     "kitchen"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍼",
@@ -8470,7 +9119,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "food",
                     "container",
                     "milk"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥛",
@@ -8482,7 +9132,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "beverage",
                     "drink",
                     "cow"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "☕",
@@ -8497,7 +9148,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "espresso",
                     "coffee",
                     "mug"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍵",
@@ -8511,7 +9163,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "breakfast",
                     "green",
                     "british"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍶",
@@ -8527,7 +9180,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "japanese",
                     "alcohol",
                     "booze"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍾",
@@ -8540,7 +9194,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "wine",
                     "bottle",
                     "celebration"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍷",
@@ -8554,7 +9209,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "drunk",
                     "alcohol",
                     "booze"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍸",
@@ -8569,7 +9225,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "beverage",
                     "booze",
                     "mojito"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍹",
@@ -8585,7 +9242,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "alcohol",
                     "booze",
                     "mojito"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍺",
@@ -8603,7 +9261,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "summer",
                     "alcohol",
                     "booze"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍻",
@@ -8621,7 +9280,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "summer",
                     "alcohol",
                     "booze"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥂",
@@ -8639,7 +9299,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "wine",
                     "champagne",
                     "toast"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥃",
@@ -8659,7 +9320,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "whisky",
                     "glass",
                     "shot"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥤",
@@ -8670,7 +9332,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cup_with_straw",
                     "drink",
                     "soda"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥢",
@@ -8680,7 +9343,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "chopsticks",
                     "food"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍽️",
@@ -8695,7 +9359,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "lunch",
                     "dinner",
                     "restaurant"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🍴",
@@ -8706,7 +9371,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fork_and_knife",
                     "cutlery",
                     "kitchen"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥄",
@@ -8718,7 +9384,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cutlery",
                     "kitchen",
                     "tableware"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔪",
@@ -8732,7 +9399,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cutlery",
                     "kitchen",
                     "weapon"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏺",
@@ -8743,7 +9411,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "amphora",
                     "vase",
                     "jar"
-                ]
+                ],
+                url: ""
             }
         ]
     },
@@ -8761,7 +9430,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "globe",
                     "world",
                     "international"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌎",
@@ -8774,7 +9444,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "world",
                     "USA",
                     "international"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌏",
@@ -8787,7 +9458,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "world",
                     "east",
                     "international"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌐",
@@ -8802,7 +9474,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "internet",
                     "interweb",
                     "i18n"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🗺️",
@@ -8813,7 +9486,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "world_map",
                     "location",
                     "direction"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🗾",
@@ -8826,7 +9500,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "japanese",
                     "asia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧭",
@@ -8838,7 +9513,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "magnetic",
                     "navigation",
                     "orienteering"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏔️",
@@ -8852,7 +9528,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "environment",
                     "winter",
                     "cold"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⛰️",
@@ -8864,7 +9541,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "photo",
                     "nature",
                     "environment"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌋",
@@ -8876,7 +9554,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "photo",
                     "nature",
                     "disaster"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🗻",
@@ -8889,7 +9568,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "mountain",
                     "nature",
                     "japanese"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏕️",
@@ -8901,7 +9581,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "photo",
                     "outdoors",
                     "tent"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏖️",
@@ -8915,7 +9596,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sunny",
                     "sand",
                     "mojito"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏜️",
@@ -8927,7 +9609,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "photo",
                     "warm",
                     "saharah"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏝️",
@@ -8939,7 +9622,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "photo",
                     "tropical",
                     "mojito"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏞️",
@@ -8951,7 +9635,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "photo",
                     "environment",
                     "nature"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏟️",
@@ -8965,7 +9650,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sports",
                     "concert",
                     "venue"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏛️",
@@ -8977,7 +9663,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "art",
                     "culture",
                     "history"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏗️",
@@ -8989,7 +9676,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "wip",
                     "working",
                     "progress"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧱",
@@ -8999,7 +9687,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "brick",
                     "bricks"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏘️",
@@ -9010,7 +9699,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "houses",
                     "buildings",
                     "photo"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏚️",
@@ -9023,7 +9713,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "evict",
                     "broken",
                     "building"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏠",
@@ -9034,7 +9725,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "house",
                     "building",
                     "home"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏡",
@@ -9046,7 +9738,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "home",
                     "plant",
                     "nature"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏢",
@@ -9058,7 +9751,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "building",
                     "bureau",
                     "work"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏣",
@@ -9070,7 +9764,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "building",
                     "envelope",
                     "communication"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏤",
@@ -9081,7 +9776,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "post_office",
                     "building",
                     "email"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏥",
@@ -9094,7 +9790,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "health",
                     "surgery",
                     "doctor"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏦",
@@ -9109,7 +9806,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cash",
                     "business",
                     "enterprise"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏨",
@@ -9121,7 +9819,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "building",
                     "accomodation",
                     "checkin"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏩",
@@ -9133,7 +9832,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "like",
                     "affection",
                     "dating"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏪",
@@ -9145,7 +9845,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "building",
                     "shopping",
                     "groceries"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏫",
@@ -9159,7 +9860,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "education",
                     "learn",
                     "teach"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏬",
@@ -9171,7 +9873,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "building",
                     "shopping",
                     "mall"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏭",
@@ -9184,7 +9887,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "industry",
                     "pollution",
                     "smoke"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏯",
@@ -9195,7 +9899,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "japanese_castle",
                     "photo",
                     "building"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏰",
@@ -9207,7 +9912,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "building",
                     "royalty",
                     "history"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💒",
@@ -9223,7 +9929,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "marriage",
                     "bride",
                     "groom"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🗼",
@@ -9234,7 +9941,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "tokyo_tower",
                     "photo",
                     "japanese"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🗽",
@@ -9245,7 +9953,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "statue_of_liberty",
                     "american",
                     "newyork"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⛪",
@@ -9257,7 +9966,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "building",
                     "religion",
                     "christ"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕌",
@@ -9269,7 +9979,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "islam",
                     "worship",
                     "minaret"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕍",
@@ -9282,7 +9993,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "worship",
                     "temple",
                     "jewish"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⛩️",
@@ -9294,7 +10006,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "temple",
                     "japan",
                     "kyoto"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕋",
@@ -9306,7 +10019,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "mecca",
                     "mosque",
                     "islam"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⛲",
@@ -9319,7 +10033,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "summer",
                     "water",
                     "fresh"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⛺",
@@ -9331,7 +10046,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "photo",
                     "camping",
                     "outdoors"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌁",
@@ -9342,7 +10058,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "foggy",
                     "photo",
                     "mountain"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌃",
@@ -9354,7 +10071,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "evening",
                     "city",
                     "downtown"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏙️",
@@ -9366,7 +10084,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "photo",
                     "night life",
                     "urban"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌄",
@@ -9378,7 +10097,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "view",
                     "vacation",
                     "photo"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌅",
@@ -9391,7 +10111,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "view",
                     "vacation",
                     "photo"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌆",
@@ -9404,7 +10125,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "evening",
                     "sky",
                     "buildings"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌇",
@@ -9416,7 +10138,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "photo",
                     "good morning",
                     "dawn"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌉",
@@ -9427,7 +10150,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "bridge_at_night",
                     "photo",
                     "sanfrancisco"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "♨️",
@@ -9439,7 +10163,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "bath",
                     "warm",
                     "relax"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎠",
@@ -9450,7 +10175,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "carousel_horse",
                     "photo",
                     "carnival"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎡",
@@ -9462,7 +10188,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "photo",
                     "carnival",
                     "londoneye"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎢",
@@ -9475,7 +10202,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "playground",
                     "photo",
                     "fun"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💈",
@@ -9487,7 +10215,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hair",
                     "salon",
                     "style"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎪",
@@ -9499,7 +10228,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "festival",
                     "carnival",
                     "party"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚂",
@@ -9511,7 +10241,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "transportation",
                     "vehicle",
                     "train"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚃",
@@ -9522,7 +10253,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "railway_car",
                     "transportation",
                     "vehicle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚄",
@@ -9533,7 +10265,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "high_speed_train",
                     "transportation",
                     "vehicle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚅",
@@ -9548,7 +10281,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fast",
                     "public",
                     "travel"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚆",
@@ -9559,7 +10293,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "train",
                     "transportation",
                     "vehicle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚇",
@@ -9573,7 +10308,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "mrt",
                     "underground",
                     "tube"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚈",
@@ -9584,7 +10320,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "light_rail",
                     "transportation",
                     "vehicle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚉",
@@ -9596,7 +10333,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "transportation",
                     "vehicle",
                     "public"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚊",
@@ -9607,7 +10345,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "tram",
                     "transportation",
                     "vehicle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚝",
@@ -9618,7 +10357,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "monorail",
                     "transportation",
                     "vehicle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚞",
@@ -9629,7 +10369,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "mountain_railway",
                     "transportation",
                     "vehicle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚋",
@@ -9643,7 +10384,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "carriage",
                     "public",
                     "travel"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚌",
@@ -9655,7 +10397,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "car",
                     "vehicle",
                     "transportation"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚍",
@@ -9666,7 +10409,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "oncoming_bus",
                     "vehicle",
                     "transportation"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚎",
@@ -9678,7 +10422,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "bart",
                     "transportation",
                     "vehicle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚐",
@@ -9690,7 +10435,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "vehicle",
                     "car",
                     "transportation"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚑",
@@ -9702,7 +10448,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "health",
                     "911",
                     "hospital"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚒",
@@ -9714,7 +10461,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "transportation",
                     "cars",
                     "vehicle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚓",
@@ -9729,7 +10477,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "law",
                     "legal",
                     "enforcement"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚔",
@@ -9743,7 +10492,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "legal",
                     "enforcement",
                     "911"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚕",
@@ -9756,7 +10506,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "vehicle",
                     "cars",
                     "transportation"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚖",
@@ -9768,7 +10519,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "vehicle",
                     "cars",
                     "uber"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚗",
@@ -9780,7 +10532,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "red",
                     "transportation",
                     "vehicle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚘",
@@ -9792,7 +10545,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "car",
                     "vehicle",
                     "transportation"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚙",
@@ -9803,7 +10557,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sport_utility_vehicle",
                     "transportation",
                     "vehicle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚚",
@@ -9814,7 +10569,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "delivery_truck",
                     "cars",
                     "transportation"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚛",
@@ -9827,7 +10583,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cars",
                     "transportation",
                     "express"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚜",
@@ -9840,7 +10597,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "car",
                     "farming",
                     "agriculture"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏎️",
@@ -9854,7 +10612,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fast",
                     "formula",
                     "f1"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏍️",
@@ -9866,7 +10625,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "race",
                     "sports",
                     "fast"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛵",
@@ -9878,7 +10638,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "vehicle",
                     "vespa",
                     "sasha"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚲",
@@ -9891,7 +10652,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "bicycle",
                     "exercise",
                     "hipster"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛴",
@@ -9903,7 +10665,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "vehicle",
                     "kick",
                     "razor"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛹",
@@ -9913,7 +10676,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "skateboard",
                     "board"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚏",
@@ -9924,7 +10688,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "bus_stop",
                     "transportation",
                     "wait"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛣️",
@@ -9937,7 +10702,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cupertino",
                     "interstate",
                     "highway"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛤️",
@@ -9948,7 +10714,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "railway_track",
                     "train",
                     "transportation"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛢️",
@@ -9958,7 +10725,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "oil_drum",
                     "barrell"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⛽",
@@ -9969,7 +10737,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fuel_pump",
                     "gas station",
                     "petroleum"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚨",
@@ -9987,7 +10756,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "pinged",
                     "law",
                     "legal"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚥",
@@ -9998,7 +10768,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "horizontal_traffic_light",
                     "transportation",
                     "signal"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚦",
@@ -10009,7 +10780,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "vertical_traffic_light",
                     "transportation",
                     "driving"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛑",
@@ -10019,7 +10791,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "stop_sign",
                     "stop"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚧",
@@ -10032,7 +10805,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "progress",
                     "caution",
                     "warning"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⚓",
@@ -10045,7 +10819,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "ferry",
                     "sea",
                     "boat"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⛵",
@@ -10059,7 +10834,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "transportation",
                     "water",
                     "sailing"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛶",
@@ -10072,7 +10848,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "paddle",
                     "water",
                     "ship"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚤",
@@ -10085,7 +10862,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "transportation",
                     "vehicle",
                     "summer"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛳️",
@@ -10097,7 +10875,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "yacht",
                     "cruise",
                     "ferry"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⛴️",
@@ -10109,7 +10888,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "boat",
                     "ship",
                     "yacht"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛥️",
@@ -10119,7 +10899,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "motor_boat",
                     "ship"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚢",
@@ -10131,7 +10912,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "transportation",
                     "titanic",
                     "deploy"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "✈️",
@@ -10144,7 +10926,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "transportation",
                     "flight",
                     "fly"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛩️",
@@ -10157,7 +10940,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "transportation",
                     "fly",
                     "vehicle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛫",
@@ -10169,7 +10953,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "airport",
                     "flight",
                     "landing"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛬",
@@ -10181,7 +10966,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "airport",
                     "flight",
                     "boarding"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💺",
@@ -10196,7 +10982,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "bus",
                     "flight",
                     "fly"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚁",
@@ -10208,7 +10995,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "transportation",
                     "vehicle",
                     "fly"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚟",
@@ -10219,7 +11007,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "suspension_railway",
                     "vehicle",
                     "transportation"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚠",
@@ -10231,7 +11020,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "transportation",
                     "vehicle",
                     "ski"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚡",
@@ -10243,7 +11033,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "transportation",
                     "vehicle",
                     "ski"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛰️",
@@ -10258,7 +11049,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "spaceflight",
                     "NASA",
                     "ISS"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚀",
@@ -10274,7 +11066,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "outer space",
                     "outer_space",
                     "fly"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛸",
@@ -10286,7 +11079,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "transportation",
                     "vehicle",
                     "ufo"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛎️",
@@ -10296,7 +11090,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "bellhop_bell",
                     "service"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧳",
@@ -10307,7 +11102,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "luggage",
                     "packing",
                     "travel"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⌛",
@@ -10323,7 +11119,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "exam",
                     "quiz",
                     "test"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⏳",
@@ -10335,7 +11132,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "oldschool",
                     "time",
                     "countdown"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⌚",
@@ -10346,7 +11144,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "watch",
                     "time",
                     "accessories"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⏰",
@@ -10357,7 +11156,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "alarm_clock",
                     "time",
                     "wake"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⏱️",
@@ -10368,7 +11168,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "stopwatch",
                     "time",
                     "deadline"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⏲️",
@@ -10378,7 +11179,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "timer_clock",
                     "alarm"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕰️",
@@ -10388,7 +11190,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "mantelpiece_clock",
                     "time"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕛",
@@ -10409,7 +11212,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "late",
                     "early",
                     "schedule"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕧",
@@ -10426,7 +11230,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "late",
                     "early",
                     "schedule"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕐",
@@ -10444,7 +11249,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "late",
                     "early",
                     "schedule"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕜",
@@ -10461,7 +11267,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "late",
                     "early",
                     "schedule"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕑",
@@ -10479,7 +11286,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "late",
                     "early",
                     "schedule"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕝",
@@ -10496,7 +11304,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "late",
                     "early",
                     "schedule"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕒",
@@ -10514,7 +11323,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "late",
                     "early",
                     "schedule"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕞",
@@ -10531,7 +11341,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "late",
                     "early",
                     "schedule"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕓",
@@ -10549,7 +11360,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "late",
                     "early",
                     "schedule"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕟",
@@ -10566,7 +11378,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "late",
                     "early",
                     "schedule"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕔",
@@ -10584,7 +11397,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "late",
                     "early",
                     "schedule"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕠",
@@ -10601,7 +11415,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "late",
                     "early",
                     "schedule"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕕",
@@ -10621,7 +11436,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "schedule",
                     "dawn",
                     "dusk"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕡",
@@ -10638,7 +11454,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "late",
                     "early",
                     "schedule"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕖",
@@ -10656,7 +11473,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "late",
                     "early",
                     "schedule"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕢",
@@ -10673,7 +11491,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "late",
                     "early",
                     "schedule"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕗",
@@ -10691,7 +11510,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "late",
                     "early",
                     "schedule"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕣",
@@ -10708,7 +11528,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "late",
                     "early",
                     "schedule"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕘",
@@ -10726,7 +11547,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "late",
                     "early",
                     "schedule"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕤",
@@ -10743,7 +11565,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "late",
                     "early",
                     "schedule"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕙",
@@ -10761,7 +11584,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "late",
                     "early",
                     "schedule"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕥",
@@ -10778,7 +11602,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "late",
                     "early",
                     "schedule"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕚",
@@ -10796,7 +11621,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "late",
                     "early",
                     "schedule"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕦",
@@ -10813,7 +11639,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "late",
                     "early",
                     "schedule"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌑",
@@ -10829,7 +11656,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "night",
                     "evening",
                     "sleep"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌒",
@@ -10845,7 +11673,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "night",
                     "evening",
                     "sleep"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌓",
@@ -10861,7 +11690,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "night",
                     "evening",
                     "sleep"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌔",
@@ -10879,7 +11709,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "space",
                     "evening",
                     "sleep"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌕",
@@ -10896,7 +11727,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "night",
                     "evening",
                     "sleep"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌖",
@@ -10913,7 +11745,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "evening",
                     "sleep",
                     "waxing_gibbous_moon"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌗",
@@ -10929,7 +11762,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "night",
                     "evening",
                     "sleep"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌘",
@@ -10945,7 +11779,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "night",
                     "evening",
                     "sleep"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌙",
@@ -10959,7 +11794,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sky",
                     "evening",
                     "magic"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌚",
@@ -10975,7 +11811,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "night",
                     "evening",
                     "sleep"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌛",
@@ -10991,7 +11828,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "night",
                     "evening",
                     "sleep"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌜",
@@ -11007,7 +11845,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "night",
                     "evening",
                     "sleep"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌡️",
@@ -11020,7 +11859,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "temperature",
                     "hot",
                     "cold"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "☀️",
@@ -11035,7 +11875,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "summer",
                     "beach",
                     "spring"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌝",
@@ -11051,7 +11892,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "night",
                     "evening",
                     "sleep"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌞",
@@ -11063,7 +11905,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "morning",
                     "sky"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⭐",
@@ -11074,7 +11917,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "star",
                     "night",
                     "yellow"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌟",
@@ -11088,7 +11932,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "awesome",
                     "good",
                     "magic"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌠",
@@ -11099,7 +11944,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "shooting_star",
                     "night",
                     "photo"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌌",
@@ -11111,7 +11957,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "photo",
                     "space",
                     "stars"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "☁️",
@@ -11122,7 +11969,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cloud",
                     "weather",
                     "sky"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⛅",
@@ -11137,7 +11985,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "morning",
                     "fall",
                     "spring"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⛈️",
@@ -11148,7 +11997,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cloud_with_lightning_and_rain",
                     "weather",
                     "lightning"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌤️",
@@ -11158,7 +12008,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "sun_behind_small_cloud",
                     "weather"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌥️",
@@ -11168,7 +12019,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "sun_behind_large_cloud",
                     "weather"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌦️",
@@ -11178,7 +12030,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "sun_behind_rain_cloud",
                     "weather"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌧️",
@@ -11188,7 +12041,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "cloud_with_rain",
                     "weather"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌨️",
@@ -11198,7 +12052,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "cloud_with_snow",
                     "weather"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌩️",
@@ -11209,7 +12064,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cloud_with_lightning",
                     "weather",
                     "thunder"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌪️",
@@ -11221,7 +12077,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "weather",
                     "cyclone",
                     "twister"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌫️",
@@ -11231,7 +12088,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "fog",
                     "weather"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌬️",
@@ -11242,7 +12100,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "wind_face",
                     "gust",
                     "air"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌀",
@@ -11262,7 +12121,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "tornado",
                     "hurricane",
                     "typhoon"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌈",
@@ -11277,7 +12137,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "photo",
                     "sky",
                     "spring"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌂",
@@ -11289,7 +12150,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "weather",
                     "rain",
                     "drizzle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "☂️",
@@ -11300,7 +12162,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "umbrella",
                     "weather",
                     "spring"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "☔",
@@ -11312,7 +12175,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "rainy",
                     "weather",
                     "spring"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⛱️",
@@ -11323,7 +12187,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "umbrella_on_ground",
                     "weather",
                     "summer"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⚡",
@@ -11336,7 +12201,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "weather",
                     "lightning bolt",
                     "fast"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "❄️",
@@ -11351,7 +12217,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "weather",
                     "christmas",
                     "xmas"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "☃️",
@@ -11367,7 +12234,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "christmas",
                     "xmas",
                     "frozen"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⛄",
@@ -11384,7 +12252,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "xmas",
                     "frozen",
                     "without_snow"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "☄️",
@@ -11394,7 +12263,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "comet",
                     "space"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔥",
@@ -11406,7 +12276,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hot",
                     "cook",
                     "flame"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💧",
@@ -11419,7 +12290,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "drip",
                     "faucet",
                     "spring"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🌊",
@@ -11434,7 +12306,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nature",
                     "tsunami",
                     "disaster"
-                ]
+                ],
+                url: ""
             }
         ]
     },
@@ -11454,7 +12327,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "pumpkin",
                     "creepy",
                     "fall"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎄",
@@ -11468,7 +12342,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "december",
                     "xmas",
                     "celebration"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎆",
@@ -11481,7 +12356,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "festival",
                     "carnival",
                     "congratulations"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎇",
@@ -11493,7 +12369,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "stars",
                     "night",
                     "shine"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧨",
@@ -11507,7 +12384,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "explode",
                     "explosion",
                     "explosive"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "✨",
@@ -11523,7 +12401,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "awesome",
                     "good",
                     "magic"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎈",
@@ -11536,7 +12415,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "celebration",
                     "birthday",
                     "circus"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎉",
@@ -11552,7 +12432,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "circus",
                     "celebration",
                     "tada"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎊",
@@ -11565,7 +12446,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "party",
                     "birthday",
                     "circus"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎋",
@@ -11582,7 +12464,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "wish",
                     "star_festival",
                     "tanzaku"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎍",
@@ -11598,7 +12481,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "panda",
                     "new_years",
                     "bamboo"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎎",
@@ -11610,7 +12494,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "japanese",
                     "toy",
                     "kimono"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎏",
@@ -11624,7 +12509,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "koinobori",
                     "carp",
                     "banner"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎐",
@@ -11637,7 +12523,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "ding",
                     "spring",
                     "bell"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎑",
@@ -11650,7 +12537,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "japan",
                     "asia",
                     "tsukimi"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧧",
@@ -11660,7 +12548,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "red_envelope",
                     "gift"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎀",
@@ -11673,7 +12562,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "pink",
                     "girl",
                     "bowtie"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎁",
@@ -11686,7 +12576,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "birthday",
                     "christmas",
                     "xmas"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎗️",
@@ -11699,7 +12590,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cause",
                     "support",
                     "awareness"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎟️",
@@ -11711,7 +12603,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sports",
                     "concert",
                     "entrance"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎫",
@@ -11723,7 +12616,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "event",
                     "concert",
                     "pass"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎖️",
@@ -11735,7 +12629,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "award",
                     "winning",
                     "army"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏆",
@@ -11750,7 +12645,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "place",
                     "ftw",
                     "ceremony"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏅",
@@ -11761,7 +12657,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sports_medal",
                     "award",
                     "winning"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥇",
@@ -11773,7 +12670,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "award",
                     "winning",
                     "first"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥈",
@@ -11784,7 +12682,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "2nd_place_medal",
                     "award",
                     "second"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥉",
@@ -11795,7 +12694,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "3rd_place_medal",
                     "award",
                     "third"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⚽",
@@ -11806,7 +12706,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "soccer_ball",
                     "sports",
                     "football"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⚾",
@@ -11817,7 +12718,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "baseball",
                     "sports",
                     "balls"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥎",
@@ -11828,7 +12730,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "softball",
                     "sports",
                     "balls"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏀",
@@ -11840,7 +12743,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sports",
                     "balls",
                     "NBA"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏐",
@@ -11851,7 +12755,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "volleyball",
                     "sports",
                     "balls"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏈",
@@ -11863,7 +12768,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sports",
                     "balls",
                     "NFL"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏉",
@@ -11874,7 +12780,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "rugby_football",
                     "sports",
                     "team"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎾",
@@ -11886,7 +12793,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sports",
                     "balls",
                     "green"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥏",
@@ -11898,7 +12806,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sports",
                     "frisbee",
                     "ultimate"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎳",
@@ -11910,7 +12819,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sports",
                     "fun",
                     "play"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏏",
@@ -11920,7 +12830,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "cricket_game",
                     "sports"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏑",
@@ -11930,7 +12841,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "field_hockey",
                     "sports"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏒",
@@ -11940,7 +12852,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "ice_hockey",
                     "sports"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥍",
@@ -11952,7 +12865,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sports",
                     "ball",
                     "stick"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏓",
@@ -11963,7 +12877,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "ping_pong",
                     "sports",
                     "pingpong"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏸",
@@ -11973,7 +12888,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "badminton",
                     "sports"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥊",
@@ -11984,7 +12900,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "boxing_glove",
                     "sports",
                     "fighting"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥋",
@@ -11996,7 +12913,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "judo",
                     "karate",
                     "taekwondo"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥅",
@@ -12006,7 +12924,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "goal_net",
                     "sports"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⛳",
@@ -12020,7 +12939,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "flag",
                     "hole",
                     "summer"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⛸️",
@@ -12030,7 +12950,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "ice_skate",
                     "sports"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎣",
@@ -12042,7 +12963,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "food",
                     "hobby",
                     "summer"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎽",
@@ -12053,7 +12975,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "running_shirt",
                     "play",
                     "pageant"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎿",
@@ -12066,7 +12989,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "winter",
                     "cold",
                     "snow"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛷",
@@ -12078,7 +13002,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sleigh",
                     "luge",
                     "toboggan"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥌",
@@ -12088,7 +13013,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "curling_stone",
                     "sports"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎯",
@@ -12102,7 +13028,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "bar",
                     "target",
                     "bullseye"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔫",
@@ -12115,7 +13042,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "weapon",
                     "pistol",
                     "revolver"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎱",
@@ -12129,7 +13057,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "game",
                     "luck",
                     "magic"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔮",
@@ -12143,7 +13072,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "magic",
                     "circus",
                     "fortune_teller"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎮",
@@ -12156,7 +13086,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "console",
                     "PS4",
                     "controller"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕹️",
@@ -12167,7 +13098,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "joystick",
                     "game",
                     "play"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎰",
@@ -12182,7 +13114,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fruit machine",
                     "luck",
                     "casino"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎲",
@@ -12196,7 +13129,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "tabletop",
                     "play",
                     "luck"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧩",
@@ -12208,7 +13142,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "interlocking",
                     "puzzle",
                     "piece"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧸",
@@ -12219,7 +13154,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "teddy_bear",
                     "plush",
                     "stuffed"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "♠️",
@@ -12232,7 +13168,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cards",
                     "suits",
                     "magic"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "♥️",
@@ -12245,7 +13182,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cards",
                     "magic",
                     "suits"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "♦️",
@@ -12258,7 +13196,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cards",
                     "magic",
                     "suits"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "♣️",
@@ -12271,7 +13210,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cards",
                     "magic",
                     "suits"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "♟️",
@@ -12281,7 +13221,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "chess_pawn",
                     "expendable"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🃏",
@@ -12295,7 +13236,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "game",
                     "play",
                     "magic"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🀄",
@@ -12308,7 +13250,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "play",
                     "chinese",
                     "kanji"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎴",
@@ -12320,7 +13263,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "game",
                     "sunset",
                     "red"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎭",
@@ -12332,7 +13276,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "acting",
                     "theater",
                     "drama"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🖼️",
@@ -12342,7 +13287,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "framed_picture",
                     "photography"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎨",
@@ -12355,7 +13301,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "paint",
                     "draw",
                     "colors"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧵",
@@ -12368,7 +13315,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sewing",
                     "spool",
                     "string"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧶",
@@ -12380,7 +13328,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "ball",
                     "crochet",
                     "knit"
-                ]
+                ],
+                url: ""
             }
         ]
     },
@@ -12401,7 +13350,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nerdy",
                     "dork",
                     "geek"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕶️",
@@ -12413,7 +13363,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "face",
                     "cool",
                     "accessories"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥽",
@@ -12425,7 +13376,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "eyes",
                     "protection",
                     "safety"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥼",
@@ -12438,7 +13390,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "experiment",
                     "scientist",
                     "chemist"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👔",
@@ -12453,7 +13406,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fashion",
                     "cloth",
                     "business"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👕",
@@ -12467,7 +13421,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "casual",
                     "shirt",
                     "tee"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👖",
@@ -12478,7 +13433,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "jeans",
                     "fashion",
                     "shopping"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧣",
@@ -12490,7 +13446,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "neck",
                     "winter",
                     "clothes"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧤",
@@ -12502,7 +13459,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hands",
                     "winter",
                     "clothes"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧥",
@@ -12512,7 +13470,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "coat",
                     "jacket"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧦",
@@ -12523,7 +13482,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "socks",
                     "stockings",
                     "clothes"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👗",
@@ -12535,7 +13495,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "clothes",
                     "fashion",
                     "shopping"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👘",
@@ -12549,7 +13510,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "women",
                     "female",
                     "japanese"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👙",
@@ -12565,7 +13527,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fashion",
                     "beach",
                     "summer"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👚",
@@ -12577,7 +13540,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fashion",
                     "shopping_bags",
                     "female"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👛",
@@ -12591,7 +13555,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "money",
                     "sales",
                     "shopping"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👜",
@@ -12604,7 +13569,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "accessory",
                     "accessories",
                     "shopping"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👝",
@@ -12616,7 +13582,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "bag",
                     "accessories",
                     "shopping"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛍️",
@@ -12628,7 +13595,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "mall",
                     "buy",
                     "purchase"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎒",
@@ -12641,7 +13609,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "education",
                     "bag",
                     "backpack"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👞",
@@ -12652,7 +13621,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "man_s_shoe",
                     "fashion",
                     "male"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👟",
@@ -12664,7 +13634,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "shoes",
                     "sports",
                     "sneakers"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥾",
@@ -12676,7 +13647,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "backpacking",
                     "camping",
                     "hiking"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥿",
@@ -12688,7 +13660,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "ballet",
                     "slip-on",
                     "slipper"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👠",
@@ -12702,7 +13675,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "female",
                     "pumps",
                     "stiletto"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👡",
@@ -12714,7 +13688,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "shoes",
                     "fashion",
                     "flip flops"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👢",
@@ -12725,7 +13700,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "woman_s_boot",
                     "shoes",
                     "fashion"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👑",
@@ -12739,7 +13715,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "leader",
                     "royalty",
                     "lord"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "👒",
@@ -12753,7 +13730,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "female",
                     "lady",
                     "spring"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎩",
@@ -12766,7 +13744,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "gentleman",
                     "classy",
                     "circus"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎓",
@@ -12785,7 +13764,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "legal",
                     "learn",
                     "education"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧢",
@@ -12796,7 +13776,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "billed_cap",
                     "cap",
                     "baseball"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⛑️",
@@ -12807,7 +13788,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "rescue_worker_s_helmet",
                     "construction",
                     "build"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📿",
@@ -12818,7 +13800,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "prayer_beads",
                     "dhikr",
                     "religious"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💄",
@@ -12831,7 +13814,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "girl",
                     "fashion",
                     "woman"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💍",
@@ -12849,7 +13833,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "jewelry",
                     "gem",
                     "engagement"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💎",
@@ -12862,7 +13847,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "ruby",
                     "diamond",
                     "jewelry"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔇",
@@ -12875,7 +13861,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "volume",
                     "silence",
                     "quiet"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔈",
@@ -12888,7 +13875,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "volume",
                     "silence",
                     "broadcast"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔉",
@@ -12900,7 +13888,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "volume",
                     "speaker",
                     "broadcast"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔊",
@@ -12914,7 +13903,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "noisy",
                     "speaker",
                     "broadcast"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📢",
@@ -12925,7 +13915,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "loudspeaker",
                     "volume",
                     "sound"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📣",
@@ -12937,7 +13928,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sound",
                     "speaker",
                     "volume"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📯",
@@ -12948,7 +13940,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "postal_horn",
                     "instrument",
                     "music"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔔",
@@ -12962,7 +13955,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "christmas",
                     "xmas",
                     "chime"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔕",
@@ -12976,7 +13970,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "mute",
                     "quiet",
                     "silent"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎼",
@@ -12988,7 +13983,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "treble",
                     "clef",
                     "compose"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎵",
@@ -13000,7 +13996,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "score",
                     "tone",
                     "sound"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎶",
@@ -13011,7 +14008,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "musical_notes",
                     "music",
                     "score"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎙️",
@@ -13024,7 +14022,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "recording",
                     "artist",
                     "talkshow"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎚️",
@@ -13034,7 +14033,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "level_slider",
                     "scale"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎛️",
@@ -13044,7 +14044,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "control_knobs",
                     "dial"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎤",
@@ -13058,7 +14059,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "PA",
                     "sing",
                     "talkshow"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎧",
@@ -13070,7 +14072,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "music",
                     "score",
                     "gadgets"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📻",
@@ -13083,7 +14086,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "music",
                     "podcast",
                     "program"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎷",
@@ -13096,7 +14100,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "instrument",
                     "jazz",
                     "blues"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎸",
@@ -13107,7 +14112,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "guitar",
                     "music",
                     "instrument"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎹",
@@ -13119,7 +14125,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "piano",
                     "instrument",
                     "compose"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎺",
@@ -13130,7 +14137,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "trumpet",
                     "music",
                     "brass"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎻",
@@ -13143,7 +14151,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "instrument",
                     "orchestra",
                     "symphony"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🥁",
@@ -13156,7 +14165,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "instrument",
                     "drumsticks",
                     "snare"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📱",
@@ -13169,7 +14179,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "apple",
                     "gadgets",
                     "dial"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📲",
@@ -13180,7 +14191,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "mobile_phone_with_arrow",
                     "iphone",
                     "incoming"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "☎️",
@@ -13193,7 +14205,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "communication",
                     "dial",
                     "telephone"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📞",
@@ -13205,7 +14218,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "technology",
                     "communication",
                     "dial"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📟",
@@ -13217,7 +14231,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "bbcall",
                     "oldschool",
                     "90s"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📠",
@@ -13228,7 +14243,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fax_machine",
                     "communication",
                     "technology"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔋",
@@ -13240,7 +14256,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "power",
                     "energy",
                     "sustain"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔌",
@@ -13251,7 +14268,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "electric_plug",
                     "charger",
                     "power"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💻",
@@ -13265,7 +14283,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "screen",
                     "display",
                     "monitor"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🖥️",
@@ -13277,7 +14296,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "technology",
                     "computing",
                     "screen"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🖨️",
@@ -13288,7 +14308,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "printer",
                     "paper",
                     "ink"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⌨️",
@@ -13302,7 +14323,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "type",
                     "input",
                     "text"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🖱️",
@@ -13312,7 +14334,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "computer_mouse",
                     "click"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🖲️",
@@ -13323,7 +14346,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "trackball",
                     "technology",
                     "trackpad"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💽",
@@ -13337,7 +14361,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "data",
                     "disk",
                     "90s"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💾",
@@ -13351,7 +14376,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "save",
                     "90s",
                     "80s"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💿",
@@ -13365,7 +14391,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "disk",
                     "disc",
                     "90s"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📀",
@@ -13377,7 +14404,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cd",
                     "disk",
                     "disc"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧮",
@@ -13387,7 +14415,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "abacus",
                     "calculation"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎥",
@@ -13398,7 +14427,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "movie_camera",
                     "film",
                     "record"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎞️",
@@ -13408,7 +14438,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "film_frames",
                     "movie"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📽️",
@@ -13421,7 +14452,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "tape",
                     "record",
                     "movie"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎬",
@@ -13433,7 +14465,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "movie",
                     "film",
                     "record"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📺",
@@ -13447,7 +14480,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "oldschool",
                     "show",
                     "television"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📷",
@@ -13458,7 +14492,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "camera",
                     "gadgets",
                     "photography"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📸",
@@ -13469,7 +14504,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "camera_with_flash",
                     "photography",
                     "gadgets"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📹",
@@ -13480,7 +14516,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "video_camera",
                     "film",
                     "record"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📼",
@@ -13494,7 +14531,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "oldschool",
                     "90s",
                     "80s"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔍",
@@ -13507,7 +14545,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "zoom",
                     "find",
                     "detective"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔎",
@@ -13520,7 +14559,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "zoom",
                     "find",
                     "detective"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕯️",
@@ -13531,7 +14571,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "candle",
                     "fire",
                     "wax"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💡",
@@ -13543,7 +14584,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "light",
                     "electricity",
                     "idea"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔦",
@@ -13556,7 +14598,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "camping",
                     "sight",
                     "night"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏮",
@@ -13569,7 +14612,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "paper",
                     "halloween",
                     "spooky"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📔",
@@ -13583,7 +14627,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "record",
                     "paper",
                     "study"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📕",
@@ -13597,7 +14642,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "knowledge",
                     "textbook",
                     "learn"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📖",
@@ -13613,7 +14659,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "literature",
                     "learn",
                     "study"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📗",
@@ -13626,7 +14673,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "library",
                     "knowledge",
                     "study"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📘",
@@ -13640,7 +14688,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "knowledge",
                     "learn",
                     "study"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📙",
@@ -13654,7 +14703,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "knowledge",
                     "textbook",
                     "study"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📚",
@@ -13666,7 +14716,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "literature",
                     "library",
                     "study"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📓",
@@ -13680,7 +14731,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "notes",
                     "paper",
                     "study"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📒",
@@ -13691,7 +14743,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "ledger",
                     "notes",
                     "paper"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📃",
@@ -13703,7 +14756,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "documents",
                     "office",
                     "paper"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📜",
@@ -13716,7 +14770,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "ancient",
                     "history",
                     "paper"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📄",
@@ -13729,7 +14784,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "office",
                     "paper",
                     "information"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📰",
@@ -13740,7 +14796,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "newspaper",
                     "press",
                     "headline"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🗞️",
@@ -13751,7 +14808,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "rolled_up_newspaper",
                     "press",
                     "headline"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📑",
@@ -13764,7 +14822,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "save",
                     "order",
                     "tidy"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔖",
@@ -13776,7 +14835,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "favorite",
                     "label",
                     "save"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏷️",
@@ -13787,7 +14847,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "label",
                     "sale",
                     "tag"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💰",
@@ -13800,7 +14861,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "payment",
                     "coins",
                     "sale"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💴",
@@ -13814,7 +14876,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "japanese",
                     "dollar",
                     "currency"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💵",
@@ -13827,7 +14890,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sales",
                     "bill",
                     "currency"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💶",
@@ -13840,7 +14904,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sales",
                     "dollar",
                     "currency"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💷",
@@ -13857,7 +14922,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "uk",
                     "england",
                     "currency"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💸",
@@ -13870,7 +14936,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "bills",
                     "payment",
                     "sale"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💳",
@@ -13885,7 +14952,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "bill",
                     "payment",
                     "shopping"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧾",
@@ -13896,7 +14964,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "receipt",
                     "accounting",
                     "expenses"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💹",
@@ -13909,7 +14978,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "graph",
                     "presentation",
                     "stats"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "✉️",
@@ -13922,7 +14992,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "postal",
                     "inbox",
                     "communication"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📧",
@@ -13933,7 +15004,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "e_mail",
                     "communication",
                     "inbox"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📨",
@@ -13944,7 +15016,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "incoming_envelope",
                     "email",
                     "inbox"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📩",
@@ -13955,7 +15028,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "envelope_with_arrow",
                     "email",
                     "communication"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📤",
@@ -13966,7 +15040,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "outbox_tray",
                     "inbox",
                     "email"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📥",
@@ -13977,7 +15052,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "inbox_tray",
                     "email",
                     "documents"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📦",
@@ -13991,7 +15067,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cardboard",
                     "box",
                     "moving"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📫",
@@ -14003,7 +15080,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "email",
                     "inbox",
                     "communication"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📪",
@@ -14015,7 +15093,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "email",
                     "communication",
                     "inbox"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📬",
@@ -14027,7 +15106,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "email",
                     "inbox",
                     "communication"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📭",
@@ -14038,7 +15118,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "open_mailbox_with_lowered_flag",
                     "email",
                     "inbox"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📮",
@@ -14050,7 +15131,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "email",
                     "letter",
                     "envelope"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🗳️",
@@ -14061,7 +15143,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "ballot_box_with_ballot",
                     "election",
                     "vote"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "✏️",
@@ -14076,7 +15159,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "writing",
                     "school",
                     "study"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "✒️",
@@ -14089,7 +15173,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "stationery",
                     "writing",
                     "write"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🖋️",
@@ -14101,7 +15186,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "stationery",
                     "writing",
                     "write"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🖊️",
@@ -14113,7 +15199,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "stationery",
                     "writing",
                     "write"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🖌️",
@@ -14125,7 +15212,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "drawing",
                     "creativity",
                     "art"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🖍️",
@@ -14136,7 +15224,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "crayon",
                     "drawing",
                     "creativity"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📝",
@@ -14157,7 +15246,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "test",
                     "study",
                     "compose"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💼",
@@ -14173,7 +15263,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "legal",
                     "job",
                     "career"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📁",
@@ -14185,7 +15276,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "documents",
                     "business",
                     "office"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📂",
@@ -14196,7 +15288,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "open_file_folder",
                     "documents",
                     "load"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🗂️",
@@ -14208,7 +15301,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "organizing",
                     "business",
                     "stationery"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📅",
@@ -14219,7 +15313,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "calendar",
                     "calendar",
                     "schedule"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📆",
@@ -14231,7 +15326,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "schedule",
                     "date",
                     "planning"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🗒️",
@@ -14242,7 +15338,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "spiral_notepad",
                     "memo",
                     "stationery"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🗓️",
@@ -14254,7 +15351,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "date",
                     "schedule",
                     "planning"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📇",
@@ -14265,7 +15363,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "card_index",
                     "business",
                     "stationery"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📈",
@@ -14284,7 +15383,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sales",
                     "good",
                     "success"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📉",
@@ -14303,7 +15403,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sales",
                     "bad",
                     "failure"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📊",
@@ -14315,7 +15416,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "graph",
                     "presentation",
                     "stats"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📋",
@@ -14326,7 +15428,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "clipboard",
                     "stationery",
                     "documents"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📌",
@@ -14338,7 +15441,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "stationery",
                     "mark",
                     "here"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📍",
@@ -14351,7 +15455,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "location",
                     "map",
                     "here"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📎",
@@ -14362,7 +15467,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "paperclip",
                     "documents",
                     "stationery"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🖇️",
@@ -14373,7 +15479,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "linked_paperclips",
                     "documents",
                     "stationery"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📏",
@@ -14390,7 +15497,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "drawing",
                     "architect",
                     "sketch"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📐",
@@ -14403,7 +15511,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "math",
                     "architect",
                     "sketch"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "✂️",
@@ -14414,7 +15523,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "scissors",
                     "stationery",
                     "cut"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🗃️",
@@ -14425,7 +15535,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "card_file_box",
                     "business",
                     "stationery"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🗄️",
@@ -14436,7 +15547,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "file_cabinet",
                     "filing",
                     "organizing"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🗑️",
@@ -14450,7 +15562,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "rubbish",
                     "garbage",
                     "toss"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔒",
@@ -14462,7 +15575,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "security",
                     "password",
                     "padlock"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔓",
@@ -14473,7 +15587,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "unlocked",
                     "privacy",
                     "security"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔏",
@@ -14484,7 +15599,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "locked_with_pen",
                     "security",
                     "secret"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔐",
@@ -14495,7 +15611,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "locked_with_key",
                     "security",
                     "privacy"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔑",
@@ -14507,7 +15624,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "lock",
                     "door",
                     "password"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🗝️",
@@ -14519,7 +15637,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "lock",
                     "door",
                     "password"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔨",
@@ -14531,7 +15650,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "tools",
                     "build",
                     "create"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⛏️",
@@ -14542,7 +15662,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "pick",
                     "tools",
                     "dig"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⚒️",
@@ -14554,7 +15675,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "tools",
                     "build",
                     "create"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛠️",
@@ -14566,7 +15688,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "tools",
                     "build",
                     "create"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🗡️",
@@ -14576,7 +15699,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "dagger",
                     "weapon"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⚔️",
@@ -14586,7 +15710,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "crossed_swords",
                     "weapon"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💣",
@@ -14599,7 +15724,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "explode",
                     "explosion",
                     "terrorism"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏹",
@@ -14609,7 +15735,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "bow_and_arrow",
                     "sports"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛡️",
@@ -14620,7 +15747,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "shield",
                     "protection",
                     "security"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔧",
@@ -14634,7 +15762,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "ikea",
                     "fix",
                     "maintainer"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔩",
@@ -14646,7 +15775,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "handy",
                     "tools",
                     "fix"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⚙️",
@@ -14656,7 +15786,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "gear",
                     "cog"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🗜️",
@@ -14666,7 +15797,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "clamp",
                     "tool"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⚖️",
@@ -14678,7 +15810,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "law",
                     "fairness",
                     "weight"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔗",
@@ -14689,7 +15822,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "link",
                     "rings",
                     "url"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⛓️",
@@ -14700,7 +15834,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "chains",
                     "lock",
                     "arrest"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧰",
@@ -14714,7 +15849,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fix",
                     "maintainer",
                     "mechanic"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧲",
@@ -14725,7 +15861,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "magnet",
                     "attraction",
                     "magnetic"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⚗️",
@@ -14738,7 +15875,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "science",
                     "experiment",
                     "chemistry"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧪",
@@ -14751,7 +15889,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "experiment",
                     "lab",
                     "science"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧫",
@@ -14764,7 +15903,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "biology",
                     "culture",
                     "lab"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧬",
@@ -14776,7 +15916,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "biologist",
                     "genetics",
                     "life"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔬",
@@ -14790,7 +15931,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "zoomin",
                     "science",
                     "study"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔭",
@@ -14804,7 +15946,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "zoom",
                     "science",
                     "astronomy"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📡",
@@ -14817,7 +15960,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "future",
                     "radio",
                     "space"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💉",
@@ -14834,7 +15978,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "needle",
                     "doctor",
                     "nurse"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💊",
@@ -14848,7 +15993,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "doctor",
                     "pharmacy",
                     "drug"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚪",
@@ -14860,7 +16006,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "house",
                     "entry",
                     "exit"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛏️",
@@ -14871,7 +16018,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "bed",
                     "sleep",
                     "rest"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛋️",
@@ -14882,7 +16030,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "couch_and_lamp",
                     "read",
                     "chill"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚽",
@@ -14896,7 +16045,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "washroom",
                     "bathroom",
                     "potty"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚿",
@@ -14908,7 +16058,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "clean",
                     "water",
                     "bathroom"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛁",
@@ -14920,7 +16071,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "clean",
                     "shower",
                     "bathroom"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧴",
@@ -14931,7 +16083,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "lotion_bottle",
                     "moisturizer",
                     "sunscreen"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧷",
@@ -14941,7 +16094,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "safety_pin",
                     "diaper"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧹",
@@ -14953,7 +16107,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cleaning",
                     "sweeping",
                     "witch"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧺",
@@ -14963,7 +16118,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "basket",
                     "laundry"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧻",
@@ -14973,7 +16129,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "roll_of_paper",
                     "roll"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧼",
@@ -14986,7 +16143,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "bathing",
                     "cleaning",
                     "lather"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧽",
@@ -14998,7 +16156,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "absorbing",
                     "cleaning",
                     "porous"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧯",
@@ -15008,7 +16167,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "fire_extinguisher",
                     "quench"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛒",
@@ -15018,7 +16178,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "shopping_cart",
                     "trolley"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚬",
@@ -15032,7 +16193,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cigarette",
                     "joint",
                     "smoke"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⚰️",
@@ -15051,7 +16213,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "casket",
                     "funeral",
                     "box"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⚱️",
@@ -15065,7 +16228,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "death",
                     "rip",
                     "ashes"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🧿",
@@ -15076,7 +16240,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nazar_amulet",
                     "bead",
                     "charm"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🗿",
@@ -15088,7 +16253,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "rock",
                     "easter island",
                     "moai"
-                ]
+                ],
+                url: ""
             }
         ]
     },
@@ -15109,7 +16275,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blue-square",
                     "payment",
                     "bank"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚮",
@@ -15122,7 +16289,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sign",
                     "human",
                     "info"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚰",
@@ -15136,7 +16304,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "restroom",
                     "cleaning",
                     "faucet"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "♿",
@@ -15148,7 +16317,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blue-square",
                     "disabled",
                     "accessibility"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚹",
@@ -15163,7 +16333,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blue-square",
                     "gender",
                     "male"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚺",
@@ -15179,7 +16350,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "loo",
                     "restroom",
                     "gender"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚻",
@@ -15193,7 +16365,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "refresh",
                     "wc",
                     "gender"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚼",
@@ -15204,7 +16377,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "baby_symbol",
                     "orange-square",
                     "child"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚾",
@@ -15216,7 +16390,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "toilet",
                     "restroom",
                     "blue-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛂",
@@ -15227,7 +16402,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "passport_control",
                     "custom",
                     "blue-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛃",
@@ -15239,7 +16415,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "passport",
                     "border",
                     "blue-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛄",
@@ -15251,7 +16428,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blue-square",
                     "airport",
                     "transport"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛅",
@@ -15262,7 +16440,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "left_luggage",
                     "blue-square",
                     "travel"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⚠️",
@@ -15277,7 +16456,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "error",
                     "problem",
                     "issue"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚸",
@@ -15292,7 +16472,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sign",
                     "driving",
                     "yellow-diamond"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⛔",
@@ -15308,7 +16489,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "denied",
                     "stop",
                     "circle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚫",
@@ -15323,7 +16505,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "denied",
                     "disallow",
                     "circle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚳",
@@ -15335,7 +16518,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cyclist",
                     "prohibited",
                     "circle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚭",
@@ -15348,7 +16532,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blue-square",
                     "smell",
                     "smoke"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚯",
@@ -15361,7 +16546,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "bin",
                     "garbage",
                     "circle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚱",
@@ -15374,7 +16560,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "faucet",
                     "tap",
                     "circle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚷",
@@ -15387,7 +16574,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "crossing",
                     "walking",
                     "circle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📵",
@@ -15399,7 +16587,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "iphone",
                     "mute",
                     "circle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔞",
@@ -15414,7 +16603,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "night",
                     "minor",
                     "circle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "☢️",
@@ -15425,7 +16615,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "radioactive",
                     "nuclear",
                     "danger"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "☣️",
@@ -15435,7 +16626,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "biohazard",
                     "danger"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⬆️",
@@ -15448,7 +16640,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "continue",
                     "top",
                     "direction"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "↗️",
@@ -15462,7 +16655,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "direction",
                     "diagonal",
                     "northeast"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "➡️",
@@ -15473,7 +16667,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "right_arrow",
                     "blue-square",
                     "next"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "↘️",
@@ -15486,7 +16681,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "direction",
                     "diagonal",
                     "southeast"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⬇️",
@@ -15498,7 +16694,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blue-square",
                     "direction",
                     "bottom"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "↙️",
@@ -15511,7 +16708,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "direction",
                     "diagonal",
                     "southwest"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⬅️",
@@ -15523,7 +16721,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blue-square",
                     "previous",
                     "back"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "↖️",
@@ -15537,7 +16736,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "direction",
                     "diagonal",
                     "northwest"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "↕️",
@@ -15550,7 +16750,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "direction",
                     "way",
                     "vertical"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "↔️",
@@ -15563,7 +16764,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "direction",
                     "horizontal",
                     "sideways"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "↩️",
@@ -15577,7 +16779,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blue-square",
                     "undo",
                     "enter"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "↪️",
@@ -15590,7 +16793,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "return",
                     "rotate",
                     "direction"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⤴️",
@@ -15602,7 +16806,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blue-square",
                     "direction",
                     "top"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⤵️",
@@ -15614,7 +16819,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blue-square",
                     "direction",
                     "bottom"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔃",
@@ -15627,7 +16833,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cycle",
                     "round",
                     "repeat"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔄",
@@ -15639,7 +16846,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blue-square",
                     "sync",
                     "cycle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔙",
@@ -15651,7 +16859,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "arrow",
                     "words",
                     "return"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔚",
@@ -15662,7 +16871,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "end_arrow",
                     "words",
                     "arrow"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔛",
@@ -15673,7 +16883,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "on_arrow",
                     "arrow",
                     "words"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔜",
@@ -15684,7 +16895,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "soon_arrow",
                     "arrow",
                     "words"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔝",
@@ -15695,7 +16907,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "top_arrow",
                     "words",
                     "blue-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🛐",
@@ -15708,7 +16921,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "church",
                     "temple",
                     "prayer"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⚛️",
@@ -15720,7 +16934,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "science",
                     "physics",
                     "chemistry"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕉️",
@@ -15733,7 +16948,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "buddhism",
                     "sikhism",
                     "jainism"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "✡️",
@@ -15743,7 +16959,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "star_of_david",
                     "judaism"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "☸️",
@@ -15756,7 +16973,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "buddhism",
                     "sikhism",
                     "jainism"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "☯️",
@@ -15766,7 +16984,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "yin_yang",
                     "balance"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "✝️",
@@ -15776,7 +16995,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "latin_cross",
                     "christianity"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "☦️",
@@ -15787,7 +17007,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "orthodox_cross",
                     "suppedaneum",
                     "religion"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "☪️",
@@ -15797,7 +17018,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "star_and_crescent",
                     "islam"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "☮️",
@@ -15807,7 +17029,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "peace_symbol",
                     "hippie"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🕎",
@@ -15819,7 +17042,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hanukkah",
                     "candles",
                     "jewish"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔯",
@@ -15832,7 +17056,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "religion",
                     "jewish",
                     "hexagram"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "♈",
@@ -15845,7 +17070,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "purple-square",
                     "zodiac",
                     "astrology"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "♉",
@@ -15858,7 +17084,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sign",
                     "zodiac",
                     "astrology"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "♊",
@@ -15871,7 +17098,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "zodiac",
                     "purple-square",
                     "astrology"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "♋",
@@ -15884,7 +17112,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "zodiac",
                     "purple-square",
                     "astrology"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "♌",
@@ -15897,7 +17126,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "purple-square",
                     "zodiac",
                     "astrology"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "♍",
@@ -15910,7 +17140,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "zodiac",
                     "purple-square",
                     "astrology"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "♎",
@@ -15923,7 +17154,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "purple-square",
                     "zodiac",
                     "astrology"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "♏",
@@ -15937,7 +17169,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "purple-square",
                     "astrology",
                     "scorpio"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "♐",
@@ -15950,7 +17183,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "zodiac",
                     "purple-square",
                     "astrology"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "♑",
@@ -15963,7 +17197,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "zodiac",
                     "purple-square",
                     "astrology"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "♒",
@@ -15976,7 +17211,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "purple-square",
                     "zodiac",
                     "astrology"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "♓",
@@ -15989,7 +17225,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sign",
                     "zodiac",
                     "astrology"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⛎",
@@ -16002,7 +17239,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "purple-square",
                     "constellation",
                     "astrology"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔀",
@@ -16015,7 +17253,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "shuffle",
                     "music",
                     "random"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔁",
@@ -16026,7 +17265,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "repeat_button",
                     "loop",
                     "record"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔂",
@@ -16037,7 +17277,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "repeat_single_button",
                     "blue-square",
                     "loop"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "▶️",
@@ -16050,7 +17291,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "right",
                     "direction",
                     "play"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⏩",
@@ -16063,7 +17305,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "play",
                     "speed",
                     "continue"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⏭️",
@@ -16075,7 +17318,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "forward",
                     "next",
                     "blue-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⏯️",
@@ -16087,7 +17331,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blue-square",
                     "play",
                     "pause"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "◀️",
@@ -16099,7 +17344,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blue-square",
                     "left",
                     "direction"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⏪",
@@ -16110,7 +17356,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fast_reverse_button",
                     "play",
                     "blue-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⏮️",
@@ -16120,7 +17367,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "last_track_button",
                     "backward"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔼",
@@ -16135,7 +17383,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "point",
                     "forward",
                     "top"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⏫",
@@ -16147,7 +17396,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blue-square",
                     "direction",
                     "top"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔽",
@@ -16159,7 +17409,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blue-square",
                     "direction",
                     "bottom"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⏬",
@@ -16171,7 +17422,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blue-square",
                     "direction",
                     "bottom"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⏸️",
@@ -16182,7 +17434,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "pause_button",
                     "pause",
                     "blue-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⏹️",
@@ -16192,7 +17445,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "stop_button",
                     "blue-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⏺️",
@@ -16202,7 +17456,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "record_button",
                     "blue-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⏏️",
@@ -16212,7 +17467,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "eject_button",
                     "blue-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎦",
@@ -16228,7 +17484,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "curtain",
                     "stage",
                     "theater"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔅",
@@ -16241,7 +17498,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "afternoon",
                     "warm",
                     "summer"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔆",
@@ -16252,7 +17510,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "bright_button",
                     "sun",
                     "light"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📶",
@@ -16269,7 +17528,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "wifi",
                     "bluetooth",
                     "bars"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📳",
@@ -16280,7 +17540,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "vibration_mode",
                     "orange-square",
                     "phone"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📴",
@@ -16293,7 +17554,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "orange-square",
                     "silence",
                     "quiet"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "♀️",
@@ -16306,7 +17568,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "women",
                     "lady",
                     "girl"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "♂️",
@@ -16318,7 +17581,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "man",
                     "boy",
                     "men"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "✖️",
@@ -16329,7 +17593,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "multiplication_sign",
                     "math",
                     "calculation"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "➕",
@@ -16343,7 +17608,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "addition",
                     "more",
                     "increase"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "➖",
@@ -16356,7 +17622,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "calculation",
                     "subtract",
                     "less"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "➗",
@@ -16368,7 +17635,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "divide",
                     "math",
                     "calculation"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "♾️",
@@ -16378,7 +17646,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "infinity",
                     "forever"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "‼️",
@@ -16389,7 +17658,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "double_exclamation_mark",
                     "exclamation",
                     "surprise"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⁉️",
@@ -16401,7 +17671,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "wat",
                     "punctuation",
                     "surprise"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "❓",
@@ -16412,7 +17683,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "question_mark",
                     "doubt",
                     "confused"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "❔",
@@ -16425,7 +17697,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "gray",
                     "huh",
                     "confused"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "❕",
@@ -16439,7 +17712,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "gray",
                     "wow",
                     "warning"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "❗",
@@ -16454,7 +17728,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "punctuation",
                     "wow",
                     "warning"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "〰️",
@@ -16469,7 +17744,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "mustache",
                     "squiggle",
                     "scribble"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💱",
@@ -16482,7 +17758,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sales",
                     "dollar",
                     "travel"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💲",
@@ -16496,7 +17773,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "payment",
                     "currency",
                     "buck"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⚕️",
@@ -16507,7 +17785,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "medical_symbol",
                     "health",
                     "hospital"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "♻️",
@@ -16520,7 +17799,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "environment",
                     "garbage",
                     "trash"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⚜️",
@@ -16531,7 +17811,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "fleur_de_lis",
                     "decorative",
                     "scout"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔱",
@@ -16542,7 +17823,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "trident_emblem",
                     "weapon",
                     "spear"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "📛",
@@ -16553,7 +17835,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "name_badge",
                     "fire",
                     "forbid"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔰",
@@ -16564,7 +17847,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "japanese_symbol_for_beginner",
                     "badge",
                     "shield"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⭕",
@@ -16575,7 +17859,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hollow_red_circle",
                     "circle",
                     "round"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "✅",
@@ -16591,7 +17876,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "election",
                     "answer",
                     "tick"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "☑️",
@@ -16608,7 +17894,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "election",
                     "yes",
                     "tick"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "✔️",
@@ -16622,7 +17909,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "answer",
                     "yes",
                     "tick"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "❌",
@@ -16636,7 +17924,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "remove",
                     "cancel",
                     "red"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "❎",
@@ -16649,7 +17938,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "green-square",
                     "no",
                     "deny"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "➰",
@@ -16662,7 +17952,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "draw",
                     "shape",
                     "squiggle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "➿",
@@ -16673,7 +17964,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "double_curly_loop",
                     "tape",
                     "cassette"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "〽️",
@@ -16688,7 +17980,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "business",
                     "economics",
                     "bad"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "✳️",
@@ -16700,7 +17993,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "star",
                     "sparkle",
                     "green-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "✴️",
@@ -16712,7 +18006,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "orange-square",
                     "shape",
                     "polygon"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "❇️",
@@ -16726,7 +18021,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "awesome",
                     "good",
                     "fireworks"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "©️",
@@ -16740,7 +18036,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "circle",
                     "law",
                     "legal"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "®️",
@@ -16751,7 +18048,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "registered",
                     "alphabet",
                     "circle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "™️",
@@ -16764,7 +18062,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "brand",
                     "law",
                     "legal"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "#️⃣",
@@ -16776,7 +18075,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "symbol",
                     "blue-square",
                     "twitter"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "*️⃣",
@@ -16787,7 +18087,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "keycap_",
                     "star",
                     "keycap"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "0️⃣",
@@ -16800,7 +18101,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "numbers",
                     "blue-square",
                     "null"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "1️⃣",
@@ -16812,7 +18114,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blue-square",
                     "numbers",
                     "1"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "2️⃣",
@@ -16825,7 +18128,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "2",
                     "prime",
                     "blue-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "3️⃣",
@@ -16838,7 +18142,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "numbers",
                     "prime",
                     "blue-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "4️⃣",
@@ -16850,7 +18155,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "4",
                     "numbers",
                     "blue-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "5️⃣",
@@ -16863,7 +18169,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "numbers",
                     "blue-square",
                     "prime"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "6️⃣",
@@ -16875,7 +18182,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "6",
                     "numbers",
                     "blue-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "7️⃣",
@@ -16888,7 +18196,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "numbers",
                     "blue-square",
                     "prime"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "8️⃣",
@@ -16900,7 +18209,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "8",
                     "blue-square",
                     "numbers"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "9️⃣",
@@ -16912,7 +18222,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blue-square",
                     "numbers",
                     "9"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔟",
@@ -16924,7 +18235,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "numbers",
                     "10",
                     "blue-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔠",
@@ -16936,7 +18248,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "alphabet",
                     "words",
                     "blue-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔡",
@@ -16947,7 +18260,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "input_latin_lowercase",
                     "blue-square",
                     "alphabet"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔢",
@@ -16963,7 +18277,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "2",
                     "3",
                     "4"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔣",
@@ -16979,7 +18294,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "percent",
                     "glyphs",
                     "characters"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔤",
@@ -16990,7 +18306,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "input_latin_letters",
                     "blue-square",
                     "alphabet"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🅰️",
@@ -17002,7 +18319,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "red-square",
                     "alphabet",
                     "letter"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🆎",
@@ -17013,7 +18331,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "ab_button",
                     "red-square",
                     "alphabet"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🅱️",
@@ -17025,7 +18344,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "red-square",
                     "alphabet",
                     "letter"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🆑",
@@ -17037,7 +18357,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "alphabet",
                     "words",
                     "red-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🆒",
@@ -17048,7 +18369,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cool_button",
                     "words",
                     "blue-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🆓",
@@ -17059,7 +18381,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "free_button",
                     "blue-square",
                     "words"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "ℹ️",
@@ -17071,7 +18394,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blue-square",
                     "alphabet",
                     "letter"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🆔",
@@ -17082,7 +18406,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "id_button",
                     "purple-square",
                     "words"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "Ⓜ️",
@@ -17094,7 +18419,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "alphabet",
                     "blue-circle",
                     "letter"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🆕",
@@ -17106,7 +18432,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blue-square",
                     "words",
                     "start"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🆖",
@@ -17119,7 +18446,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "words",
                     "shape",
                     "icon"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🅾️",
@@ -17131,7 +18459,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "alphabet",
                     "red-square",
                     "letter"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🆗",
@@ -17144,7 +18473,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "agree",
                     "yes",
                     "blue-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🅿️",
@@ -17157,7 +18487,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blue-square",
                     "alphabet",
                     "letter"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🆘",
@@ -17171,7 +18502,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "words",
                     "emergency",
                     "911"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🆙",
@@ -17183,7 +18515,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "blue-square",
                     "above",
                     "high"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🆚",
@@ -17194,7 +18527,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "vs_button",
                     "words",
                     "orange-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🈁",
@@ -17208,7 +18542,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "katakana",
                     "japanese",
                     "destination"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🈂️",
@@ -17220,7 +18555,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "japanese",
                     "blue-square",
                     "katakana"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🈷️",
@@ -17235,7 +18571,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "japanese",
                     "orange-square",
                     "kanji"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🈶",
@@ -17248,7 +18585,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "chinese",
                     "have",
                     "kanji"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🈯",
@@ -17261,7 +18599,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "point",
                     "green-square",
                     "kanji"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🉐",
@@ -17275,7 +18614,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "obtain",
                     "get",
                     "circle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🈹",
@@ -17289,7 +18629,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "chinese",
                     "kanji",
                     "pink-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🈚",
@@ -17303,7 +18644,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "kanji",
                     "japanese",
                     "orange-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🈲",
@@ -17319,7 +18661,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "limit",
                     "restricted",
                     "red-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🉑",
@@ -17335,7 +18678,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "agree",
                     "yes",
                     "orange-circle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🈸",
@@ -17348,7 +18692,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "japanese",
                     "kanji",
                     "orange-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🈴",
@@ -17362,7 +18707,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "join",
                     "kanji",
                     "red-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🈳",
@@ -17377,7 +18723,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "empty",
                     "sky",
                     "blue-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "㊗️",
@@ -17390,7 +18737,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "kanji",
                     "japanese",
                     "red-circle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "㊙️",
@@ -17404,7 +18752,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "sshh",
                     "kanji",
                     "red-circle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🈺",
@@ -17416,7 +18765,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "japanese",
                     "opening hours",
                     "orange-square"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🈵",
@@ -17430,7 +18780,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "japanese",
                     "red-square",
                     "kanji"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔴",
@@ -17442,7 +18793,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "shape",
                     "error",
                     "danger"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔵",
@@ -17454,7 +18806,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "shape",
                     "icon",
                     "button"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⚫",
@@ -17466,7 +18819,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "shape",
                     "button",
                     "round"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⚪",
@@ -17477,7 +18831,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "white_circle",
                     "shape",
                     "round"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⬛",
@@ -17489,7 +18844,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "shape",
                     "icon",
                     "button"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "⬜",
@@ -17502,7 +18858,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "icon",
                     "stone",
                     "button"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "◼️",
@@ -17514,7 +18871,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "shape",
                     "button",
                     "icon"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "◻️",
@@ -17526,7 +18884,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "shape",
                     "stone",
                     "icon"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "◾",
@@ -17538,7 +18897,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "icon",
                     "shape",
                     "button"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "◽",
@@ -17551,7 +18911,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "stone",
                     "icon",
                     "button"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "▪️",
@@ -17562,7 +18923,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "black_small_square",
                     "shape",
                     "icon"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "▫️",
@@ -17573,7 +18935,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "white_small_square",
                     "shape",
                     "icon"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔶",
@@ -17585,7 +18948,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "shape",
                     "jewel",
                     "gem"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔷",
@@ -17597,7 +18961,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "shape",
                     "jewel",
                     "gem"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔸",
@@ -17609,7 +18974,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "shape",
                     "jewel",
                     "gem"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔹",
@@ -17621,7 +18987,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "shape",
                     "jewel",
                     "gem"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔺",
@@ -17634,7 +19001,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "direction",
                     "up",
                     "top"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔻",
@@ -17646,7 +19014,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "shape",
                     "direction",
                     "bottom"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "💠",
@@ -17660,7 +19029,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "gem",
                     "crystal",
                     "fancy"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔘",
@@ -17673,7 +19043,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "old",
                     "music",
                     "circle"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔳",
@@ -17684,7 +19055,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "white_square_button",
                     "shape",
                     "input"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🔲",
@@ -17696,7 +19068,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "shape",
                     "input",
                     "frame"
-                ]
+                ],
+                url: ""
             }
         ]
     },
@@ -17715,7 +19088,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "finishline",
                     "race",
                     "gokart"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🚩",
@@ -17727,7 +19101,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "mark",
                     "milestone",
                     "place"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🎌",
@@ -17740,7 +19115,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nation",
                     "country",
                     "border"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏴",
@@ -17750,7 +19126,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "black_flag",
                     "pirate"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏳️",
@@ -17765,7 +19142,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "surrender",
                     "give up",
                     "fail"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏳️‍🌈",
@@ -17785,7 +19163,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "lesbian",
                     "bisexual",
                     "transgender"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏴‍☠️",
@@ -17798,7 +19177,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "crossbones",
                     "flag",
                     "banner"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇦🇨",
@@ -17807,7 +19187,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "toneEnabled": false,
                 "keywords": [
                     "flag_ascension_island"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇦🇩",
@@ -17822,7 +19203,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "andorra"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇦🇪",
@@ -17839,7 +19221,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "united_arab_emirates"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇦🇫",
@@ -17854,7 +19237,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "afghanistan"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇦🇬",
@@ -17870,7 +19254,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "antigua_barbuda"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇦🇮",
@@ -17885,7 +19270,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "anguilla"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇦🇱",
@@ -17900,7 +19286,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "albania"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇦🇲",
@@ -17915,7 +19302,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "armenia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇦🇴",
@@ -17930,7 +19318,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "angola"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇦🇶",
@@ -17945,7 +19334,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "antarctica"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇦🇷",
@@ -17960,7 +19350,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "argentina"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇦🇸",
@@ -17976,7 +19367,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "american_samoa"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇦🇹",
@@ -17991,7 +19383,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "austria"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇦🇺",
@@ -18006,7 +19399,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "australia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇦🇼",
@@ -18021,7 +19415,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "aruba"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇦🇽",
@@ -18037,7 +19432,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "aland_islands"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇦🇿",
@@ -18052,7 +19448,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "azerbaijan"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇧🇦",
@@ -18068,7 +19465,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "bosnia_herzegovina"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇧🇧",
@@ -18083,7 +19481,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "barbados"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇧🇩",
@@ -18098,7 +19497,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "bangladesh"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇧🇪",
@@ -18113,7 +19513,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "belgium"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇧🇫",
@@ -18129,7 +19530,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "burkina_faso"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇧🇬",
@@ -18144,7 +19546,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "bulgaria"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇧🇭",
@@ -18159,7 +19562,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "bahrain"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇧🇮",
@@ -18174,7 +19578,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "burundi"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇧🇯",
@@ -18189,7 +19594,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "benin"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇧🇱",
@@ -18205,7 +19611,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "st_barthelemy"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇧🇲",
@@ -18220,7 +19627,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "bermuda"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇧🇳",
@@ -18236,7 +19644,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "brunei"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇧🇴",
@@ -18251,7 +19660,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "bolivia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇧🇶",
@@ -18266,7 +19676,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "caribbean_netherlands"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇧🇷",
@@ -18281,7 +19692,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "brazil"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇧🇸",
@@ -18296,7 +19708,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "bahamas"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇧🇹",
@@ -18311,7 +19724,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "bhutan"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇧🇻",
@@ -18321,7 +19735,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "keywords": [
                     "flag_bouvet_island",
                     "norway"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇧🇼",
@@ -18336,7 +19751,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "botswana"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇧🇾",
@@ -18351,7 +19767,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "belarus"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇧🇿",
@@ -18366,7 +19783,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "belize"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇨🇦",
@@ -18381,7 +19799,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "canada"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇨🇨",
@@ -18398,7 +19817,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "cocos_islands"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇨🇩",
@@ -18415,7 +19835,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "congo_kinshasa"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇨🇫",
@@ -18432,7 +19853,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "central_african_republic"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇨🇬",
@@ -18447,7 +19869,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "congo_brazzaville"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇨🇭",
@@ -18462,7 +19885,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "switzerland"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇨🇮",
@@ -18478,7 +19902,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "cote_d_ivoire"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇨🇰",
@@ -18494,7 +19919,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "cook_islands"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇨🇱",
@@ -18508,7 +19934,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "chile"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇨🇲",
@@ -18523,7 +19950,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "cameroon"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇨🇳",
@@ -18540,7 +19968,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "nation",
                     "banner",
                     "china"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇨🇴",
@@ -18555,7 +19984,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "colombia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇨🇵",
@@ -18564,7 +19994,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "toneEnabled": false,
                 "keywords": [
                     "flag_clipperton_island"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇨🇷",
@@ -18580,7 +20011,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "costa_rica"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇨🇺",
@@ -18595,7 +20027,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "cuba"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇨🇻",
@@ -18611,7 +20044,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "cape_verde"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇨🇼",
@@ -18626,7 +20060,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "curacao"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇨🇽",
@@ -18642,7 +20077,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "christmas_island"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇨🇾",
@@ -18657,7 +20093,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "cyprus"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇨🇿",
@@ -18672,7 +20109,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "czechia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇩🇪",
@@ -18687,7 +20125,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "germany"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇩🇬",
@@ -18696,7 +20135,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "toneEnabled": false,
                 "keywords": [
                     "flag_diego_garcia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇩🇯",
@@ -18711,7 +20151,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "djibouti"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇩🇰",
@@ -18726,7 +20167,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "denmark"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇩🇲",
@@ -18741,7 +20183,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "dominica"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇩🇴",
@@ -18757,7 +20200,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "dominican_republic"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇩🇿",
@@ -18772,7 +20216,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "algeria"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇪🇦",
@@ -18781,7 +20226,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "toneEnabled": false,
                 "keywords": [
                     "flag_ceuta_melilla"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇪🇨",
@@ -18796,7 +20242,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "ecuador"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇪🇪",
@@ -18811,7 +20258,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "estonia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇪🇬",
@@ -18826,7 +20274,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "egypt"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇪🇭",
@@ -18842,7 +20291,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "western_sahara"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇪🇷",
@@ -18857,7 +20307,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "eritrea"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇪🇸",
@@ -18872,7 +20323,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "spain"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇪🇹",
@@ -18887,7 +20339,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "ethiopia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇪🇺",
@@ -18900,7 +20353,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "union",
                     "flag",
                     "banner"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇫🇮",
@@ -18915,7 +20369,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "finland"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇫🇯",
@@ -18930,7 +20385,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "fiji"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇫🇰",
@@ -18947,7 +20403,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "falkland_islands"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇫🇲",
@@ -18964,7 +20421,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "micronesia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇫🇴",
@@ -18980,7 +20438,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "faroe_islands"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇫🇷",
@@ -18996,7 +20455,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "french",
                     "country",
                     "france"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇬🇦",
@@ -19011,7 +20471,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "gabon"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇬🇧",
@@ -19036,7 +20497,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "england",
                     "union jack",
                     "united_kingdom"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇬🇩",
@@ -19051,7 +20513,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "grenada"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇬🇪",
@@ -19066,7 +20529,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "georgia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇬🇫",
@@ -19082,7 +20546,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "french_guiana"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇬🇬",
@@ -19097,7 +20562,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "guernsey"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇬🇭",
@@ -19112,7 +20578,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "ghana"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇬🇮",
@@ -19127,7 +20594,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "gibraltar"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇬🇱",
@@ -19142,7 +20610,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "greenland"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇬🇲",
@@ -19157,7 +20626,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "gambia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇬🇳",
@@ -19172,7 +20642,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "guinea"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇬🇵",
@@ -19187,7 +20658,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "guadeloupe"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇬🇶",
@@ -19203,7 +20675,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "equatorial_guinea"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇬🇷",
@@ -19218,7 +20691,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "greece"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇬🇸",
@@ -19236,7 +20710,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "south_georgia_south_sandwich_islands"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇬🇹",
@@ -19251,7 +20726,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "guatemala"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇬🇺",
@@ -19266,7 +20742,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "guam"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇬🇼",
@@ -19282,7 +20759,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "guinea_bissau"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇬🇾",
@@ -19297,7 +20775,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "guyana"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇭🇰",
@@ -19313,7 +20792,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "hong_kong_sar_china"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇭🇲",
@@ -19322,7 +20802,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "toneEnabled": false,
                 "keywords": [
                     "flag_heard_mcdonald_islands"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇭🇳",
@@ -19337,7 +20818,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "honduras"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇭🇷",
@@ -19352,7 +20834,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "croatia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇭🇹",
@@ -19367,7 +20850,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "haiti"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇭🇺",
@@ -19382,7 +20866,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "hungary"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇮🇨",
@@ -19398,7 +20883,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "canary_islands"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇮🇩",
@@ -19412,7 +20898,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "indonesia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇮🇪",
@@ -19427,7 +20914,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "ireland"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇮🇱",
@@ -19442,7 +20930,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "israel"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇮🇲",
@@ -19458,7 +20947,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "isle_of_man"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇮🇳",
@@ -19473,7 +20963,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "india"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇮🇴",
@@ -19491,7 +20982,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "british_indian_ocean_territory"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇮🇶",
@@ -19506,7 +20998,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "iraq"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇮🇷",
@@ -19523,7 +21016,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "iran"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇮🇸",
@@ -19538,7 +21032,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "iceland"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇮🇹",
@@ -19553,7 +21048,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "italy"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇯🇪",
@@ -19568,7 +21064,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "jersey"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇯🇲",
@@ -19583,7 +21080,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "jamaica"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇯🇴",
@@ -19598,7 +21096,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "jordan"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇯🇵",
@@ -19615,7 +21114,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "japan",
                     "jp",
                     "ja"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇰🇪",
@@ -19630,7 +21130,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "kenya"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇰🇬",
@@ -19645,7 +21146,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "kyrgyzstan"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇰🇭",
@@ -19660,7 +21162,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "cambodia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇰🇮",
@@ -19675,7 +21178,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "kiribati"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇰🇲",
@@ -19690,7 +21194,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "comoros"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇰🇳",
@@ -19707,7 +21212,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "st_kitts_nevis"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇰🇵",
@@ -19723,7 +21229,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "north_korea"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇰🇷",
@@ -19739,7 +21246,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "south_korea"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇰🇼",
@@ -19754,7 +21262,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "kuwait"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇰🇾",
@@ -19770,7 +21279,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "cayman_islands"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇰🇿",
@@ -19785,7 +21295,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "kazakhstan"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇱🇦",
@@ -19802,7 +21313,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "laos"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇱🇧",
@@ -19817,7 +21329,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "lebanon"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇱🇨",
@@ -19833,7 +21346,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "st_lucia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇱🇮",
@@ -19848,7 +21362,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "liechtenstein"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇱🇰",
@@ -19864,7 +21379,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "sri_lanka"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇱🇷",
@@ -19879,7 +21395,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "liberia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇱🇸",
@@ -19894,7 +21411,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "lesotho"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇱🇹",
@@ -19909,7 +21427,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "lithuania"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇱🇺",
@@ -19924,7 +21443,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "luxembourg"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇱🇻",
@@ -19939,7 +21459,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "latvia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇱🇾",
@@ -19954,7 +21475,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "libya"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇲🇦",
@@ -19969,7 +21491,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "morocco"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇲🇨",
@@ -19984,7 +21507,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "monaco"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇲🇩",
@@ -20000,7 +21524,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "moldova"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇲🇪",
@@ -20015,7 +21540,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "montenegro"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇲🇫",
@@ -20024,7 +21550,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "toneEnabled": false,
                 "keywords": [
                     "flag_st_martin"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇲🇬",
@@ -20039,7 +21566,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "madagascar"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇲🇭",
@@ -20055,7 +21583,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "marshall_islands"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇲🇰",
@@ -20070,7 +21599,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "north_macedonia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇲🇱",
@@ -20085,7 +21615,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "mali"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇲🇲",
@@ -20100,7 +21631,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "myanmar"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇲🇳",
@@ -20115,7 +21647,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "mongolia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇲🇴",
@@ -20130,7 +21663,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "macao_sar_china"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇲🇵",
@@ -20147,7 +21681,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "northern_mariana_islands"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇲🇶",
@@ -20162,7 +21697,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "martinique"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇲🇷",
@@ -20177,7 +21713,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "mauritania"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇲🇸",
@@ -20192,7 +21729,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "montserrat"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇲🇹",
@@ -20207,7 +21745,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "malta"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇲🇺",
@@ -20222,7 +21761,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "mauritius"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇲🇻",
@@ -20237,7 +21777,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "maldives"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇲🇼",
@@ -20252,7 +21793,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "malawi"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇲🇽",
@@ -20267,7 +21809,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "mexico"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇲🇾",
@@ -20282,7 +21825,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "malaysia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇲🇿",
@@ -20297,7 +21841,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "mozambique"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇳🇦",
@@ -20312,7 +21857,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "namibia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇳🇨",
@@ -20328,7 +21874,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "new_caledonia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇳🇪",
@@ -20343,7 +21890,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "niger"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇳🇫",
@@ -20359,7 +21907,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "norfolk_island"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇳🇬",
@@ -20373,7 +21922,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "nigeria"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇳🇮",
@@ -20388,7 +21938,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "nicaragua"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇳🇱",
@@ -20403,7 +21954,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "netherlands"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇳🇴",
@@ -20418,7 +21970,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "norway"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇳🇵",
@@ -20433,7 +21986,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "nepal"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇳🇷",
@@ -20448,7 +22002,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "nauru"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇳🇺",
@@ -20463,7 +22018,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "niue"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇳🇿",
@@ -20479,7 +22035,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "new_zealand"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇴🇲",
@@ -20494,7 +22051,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "oman"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇵🇦",
@@ -20509,7 +22067,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "panama"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇵🇪",
@@ -20524,7 +22083,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "peru"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇵🇫",
@@ -20540,7 +22100,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "french_polynesia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇵🇬",
@@ -20557,7 +22118,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "papua_new_guinea"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇵🇭",
@@ -20572,7 +22134,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "philippines"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇵🇰",
@@ -20587,7 +22150,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "pakistan"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇵🇱",
@@ -20602,7 +22166,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "poland"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇵🇲",
@@ -20619,7 +22184,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "st_pierre_miquelon"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇵🇳",
@@ -20634,7 +22200,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "pitcairn_islands"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇵🇷",
@@ -20650,7 +22217,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "puerto_rico"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇵🇸",
@@ -20667,7 +22235,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "palestinian_territories"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇵🇹",
@@ -20682,7 +22251,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "portugal"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇵🇼",
@@ -20697,7 +22267,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "palau"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇵🇾",
@@ -20712,7 +22283,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "paraguay"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇶🇦",
@@ -20727,7 +22299,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "qatar"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇷🇪",
@@ -20742,7 +22315,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "reunion"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇷🇴",
@@ -20757,7 +22331,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "romania"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇷🇸",
@@ -20772,7 +22347,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "serbia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇷🇺",
@@ -20788,7 +22364,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "russia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇷🇼",
@@ -20803,7 +22380,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "rwanda"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇸🇦",
@@ -20817,7 +22395,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "saudi_arabia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇸🇧",
@@ -20833,7 +22412,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "solomon_islands"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇸🇨",
@@ -20848,7 +22428,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "seychelles"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇸🇩",
@@ -20863,7 +22444,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "sudan"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇸🇪",
@@ -20878,7 +22460,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "sweden"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇸🇬",
@@ -20893,7 +22476,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "singapore"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇸🇭",
@@ -20912,7 +22496,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "st_helena"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇸🇮",
@@ -20927,7 +22512,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "slovenia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇸🇯",
@@ -20936,7 +22522,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "toneEnabled": false,
                 "keywords": [
                     "flag_svalbard_jan_mayen"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇸🇰",
@@ -20951,7 +22538,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "slovakia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇸🇱",
@@ -20967,7 +22555,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "sierra_leone"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇸🇲",
@@ -20983,7 +22572,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "san_marino"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇸🇳",
@@ -20998,7 +22588,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "senegal"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇸🇴",
@@ -21013,7 +22604,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "somalia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇸🇷",
@@ -21028,7 +22620,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "suriname"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇸🇸",
@@ -21044,7 +22637,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "south_sudan"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇸🇹",
@@ -21061,7 +22655,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "sao_tome_principe"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇸🇻",
@@ -21077,7 +22672,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "el_salvador"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇸🇽",
@@ -21094,7 +22690,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "sint_maarten"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇸🇾",
@@ -21111,7 +22708,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "syria"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇸🇿",
@@ -21126,7 +22724,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "eswatini"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇹🇦",
@@ -21135,7 +22734,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "toneEnabled": false,
                 "keywords": [
                     "flag_tristan_da_cunha"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇹🇨",
@@ -21152,7 +22752,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "turks_caicos_islands"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇹🇩",
@@ -21167,7 +22768,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "chad"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇹🇫",
@@ -21184,7 +22786,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "french_southern_territories"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇹🇬",
@@ -21199,7 +22802,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "togo"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇹🇭",
@@ -21214,7 +22818,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "thailand"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇹🇯",
@@ -21229,7 +22834,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "tajikistan"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇹🇰",
@@ -21244,7 +22850,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "tokelau"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇹🇱",
@@ -21260,7 +22867,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "timor_leste"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇹🇲",
@@ -21274,7 +22882,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "turkmenistan"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇹🇳",
@@ -21289,7 +22898,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "tunisia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇹🇴",
@@ -21304,7 +22914,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "tonga"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇹🇷",
@@ -21319,7 +22930,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "turkey"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇹🇹",
@@ -21335,7 +22947,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "trinidad_tobago"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇹🇻",
@@ -21349,7 +22962,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "tuvalu"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇹🇼",
@@ -21364,7 +22978,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "taiwan"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇹🇿",
@@ -21381,7 +22996,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "tanzania"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇺🇦",
@@ -21396,7 +23012,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "ukraine"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇺🇬",
@@ -21411,7 +23028,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "uganda"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇺🇲",
@@ -21420,7 +23038,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 "toneEnabled": false,
                 "keywords": [
                     "flag_u_s_outlying_islands"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇺🇳",
@@ -21432,7 +23051,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "un",
                     "flag",
                     "banner"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇺🇸",
@@ -21449,7 +23069,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "united_states"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇺🇾",
@@ -21464,7 +23085,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "uruguay"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇺🇿",
@@ -21479,7 +23101,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "uzbekistan"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇻🇦",
@@ -21495,7 +23118,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "vatican_city"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇻🇨",
@@ -21512,7 +23136,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "st_vincent_grenadines"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇻🇪",
@@ -21529,7 +23154,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "venezuela"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇻🇬",
@@ -21547,7 +23173,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "british_virgin_islands"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇻🇮",
@@ -21564,7 +23191,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "u_s_virgin_islands"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇻🇳",
@@ -21580,7 +23208,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "vietnam"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇻🇺",
@@ -21595,7 +23224,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "vanuatu"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇼🇫",
@@ -21611,7 +23241,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "wallis_futuna"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇼🇸",
@@ -21626,7 +23257,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "samoa"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇽🇰",
@@ -21641,7 +23273,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "kosovo"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇾🇪",
@@ -21656,7 +23289,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "yemen"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇾🇹",
@@ -21671,7 +23305,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "mayotte"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇿🇦",
@@ -21687,7 +23322,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "south_africa"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇿🇲",
@@ -21702,7 +23338,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "zambia"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🇿🇼",
@@ -21717,7 +23354,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "country",
                     "banner",
                     "zimbabwe"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
@@ -21728,7 +23366,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "flag_england",
                     "flag",
                     "english"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
@@ -21739,7 +23378,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "flag_scotland",
                     "flag",
                     "scottish"
-                ]
+                ],
+                url: ""
             },
             {
                 "emoji": "🏴󠁧󠁢󠁷󠁬󠁳󠁿",
@@ -21750,7 +23390,8 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "flag_wales",
                     "flag",
                     "welsh"
-                ]
+                ],
+                url: ""
             }
         ]
     }

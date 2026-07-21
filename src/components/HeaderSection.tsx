@@ -203,7 +203,19 @@ const HeaderSession = ({
                                         </MenuItemLabel>
                                     </MenuItem>
 
-
+                                    <MenuItem
+                                        key="AddSticker"
+                                        textValue="AddSticker"
+                                        onPress={() => {
+                                            setIsMenuOpen(false);
+                                            navigation.navigate('AddSticker');
+                                        }}
+                                    >
+                                        <Icon as={Navigation2} size="sm" className="text-red-600 mr-2" />
+                                        <MenuItemLabel className="text-red-600 font-bold text-sm">
+                                            Add Sticker
+                                        </MenuItemLabel>
+                                    </MenuItem>
                                 </>}
                                 <MenuItem
                                     key="exit"

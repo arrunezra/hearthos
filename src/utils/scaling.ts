@@ -24,3 +24,4 @@ export const verticalScale = (size: number) => (SCREEN_HEIGHT / guidelineBaseHei
  * Best for: Typography / Font Sizes.
  */
 export const moderateScale = (size: number, factor = 0.5) => size + (scale(size) - size) * factor;
+
