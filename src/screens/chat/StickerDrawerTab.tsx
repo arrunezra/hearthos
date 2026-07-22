@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { ActivityIndicator, TouchableOpacity, FlatList, Dimensions } from 'react-native';
+import { ActivityIndicator, TouchableOpacity, FlatList, Dimensions, Alert } from 'react-native';
 import axios from 'axios';
 import FastImage from '@d11/react-native-fast-image';
 import LottieView from 'lottie-react-native';
@@ -15,8 +15,8 @@ export interface CDNStickerItem {
 }
 
 const API_BASE_URL = API_BASE_URL_DEV + '/stickers/get_stickers.php';
-
-export const StickerDrawerTab = ({ onSelectSticker }: { onSelectSticker: (item: CDNStickerItem) => void }) => {
+const INACTIVATE_STICKER_API = API_BASE_URL_DEV + '/stickers/inactivate_sticker.php';
+export const StickerDrawerTab = ({ role, onSelectSticker }: { role: string, onSelectSticker: (item: CDNStickerItem) => void }) => {
     const [stickers, setStickers] = useState<CDNStickerItem[]>([]);
     const [page, setPage] = useState<number>(1);
     const [loading, setLoading] = useState<boolean>(false);
@@ -26,7 +26,7 @@ export const StickerDrawerTab = ({ onSelectSticker }: { onSelectSticker: (item: 
     const isFetchingRef = useRef<boolean>(false);
     // 🚀 1. Dynamic Width Calculations for 5 Columns
     const { width: SCREEN_WIDTH } = Dimensions.get('window');
-    const NUM_COLUMNS = 4;
+    const NUM_COLUMNS = 5;
     const PADDING_HORIZONTAL = scale(8) * 2; // Left + Right horizontal padding
     const AVAILABLE_WIDTH = SCREEN_WIDTH - PADDING_HORIZONTAL;
 
@@ -42,7 +42,7 @@ export const StickerDrawerTab = ({ onSelectSticker }: { onSelectSticker: (item: 
 
         try {
             const response = await axios.get(API_BASE_URL, {
-                params: { page: pageNum, limit: 20 }
+                params: { page: pageNum, limit: 20, role: role }
             });
 
             if (response.data?.status === 'success') {
@@ -90,7 +90,6 @@ export const StickerDrawerTab = ({ onSelectSticker }: { onSelectSticker: (item: 
                 ) : null
             }
             renderItem={({ item }) => (
-                /* 🚀 2. Strict 20% width to match 5 columns without stretching */
                 <Box
                     style={{
                         width: '20%',
@@ -102,6 +101,43 @@ export const StickerDrawerTab = ({ onSelectSticker }: { onSelectSticker: (item: 
                 >
                     <TouchableOpacity
                         onPress={() => onSelectSticker(item)}
+                        /* 🚀 1. Trigger long-press action only for admin users */
+                        onLongPress={() => {
+                            if (role !== 'admin') return;
+
+                            Alert.alert(
+                                'Inactivate Sticker',
+                                `Are you sure you want to deactivate "${item.name || 'this sticker'}"?`,
+                                [
+                                    { text: 'Cancel', style: 'cancel' },
+                                    {
+                                        text: 'Inactivate',
+                                        style: 'destructive',
+                                        onPress: async () => {
+                                            try {
+                                                const response = await axios.post(INACTIVATE_STICKER_API, {
+                                                    sticker_id: item.id
+                                                });
+
+                                                if (response.data?.status === 'success') {
+                                                    // 🚀 2. Remove inactivated item from local state UI immediately
+                                                    setStickers((prevStickers) =>
+                                                        prevStickers.filter((stk) => stk.id !== item.id)
+                                                    );
+                                                    Alert.alert('Success', 'Sticker deactivated successfully.');
+                                                } else {
+                                                    Alert.alert('Error', response.data?.message || 'Failed to deactivate.');
+                                                }
+                                            } catch (error) {
+                                                console.error('Inactivate error:', error);
+                                                Alert.alert('Error', 'Server connection failed.');
+                                            }
+                                        }
+                                    }
+                                ]
+                            );
+                        }}
+                        delayLongPress={500} // Optional: 500ms press threshold
                         style={{
                             width: ITEM_SIZE,
                             height: ITEM_SIZE,

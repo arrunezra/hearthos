@@ -782,6 +782,7 @@ export default function ChatScreen({ route, navigation }: any) {
                                     /* ---------------- 2. STICKER DRAWER MODE (NEW) ---------------- */
                                     <Box style={{ flex: 1 }}>
                                         <StickerDrawerTab
+                                            role={currentUserRole}
                                             onSelectSticker={(selectedSticker) => {
                                                 console.log('selectedSticker', selectedSticker)
                                                 // 🚀 Handle sending the sticker when tapped

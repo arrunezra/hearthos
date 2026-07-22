@@ -7,9 +7,12 @@ import { API_BASE_URL_DEV } from '@/src/utils/environment';
 
 const ADD_STICKER_API = API_BASE_URL_DEV + '/stickers/add_sticker.php';
 
+export type StickerRating = 'normal' | 'nsfw';
+
 export const AddStickerScreen = ({ navigation }: any) => {
     const [stickerName, setStickerName] = useState('');
     const [fileName, setFileName] = useState('');
+    const [rating, setRating] = useState<StickerRating>('normal'); // 🚀 New Rating State
     const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
     const [loading, setLoading] = useState(false);
 
@@ -55,6 +58,7 @@ export const AddStickerScreen = ({ navigation }: any) => {
             const formData = new FormData();
             formData.append('name', stickerName.trim() || 'Custom Sticker');
             formData.append('filename', fileName.trim());
+            formData.append('rating', rating); // 🚀 Send rating ('normal' | 'nsfw') to backend
 
             // Append File Asset from react-native-image-picker
             formData.append('sticker_file', {
@@ -69,7 +73,12 @@ export const AddStickerScreen = ({ navigation }: any) => {
 
             if (response.data?.status === 'success') {
                 Alert.alert('Success', 'Sticker uploaded successfully!');
-                navigation.goBack();
+
+                // 🚀 Reset all form states back to initial defaults
+                setStickerName('');
+                setFileName('');
+                setSelectedAsset(null);
+                setRating('normal');
             } else {
                 Alert.alert('Upload Failed', response.data?.message || 'Server error.');
             }
@@ -122,7 +131,29 @@ export const AddStickerScreen = ({ navigation }: any) => {
                 autoCapitalize="none"
             />
 
-            {/* 4. Upload Button */}
+            {/* 4. Content Rating Selector (Admin Moderation) */}
+            <Text style={styles.label}>Content Rating (Admin Only)</Text>
+            <View style={styles.ratingRow}>
+                <TouchableOpacity
+                    onPress={() => setRating('normal')}
+                    style={[styles.ratingChip, rating === 'normal' && styles.ratingChipActiveNormal]}
+                >
+                    <Text style={[styles.ratingChipText, rating === 'normal' && styles.ratingChipTextActive]}>
+                        🟢 Normal Content
+                    </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={() => setRating('nsfw')}
+                    style={[styles.ratingChip, rating === 'nsfw' && styles.ratingChipActiveNsfw]}
+                >
+                    <Text style={[styles.ratingChipText, rating === 'nsfw' && styles.ratingChipTextActive]}>
+                        🔴 Sensitive
+                    </Text>
+                </TouchableOpacity>
+            </View>
+
+            {/* 5. Upload Button */}
             <TouchableOpacity onPress={handleUploadSticker} disabled={loading} style={styles.uploadBtn}>
                 {loading ? (
                     <ActivityIndicator color="#FFFFFF" />
@@ -138,7 +169,7 @@ const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: '#022C22', padding: 16 },
     heading: { fontSize: 20, fontWeight: '700', color: '#F8FAFC', marginBottom: 20, textAlign: 'center' },
     filePickerBox: {
-        height: 140,
+        height: 130,
         borderWidth: 2,
         borderColor: '#059669',
         borderStyle: 'dashed',
@@ -146,12 +177,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#033F30',
-        marginBottom: 20,
+        marginBottom: 16,
     },
     pickerPlaceholder: { color: '#94A3B8', fontSize: 14 },
     previewContainer: { alignItems: 'center' },
-    previewMedia: { width: 80, height: 80 },
-    fileNameText: { color: '#E2E8F0', fontSize: 12, marginTop: 6 },
+    previewMedia: { width: 70, height: 70 },
+    fileNameText: { color: '#E2E8F0', fontSize: 12, marginTop: 4 },
     label: { color: '#E2E8F0', fontSize: 12, fontWeight: '600', marginBottom: 6 },
     input: {
         backgroundColor: '#011F18',
@@ -162,14 +193,28 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         color: '#FFFFFF',
         fontSize: 14,
-        marginBottom: 16,
+        marginBottom: 14,
     },
+    ratingRow: { flexDirection: 'row', gap: 10, marginBottom: 20 },
+    ratingChip: {
+        flex: 1,
+        paddingVertical: 10,
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: '#059669',
+        backgroundColor: '#011F18',
+        alignItems: 'center',
+    },
+    ratingChipActiveNormal: { backgroundColor: '#047857', borderColor: '#10B981' },
+    ratingChipActiveNsfw: { backgroundColor: '#991B1B', borderColor: '#EF4444' },
+    ratingChipText: { color: '#94A3B8', fontSize: 13, fontWeight: '600' },
+    ratingChipTextActive: { color: '#FFFFFF' },
     uploadBtn: {
         backgroundColor: '#E65100',
         paddingVertical: 14,
         borderRadius: 8,
         alignItems: 'center',
-        marginTop: 10,
+        marginTop: 6,
     },
     uploadBtnText: { color: '#FFFFFF', fontWeight: '700', fontSize: 15 },
 });

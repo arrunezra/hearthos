@@ -11,9 +11,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once '../config/database.php';
 
+// Safely require error log config if it exists
+if (file_exists(__DIR__ . '/../error_log_config.php')) {
+    require_once __DIR__ . '/../error_log_config.php';
+}
+
 try {
-     $db = Database::getInstance(); 
- 
+    $db = Database::getInstance();
+    $conn = method_exists($db, 'getConnection') ? $db->getConnection() : $db;
+
     // 1. Verify file upload existence
     if (!isset($_FILES['sticker_file']) || $_FILES['sticker_file']['error'] !== UPLOAD_ERR_OK) {
         throw new Exception("No valid sticker file uploaded.");
@@ -26,8 +32,12 @@ try {
     $originalFileName = $_FILES['sticker_file']['name'];
     $fileExtension = strtolower(pathinfo($originalFileName, PATHINFO_EXTENSION));
 
+    $rating = isset($_POST['rating']) && in_array($_POST['rating'], ['normal', 'nsfw']) 
+        ? $_POST['rating'] 
+        : 'normal';
+
     // 2. Validate file extension
-    $allowedExtensions = ['json', 'webp', 'png', 'jpg', 'jpeg'];
+    $allowedExtensions = ['json', 'webp', 'png', 'jpg', 'jpeg','gif'];
     if (!in_array($fileExtension, $allowedExtensions)) {
         throw new Exception("Invalid file format. Only JSON, WebP, PNG, and JPG allowed.");
     }
@@ -66,18 +76,20 @@ try {
     }
 
     // Construct full CDN URL
-    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
-    $cdnUrl =  "https://hearthos.jeasuns.com/api/uploads/stickers/" . $finalFileName;
+    $cdnUrl = "https://hearthos.jeasuns.com/api/uploads/stickers/" . $finalFileName;
     $stickerId = 'stk_' . time() . '_' . rand(100, 999);
 
     // 6. Save to MySQL Database
-    $sql = "INSERT INTO stickers (sticker_id, name, type, url) VALUES (:sticker_id, :name, :type, :url)";
-    $stmt =  $db->prepare($sql);
+    $sql = "INSERT INTO stickers (sticker_id, name, type, rating, url) 
+            VALUES (:sticker_id, :name, :type, :rating, :url)";
+            
+    $stmt = $conn->prepare($sql);
     $stmt->execute([
         ':sticker_id' => $stickerId,
-        ':name' => $stickerName,
-        ':type' => $type,
-        ':url' => $cdnUrl
+        ':name'       => $stickerName,
+        ':type'       => $type,
+        ':rating'     => $rating, // 🚀 Fixed: Bound rating parameter
+        ':url'        => $cdnUrl
     ]);
 
     http_response_code(200);
@@ -85,19 +97,23 @@ try {
         "status" => "success",
         "message" => "Sticker uploaded successfully!",
         "data" => [
-            "id" => $stickerId,
-            "name" => $stickerName,
+            "id"       => $stickerId,
+            "name"     => $stickerName,
             "filename" => $finalFileName,
-            "type" => $type,
-            "url" => $cdnUrl
+            "type"     => $type,
+            "rating"   => $rating, // 🚀 Fixed: Correct JSON key name
+            "url"      => $cdnUrl
         ]
     ]);
 
-} catch (Exception $e) {
+} catch (Exception $ex) {
+    // 🚀 Log error trace safely
+    error_log("Action Error Trace: " . $ex->getMessage());
+
     http_response_code(500);
     echo json_encode([
         "status" => "error",
-        "message" => $e->getMessage()
+        "message" => $ex->getMessage()
     ]);
 }
 ?>

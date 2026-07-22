@@ -145,6 +145,7 @@ const ChatMessageBubble = ({
     const getBubbleColor = () => {
         if (isHighlighted) return '#0a2b12ff';
         if (isDeletedByUser && isAdmin) return '#7F1D1D';
+        if (renderBigEmojiStyle || isSticker) return 'transparent';
         return isMe ? '#064E3B' : '#115E59';
     };
 
@@ -197,7 +198,7 @@ const ChatMessageBubble = ({
                         borderRadius: scale(16),
                         borderBottomRightRadius: isMe ? scale(4) : scale(16),
                         borderBottomLeftRadius: !isMe ? scale(4) : scale(16),
-                        backgroundColor: renderBigEmojiStyle || isSticker ? 'transparent' : getBubbleColor(),
+                        backgroundColor: getBubbleColor(),
                         overflow: 'hidden',
                         borderWidth: isMedia ? 1 : 0,
                         borderColor: isMe ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)',
@@ -225,7 +226,7 @@ const ChatMessageBubble = ({
                                 <Text
                                     numberOfLines={1}
                                     style={{ fontSize: moderateScale(13) }}
-                                    className={isMe ? "text-white/60" : "text-slate-600/80"}
+                                    className={isMe ? "text-white/60" : "text-slate-300"}
                                 >
                                     {item.replyTo.mediaUrl ? "🎬 [Media Context]" : item.replyTo.text}
                                 </Text>

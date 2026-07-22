@@ -4,76 +4,83 @@ header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
 header("Content-Type: application/json; charset=UTF-8");
 
-require_once '../config/database.php';
-require_once __DIR__ . '/../error_log_config.php'; 
-
-// Handle CORS Preflight Options Request
+// Handle preflight CORS request
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
 }
 
+ini_set('display_errors', 0);
+error_reporting(E_ALL);
+
 try {
-    // 1. Get Singleton Database Instance & Connection
+    require_once '../config/database.php';
+    if (file_exists(__DIR__ . '/../error_log_config.php')) {
+        require_once __DIR__ . '/../error_log_config.php'; 
+    }
+
     $db = Database::getInstance();
-    $conn = $db->getConnection(); // Assumes Database singleton exposes getConnection() or returns PDO instance
+    $conn = method_exists($db, 'getConnection') ? $db->getConnection() : $db;
 
-    // 2. Read and Sanitize Pagination Parameters (Fallback: Page 1, Limit 20)
-    $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
-    $limit = isset($_GET['limit']) && is_numeric($_GET['limit']) ? (int)$_GET['limit'] : 20;
-
-    // Ensure parameters stay within reasonable safety bounds
-    if ($page < 1) $page = 1;
-    if ($limit < 1 || $limit > 100) $limit = 20; // Cap max limit at 100
-
+    // 1. Read parameters
+    $page  = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+    $limit = isset($_GET['limit']) ? min(100, max(1, (int)$_GET['limit'])) : 20;
     $offset = ($page - 1) * $limit;
 
-    // 3. Query Total Active Stickers Count for Metadata
-    $countSql = "SELECT COUNT(*) AS total FROM stickers WHERE is_active = 1";
+    // 🚀 Read role parameter ('admin' gets all, others get 'normal' only)
+    $role = isset($_GET['role']) ? trim(strtolower($_GET['role'])) : 'user';
+
+    // 2. Build dynamic SQL WHERE clause based on role
+    if ($role === 'admin') {
+        // Admin sees all active stickers regardless of rating
+        $whereClause = "WHERE is_active = 1";
+    } else {
+        // Standard users only see normal content
+        $whereClause = "WHERE is_active = 1 AND rating = 'normal'";
+    }
+
+    // 3. Query total count
+    $countSql = "SELECT COUNT(*) AS total FROM stickers " . $whereClause;
     $countStmt = $conn->prepare($countSql);
     $countStmt->execute();
     $totalCount = (int)$countStmt->fetch(PDO::FETCH_ASSOC)['total'];
 
-    // 4. Query Paginated Items
-    $sql = "SELECT sticker_id AS id, name, type, url 
+    // 4. Query paginated records
+    $sql = "SELECT sticker_id AS id, name, type, rating, url 
             FROM stickers 
-            WHERE is_active = 1 
+            " . $whereClause . " 
             ORDER BY id DESC 
-            LIMIT :limit OFFSET :offset";
+            LIMIT $limit OFFSET $offset";
 
     $stmt = $conn->prepare($sql);
-    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
     $stmt->execute();
-
     $stickers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // 5. Send Formatted JSON Response
+    // 5. Return JSON response
     http_response_code(200);
     echo json_encode([
-        "status" => "success",
-        "page" => $page,
-        "limit" => $limit,
-        "total" => $totalCount,
+        "status"  => "success",
+        "page"    => $page,
+        "limit"   => $limit,
+        "total"   => $totalCount,
         "hasMore" => ($offset + count($stickers)) < $totalCount,
-        "data" => $stickers
+        "data"    => $stickers ?: []
     ]);
 
 } catch (PDOException $e) {
-    // Log internal error safely
-    if (function_exists('logError')) {
-        logError("Sticker Fetch Error: " . $e->getMessage());
-    }
+    error_log("Action Error Trace (PDO): " . $e->getMessage());
 
     http_response_code(500);
     echo json_encode([
-        "status" => "error",
-        "message" => "An error occurred while fetching stickers."
+        "status"  => "error",
+        "message" => "Database Query Failed: " . $e->getMessage()
     ]);
 } catch (Exception $e) {
-    http_response_code(400);
+    error_log("Action Error Trace (General): " . $e->getMessage());
+
+    http_response_code(500);
     echo json_encode([
-        "status" => "error",
+        "status"  => "error",
         "message" => $e->getMessage()
     ]);
 }
