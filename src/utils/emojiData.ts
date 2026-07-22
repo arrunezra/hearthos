@@ -253,7 +253,7 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hearts",
                     "adore"
                 ],
-                url: ""
+                url: "heart_face_1f970"
             },
             {
                 "emoji": "😍",
@@ -271,7 +271,7 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "crush",
                     "heart"
                 ],
-                url: ""
+                url: "heart_eyes_1f60d"
             },
             {
                 "emoji": "🤩",
@@ -289,6 +289,19 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 url: ""
             },
             {
+                "emoji": "🫂",
+                "name": "people hugging",
+                "v": "1.0",
+                "toneEnabled": false,
+                "keywords": [
+                    "hugging_face",
+                    "face",
+                    "smile",
+                    "hug"
+                ],
+                url: "hugging_1fac2"
+            },
+            {
                 "emoji": "😘",
                 "name": "face blowing a kiss",
                 "v": "0.6",
@@ -303,7 +316,7 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "infatuation",
                     "kiss"
                 ],
-                url: ""
+                url: "kissing_heart_1f618"
             },
             {
                 "emoji": "😗",
@@ -386,7 +399,7 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "delicious",
                     "savouring"
                 ],
-                url: ""
+                url: "yum_1f60b"
             },
             {
                 "emoji": "😛",
@@ -421,7 +434,7 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "wink",
                     "tongue"
                 ],
-                url: ""
+                url: "winky_tongue_1f61c"
             },
             {
                 "emoji": "🤪",
@@ -434,7 +447,7 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "goofy",
                     "crazy"
                 ],
-                url: ""
+                url: "zany_face_1f92a"
             },
             {
                 "emoji": "😝",
@@ -921,7 +934,7 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "celebration",
                     "woohoo"
                 ],
-                url: ""
+                url: "partying_face_1f973"
             },
             {
                 "emoji": "😎",
@@ -1196,7 +1209,7 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "upset",
                     "depressed"
                 ],
-                url: ""
+                url: "loudly_crying_1f62d",
             },
             {
                 "emoji": "😱",
@@ -1330,7 +1343,7 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "hate",
                     "despise"
                 ],
-                url: ""
+                url: "rage_1f621"
             },
             {
                 "emoji": "😠",
@@ -1344,7 +1357,7 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "annoyed",
                     "frustrated"
                 ],
-                url: ""
+                url: "angry_1f620"
             },
             {
                 "emoji": "🤬",
@@ -1360,7 +1373,7 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "profanity",
                     "expletive"
                 ],
-                url: ""
+                url: "cursing_1f92c"
             },
             {
                 "emoji": "😈",
@@ -1705,21 +1718,7 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                 ],
                 url: ""
             },
-            {
-                "emoji": "💌",
-                "name": "love letter",
-                "v": "0.6",
-                "toneEnabled": false,
-                "keywords": [
-                    "love_letter",
-                    "email",
-                    "like",
-                    "affection",
-                    "envelope",
-                    "valentines"
-                ],
-                url: ""
-            },
+
             {
                 "emoji": "💘",
                 "name": "heart with arrow",
@@ -1733,7 +1732,7 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "affection",
                     "valentines"
                 ],
-                url: ""
+                url: "cupid_1f498"
             },
             {
                 "emoji": "💝",
@@ -1804,7 +1803,7 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "affection",
                     "valentines"
                 ],
-                url: ""
+                url: "revolving_hearts_1f49e"
             },
             {
                 "emoji": "💕",
@@ -1872,7 +1871,7 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "like",
                     "valentines"
                 ],
-                url: ""
+                url: "red_heart_2764_fe0f"
             },
             {
                 "emoji": "🧡",
@@ -1969,7 +1968,7 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "affection",
                     "valentines"
                 ],
-                url: ""
+                url: "kiss_1f48b"
             },
             {
                 "emoji": "💯",
@@ -12277,7 +12276,7 @@ export const EMOJI_SECTIONS: EmojiCategory[] = [
                     "cook",
                     "flame"
                 ],
-                url: ""
+                url: "fire_1f525"
             },
             {
                 "emoji": "💧",

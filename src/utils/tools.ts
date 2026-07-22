@@ -113,6 +113,23 @@ export const checkEmojiOnlyString = (str: string) => {
 export const LOTTIE_ASSETS: Record<string, any> = {
     "smile_1f600": require("@/src/assets/emoji/smile_1f600.json"),
     "wink_1f600": require("@/src/assets/emoji/wink_1f600.json"),
+    "loudly_crying_1f62d": require("@/src/assets/emoji/loudly_crying_1f62d.json"),
+    "heart_eyes_1f60d": require("@/src/assets/emoji/heart_eyes_1f60d.json"),
+    "partying_face_1f973": require("@/src/assets/emoji/partying_face_1f973.json"),
+    "yum_1f60b": require("@/src/assets/emoji/yum_1f60b.json"),
+    "winky_tongue_1f61c": require("@/src/assets/emoji/winky_tongue_1f61c.json"),
+    "zany_face_1f92a": require("@/src/assets/emoji/zany_face_1f92a.json"),
+    "rage_1f621": require("@/src/assets/emoji/rage_1f621.json"),
+    "angry_1f620": require("@/src/assets/emoji/angry_1f620.json"),
+    "cursing_1f92c": require("@/src/assets/emoji/cursing_1f92c.json"),
+    "fire_1f525": require("@/src/assets/emoji/fire_1f525.json"),
+    "red_heart_2764_fe0f": require("@/src/assets/emoji/red_heart_2764_fe0f.json"),
+    "cupid_1f498": require("@/src/assets/emoji/cupid_1f498.json"),
+    "revolving_hearts_1f49e": require("@/src/assets/emoji/revolving_hearts_1f49e.json"),
+    "kiss_1f48b": require("@/src/assets/emoji/kiss_1f48b.json"),
+    "hugging_1fac2": require("@/src/assets/emoji/hugging_1fac2.json"),
+    "kissing_heart_1f618": require("@/src/assets/emoji/kissing_heart_1f618.json"),
+    "heart_face_1f970": require("@/src/assets/emoji/heart_face_1f970.json"),
     // Add all your local Lottie JSONs here
 };
 

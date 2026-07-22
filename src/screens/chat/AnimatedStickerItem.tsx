@@ -28,7 +28,7 @@ export const AnimatedStickerItem = ({
     const isLottie = mediaType === 'sticker/lottie' || mediaType === 'application/json' || (typeof mediaUrl === 'string' && mediaUrl.endsWith('.json'));
     // 🚀 Only trigger 5-second fallback for local emoji stickers (when originalEmoji exists)
     const isEmojiConversion = !!originalEmojiText && mediaType == 'sticker/lottie';
-    console.log('isEmojiConversion', isEmojiConversion, originalEmojiText, mediaType);
+    // console.log('isEmojiConversion', isEmojiConversion, originalEmojiText, mediaType, isLottie, mediaUrl);
     useEffect(() => {
         let timer1: any | undefined;
         let playTimer: any | undefined;
@@ -114,6 +114,7 @@ export const AnimatedStickerItem = ({
     // 🚀 STEP 2: For the first 5 seconds, render as animated Lottie JSON
     // Properly detects if mediaUrl is a remote URL string or local require() number
     const lottieSource = resolveLottieSource(mediaUrl);
+    // console.log('lottieSource', lottieSource);
     return (
         <Box
             style={{
