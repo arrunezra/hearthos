@@ -15,6 +15,9 @@ import AppNavigatorWrapper from "./AppNavigatorWrapper";
 import { TabNavigator } from "./TabNavigator";
 import NoteViewScreen from "../screens/notes/NotesScreen";
 import { AddStickerScreen } from "../screens/chat/AddStickerScreen";
+import { NotebookEntriesScreen } from "../screens/notes/NotebookEntriesScreen";
+import { AddEditNoteScreen } from "../screens/notes/AddEditNoteScreen";
+import { NoteDetailScreen } from "../screens/notes/NoteDetailScreen";
 
 const RootStack = createNativeStackNavigator();
 
@@ -41,6 +44,17 @@ export const RootNavigation = ({ currentUser }: any) => {
                     <RootStack.Screen name="GalleryView" component={GalleryViewScreen} />
                     <RootStack.Screen name="NoteViewScreen" component={NoteViewScreen} />
                     <RootStack.Screen name="AddSticker" component={AddStickerScreen} />
+                    <RootStack.Screen name="NotebookEntries" component={NotebookEntriesScreen} />
+                    <RootStack.Screen
+                        name="AddEditNoteScreen"
+                        component={AddEditNoteScreen}
+                        options={{ headerShown: false }}
+                    />
+                    <RootStack.Screen
+                        name="NoteDetailScreen"
+                        component={NoteDetailScreen}
+                        options={{ headerShown: false }}
+                    />
                     {/* Crucial Call Interface Panel Configuration */}
                     <RootStack.Screen
                         name="CallScreen"

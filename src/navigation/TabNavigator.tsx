@@ -1,13 +1,14 @@
 // src/navigation/AppNavigator.tsx
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Calculator, Radar, MessageCircle, Wallet } from 'lucide-react-native';
+import { Calculator, Radar, MessageCircle, Wallet, NotebookIcon, BookCheck, Image } from 'lucide-react-native';
 import CalculatorScreen from '../screens/CalculatorScreen';
 import { verticalScale } from '../utils/scaling';
 import ChatTab from '../screens/ChatTab';
 import GalleryViewScreen from '../screens/Gallery/GalleryViewScreen';
 import NotesScreen from '../screens/notes/NotesScreen';
 import NotesSummaryScreen from '../screens/notes/NotesSummaryScreen';
+import { NotebookListScreen } from '../screens/notes/NotebookListScreen';
 // import CalculatorScreen from '../screens/CalculatorScreen';
 // import TrackerScreen from '../screens/TrackerScreen';
 // import { Calculator, Radar, Wallet } from '../components/HOSIconUI';
@@ -34,16 +35,18 @@ export function TabNavigator() {
                 tabBarIcon: ({ color, size }) => {
                     switch (route.name) {
                         case 'Calculator': return <Calculator color={color} size={size} />;
-                        case 'Notes': return <Radar color={color} size={size} />;
-                        case 'Gallery': return <Wallet color={color} size={size} />;
+                        case 'Tasks': return <BookCheck color={color} size={size} />;
+                        case 'Gallery': return <Image color={color} size={size} />;
+                        case 'Diary': return < NotebookIcon color={color} size={size} />;
                         default: return <Wallet color={color} size={size} />;
                     }
                 },
             })}
         >
             <Tab.Screen name="Calculator" component={CalculatorScreen} options={{ title: 'KG Price Tool' }} />
-            <Tab.Screen name="Notesummary" component={NotesSummaryScreen} options={{ title: 'Notes' }} />
+            <Tab.Screen name="Tasks" component={NotesSummaryScreen} options={{ title: 'Tasks' }} />
             <Tab.Screen name="Gallery" component={GalleryViewScreen} options={{ title: 'Gallery' }} />
+            <Tab.Screen name="Diary" component={NotebookListScreen} options={{ title: 'Diary' }} />
             {/* <Tab.Screen name="Chat" component={ChatTab} options={{ title: 'Chat' }} /> */}
         </Tab.Navigator>
     );

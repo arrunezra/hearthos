@@ -42,12 +42,12 @@ export const StickerDrawerTab = ({ role, onSelectSticker }: { role: string, onSe
 
         try {
             const response = await axios.get(API_BASE_URL, {
-                params: { page: pageNum, limit: 20, role: role }
+                params: { page: pageNum, limit: 50, role: role }
             });
 
             if (response.data?.status === 'success') {
                 const newItems: CDNStickerItem[] = response.data.data || [];
-
+                //console.log('newItems', newItems);
                 setStickers(prev => (pageNum === 1 ? newItems : [...prev, ...newItems]));
                 setHasMore(response.data.hasMore ?? false);
                 setPage(pageNum);
@@ -74,95 +74,115 @@ export const StickerDrawerTab = ({ role, onSelectSticker }: { role: string, onSe
     };
 
     return (
-        <FlatList
-            data={stickers}
-            numColumns={NUM_COLUMNS}
-            keyExtractor={(item, index) => `${item.id}-${index}`}
-            contentContainerStyle={{
-                paddingHorizontal: scale(8),
-                paddingVertical: verticalScale(8)
-            }}
-            onEndReached={handleLoadMore}
-            onEndReachedThreshold={0.3}
-            ListFooterComponent={
-                loading ? (
-                    <ActivityIndicator size="small" color="#E65100" style={{ marginVertical: verticalScale(8) }} />
-                ) : null
-            }
-            renderItem={({ item }) => (
-                <Box
-                    style={{
-                        width: '20%',
-                        maxWidth: '20%',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginVertical: verticalScale(4)
-                    }}
-                >
-                    <TouchableOpacity
-                        onPress={() => onSelectSticker(item)}
-                        /* 🚀 1. Trigger long-press action only for admin users */
-                        onLongPress={() => {
-                            if (role !== 'admin') return;
-
-                            Alert.alert(
-                                'Inactivate Sticker',
-                                `Are you sure you want to deactivate "${item.name || 'this sticker'}"?`,
-                                [
-                                    { text: 'Cancel', style: 'cancel' },
-                                    {
-                                        text: 'Inactivate',
-                                        style: 'destructive',
-                                        onPress: async () => {
-                                            try {
-                                                const response = await axios.post(INACTIVATE_STICKER_API, {
-                                                    sticker_id: item.id
-                                                });
-
-                                                if (response.data?.status === 'success') {
-                                                    // 🚀 2. Remove inactivated item from local state UI immediately
-                                                    setStickers((prevStickers) =>
-                                                        prevStickers.filter((stk) => stk.id !== item.id)
-                                                    );
-                                                    Alert.alert('Success', 'Sticker deactivated successfully.');
-                                                } else {
-                                                    Alert.alert('Error', response.data?.message || 'Failed to deactivate.');
-                                                }
-                                            } catch (error) {
-                                                console.error('Inactivate error:', error);
-                                                Alert.alert('Error', 'Server connection failed.');
-                                            }
-                                        }
-                                    }
-                                ]
-                            );
-                        }}
-                        delayLongPress={500} // Optional: 500ms press threshold
+        // 🚀 Wrap FlatList in a View/Box with flex: 1
+        <Box style={{ flex: 1 }}>
+            <FlatList
+                data={stickers}
+                numColumns={NUM_COLUMNS}
+                keyExtractor={(item, index) => `${item.id}-${index}`}
+                contentContainerStyle={{
+                    paddingHorizontal: scale(8),
+                    paddingVertical: verticalScale(8),
+                    flexGrow: 1, // 🚀 Ensures content stretches properly
+                }}
+                showsVerticalScrollIndicator={true} // 🚀 Ensure scroll bar is visible
+                onEndReached={handleLoadMore}
+                onEndReachedThreshold={0.3}
+                ListFooterComponent={
+                    loading ? (
+                        <ActivityIndicator
+                            size="small"
+                            color="#E65100"
+                            style={{ marginVertical: verticalScale(8) }}
+                        />
+                    ) : null
+                }
+                renderItem={({ item }) => (
+                    <Box
                         style={{
-                            width: ITEM_SIZE,
-                            height: ITEM_SIZE,
-                            padding: scale(2),
+                            width: '20%',
+                            maxWidth: '20%',
+                            alignItems: 'center',
                             justifyContent: 'center',
-                            alignItems: 'center'
+                            marginVertical: verticalScale(4),
                         }}
                     >
-                        {item.type === 'lottie' ? (
-                            <LottieView
-                                source={{ uri: item.url }}
-                                style={{ width: '100%', height: '100%' }}
-                                autoPlay
-                                loop
-                            />
-                        ) : (
-                            <FastImage
-                                source={{ uri: item.url }}
-                                style={{ width: '100%', height: '100%' }}
-                                resizeMode={FastImage.resizeMode.contain}
-                            />
-                        )}
-                    </TouchableOpacity>
-                </Box>
-            )}
-        />
+                        <TouchableOpacity
+                            onPress={() => onSelectSticker(item)}
+                            onLongPress={() => {
+                                if (role !== 'admin') return;
+
+                                Alert.alert(
+                                    'Inactivate Sticker',
+                                    `Are you sure you want to deactivate "${item.name || 'this sticker'}"?`,
+                                    [
+                                        { text: 'Cancel', style: 'cancel' },
+                                        {
+                                            text: 'Inactivate',
+                                            style: 'destructive',
+                                            onPress: async () => {
+                                                try {
+                                                    const response = await axios.post(
+                                                        INACTIVATE_STICKER_API,
+                                                        { sticker_id: item.id }
+                                                    );
+
+                                                    if (response.data?.status === 'success') {
+                                                        setStickers((prevStickers) =>
+                                                            prevStickers.filter(
+                                                                (stk) => stk.id !== item.id
+                                                            )
+                                                        );
+                                                        Alert.alert(
+                                                            'Success',
+                                                            'Sticker deactivated successfully.'
+                                                        );
+                                                    } else {
+                                                        Alert.alert(
+                                                            'Error',
+                                                            response.data?.message ||
+                                                            'Failed to deactivate.'
+                                                        );
+                                                    }
+                                                } catch (error) {
+                                                    console.error('Inactivate error:', error);
+                                                    Alert.alert(
+                                                        'Error',
+                                                        'Server connection failed.'
+                                                    );
+                                                }
+                                            },
+                                        },
+                                    ]
+                                );
+                            }}
+                            delayLongPress={500}
+                            style={{
+                                width: ITEM_SIZE,
+                                height: ITEM_SIZE,
+                                padding: scale(2),
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                        >
+                            {item.type === 'lottie' ? (
+                                <LottieView
+                                    source={{ uri: item.url }}
+                                    style={{ width: '100%', height: '100%' }}
+                                    autoPlay
+                                    loop
+                                />
+                            ) : (
+                                <FastImage
+                                    source={{ uri: item.url }}
+                                    style={{ width: '100%', height: '100%' }}
+                                    resizeMode={FastImage.resizeMode.contain}
+                                />
+                            )}
+                        </TouchableOpacity>
+                    </Box>
+                )}
+            />
+        </Box>
     );
 };
