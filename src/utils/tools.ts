@@ -156,24 +156,28 @@ export const resolveLottieSource = (mediaUrl: string | number) => {
 /**
  * Resolves the correct sticker MIME type dynamically based on file type or URL extension.
  */
-export const getStickerMimeType = (type?: string, url?: string): string => {
-    // 1. If explicitly specified as lottie
+export const getStickerMimeType = (type?: string, url?: string, imageType: string = 'image'): string => {
+    const category = imageType || 'image';
+
+    // 1. Handle Lottie JSON files safely
     if (type === 'lottie' || url?.endsWith('.json')) {
-        return 'sticker/lottie';
+        return 'application/json'; // Standard MIME type for Lottie JSON animations
     }
 
-    // 2. Extract file extension from URL
+    // 2. Extract clean file extension from URL
     const cleanUrl = url?.split('?')[0].toLowerCase() || '';
 
-    if (cleanUrl.endsWith('.png')) return 'sticker/png';
-    if (cleanUrl.endsWith('.jpg') || cleanUrl.endsWith('.jpeg')) return 'sticker/jpeg';
-    if (cleanUrl.endsWith('.gif')) return 'sticker/gif';
-    if (cleanUrl.endsWith('.webp')) return 'sticker/webp';
+    if (cleanUrl.endsWith('.png')) return `${category}/png`;
+    if (cleanUrl.endsWith('.jpg') || cleanUrl.endsWith('.jpeg')) return `${category}/jpeg`;
+    if (cleanUrl.endsWith('.gif')) return `${category}/gif`;
+    if (cleanUrl.endsWith('.webp')) return `${category}/webp`;
 
-    // 3. Fallback based on type property or standard webp fallback
-    if (type === 'png') return 'sticker/png';
-    if (type === 'jpg' || type === 'jpeg') return 'sticker/jpeg';
-    if (type === 'gif') return 'sticker/gif';
+    // 3. Fallbacks based on type property
+    const normalizedType = type?.toLowerCase();
+    if (normalizedType === 'png') return `${category}/png`;
+    if (normalizedType === 'jpg' || normalizedType === 'jpeg') return `${category}/jpeg`;
+    if (normalizedType === 'gif') return `${category}/gif`;
 
-    return 'sticker/webp';
+    // Default Fallback
+    return `${category}/webp`;
 };

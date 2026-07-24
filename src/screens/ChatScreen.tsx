@@ -36,6 +36,7 @@ import { translateTextPipeline } from '../utils/translation';
 import { downloadVideoToCache, getLocalVideoPath } from './chat/chatCacheManager';
 import { VideoPlayerViewer } from './chat/VideoPlayerViewer';
 import { StickerDrawerTab } from './chat/StickerDrawerTab';
+import { CustomImagePickerDrawerTab } from './chat/CustomImagePickerDrawerTab';
 
 const BOTTOM_MARGIN = scale(2);
 const INITIAL_INPUT_HEIGHT = scale(42);
@@ -59,7 +60,7 @@ export default function ChatScreen({ route, navigation }: any) {
     const flashListRef = useRef<FlashListRef<any>>(null);
     const textInputRef = useRef<TextInput>(null);
     const roomId = [currentUser?.uid, targetUser.uid].sort().join('_');
-    const [activeDrawerMode, setActiveDrawerMode] = useState<'EMOJI' | 'GIF' | 'STICKER' | 'ADD_STICKER'>('EMOJI');
+    const [activeDrawerMode, setActiveDrawerMode] = useState<'EMOJI' | 'GIF' | 'STICKER' | 'ADD_STICKER' | 'ADD_CUSTOM_GIF'>('EMOJI');
     const [isGifModalVisible, setIsGifModalVisible] = useState(false);
     const [giphyMediaType, setGiphyMediaType] = useState<'gif' | 'sticker' | 'text' | 'video'>('gif');
     const [replyMessage, setReplyMessage] = useState<any | null>(null);
@@ -408,7 +409,6 @@ export default function ChatScreen({ route, navigation }: any) {
                 // console.log('User cancelled media picking action sequence.');
                 return;
             }
-
             const selectedAsset = result.assets[0];
             //  console.log("selectedAsset", selectedAsset);
             const customizedMediaEvent = {
@@ -420,7 +420,7 @@ export default function ChatScreen({ route, navigation }: any) {
                     description: selectedAsset.type?.startsWith('video') ? '[Video File]' : '[Image File]'
                 }
             };
-
+            console.log('customizedMediaEvent', customizedMediaEvent)
             await handleSendMessage(customizedMediaEvent);
             isPickingMedia.current = false;
         } catch (pickerError) {
@@ -441,8 +441,8 @@ export default function ChatScreen({ route, navigation }: any) {
         let currentMime = null;
         let textPayload = inputText.trim();
         let originalEmojiChar: string | null = null;
-
         if (mediaEvent?.nativeEvent?.uri && mediaEvent?.nativeEvent?.gifFrom != 'Sticker') {
+            // console.log('mediaEvent', mediaEvent)
             currentMime = mediaEvent.nativeEvent.mime;
             textPayload = mediaEvent.nativeEvent.description || "[Media File]";
 
@@ -450,7 +450,9 @@ export default function ChatScreen({ route, navigation }: any) {
                 currentMediaUrl = mediaEvent.nativeEvent.uri;
                 currentThumbUrl = mediaEvent.nativeEvent.thumbnailUri;
             } else {
-                const calculatedGifFrom = (currentMime === 'image/gif' || mediaEvent.nativeEvent?.gifFrom === 'Giphy') ? 'Giphy' : '';
+                // const calculatedGifFrom = (currentMime === 'image/gif' || mediaEvent.nativeEvent?.gifFrom === 'Giphy') ? 'Giphy' : '';
+                const calculatedGifFrom = (mediaEvent.nativeEvent?.gifFrom === 'Giphy') ? 'Giphy' : '';
+
                 const serverUploadedData = await uploadChatMedia(
                     {
                         uri: mediaEvent.nativeEvent.uri,
@@ -470,8 +472,8 @@ export default function ChatScreen({ route, navigation }: any) {
 
                 currentMediaUrl = calculatedGifFrom === 'Giphy' ? mediaEvent.nativeEvent.uri : serverUploadedData.url;
                 currentThumbUrl = serverUploadedData.thumbUrl || serverUploadedData.url;
-                console.log("currentMediaUrl", currentMediaUrl);
-                console.log("currentThumbUrl", currentThumbUrl);
+                //console.log("currentMediaUrl", currentMediaUrl);
+                //console.log("currentThumbUrl", currentThumbUrl);
             }
             setShowCustomEmojiPanel(false);
             freezeScroll.value = false;
@@ -516,7 +518,7 @@ export default function ChatScreen({ route, navigation }: any) {
                 mediaUrl: replyMessage.mediaUrl || null
             } : null
         };
-
+        console.log("messageData", messageData);
         try {
             setReplyMessage(null);
             const messagesCollectionRef = collection(db, 'rooms', roomId, 'messages');
@@ -785,9 +787,7 @@ export default function ChatScreen({ route, navigation }: any) {
                                             role={currentUserRole}
                                             onSelectSticker={(selectedSticker) => {
                                                 console.log('selectedSticker', selectedSticker)
-                                                // 🚀 Handle sending the sticker when tapped
-                                                const computedMime = getStickerMimeType(selectedSticker.type, selectedSticker.url);
-                                                console.log('computedMime', computedMime)
+                                                const computedMime = getStickerMimeType(selectedSticker.type, selectedSticker.url, 'sticker');
                                                 handleSendMessage({
                                                     nativeEvent: {
                                                         uri: selectedSticker.url,
@@ -798,6 +798,27 @@ export default function ChatScreen({ route, navigation }: any) {
                                                 });
 
                                                 // Close drawer panel after sending sticker
+                                                setShowCustomEmojiPanel(false);
+                                            }}
+                                        />
+                                    </Box>
+                                ) : activeDrawerMode === 'ADD_CUSTOM_GIF' ? (
+                                    /* ---------------- CUSTOM IMAGE / GIF DRAWER TAB ---------------- */
+                                    <Box style={{ flex: 1 }}>
+                                        <CustomImagePickerDrawerTab
+                                            role={currentUserRole}
+                                            onSelectImage={(selectedMedia) => {
+                                                const computedMime = getStickerMimeType(selectedMedia.type, selectedMedia.url, 'image');
+                                                handleSendMessage({
+                                                    nativeEvent: {
+                                                        uri: selectedMedia.url,
+                                                        mime: computedMime,
+                                                        description: selectedMedia.name,
+                                                        gifFrom: 'CustomImage'
+                                                    }
+                                                });
+
+                                                // Close drawer panel after selection
                                                 setShowCustomEmojiPanel(false);
                                             }}
                                         />
@@ -867,6 +888,14 @@ export default function ChatScreen({ route, navigation }: any) {
                                         <Sticker color={activeDrawerMode === 'STICKER' ? '#E65100' : '#94A3B8'} size={moderateScale(22)} />
                                     </TouchableOpacity>
 
+                                    {/* 4. Add Custom Sticker Tab (NEW) */}
+                                    {currentUserRole === 'admin' && <TouchableOpacity
+                                        onPress={() => setActiveDrawerMode('ADD_CUSTOM_GIF')}
+                                        style={{ paddingHorizontal: scale(16), paddingVertical: verticalScale(6), borderBottomWidth: activeDrawerMode === 'ADD_CUSTOM_GIF' ? 2 : 0, borderBottomColor: '#E65100' }}
+                                    >
+                                        <Plus color={activeDrawerMode === 'ADD_CUSTOM_GIF' ? '#E65100' : '#94A3B8'} size={moderateScale(22)} />
+                                    </TouchableOpacity>
+                                    }
 
                                 </HStack>
                             </Box>

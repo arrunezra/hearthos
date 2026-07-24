@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Alert, StyleSheet } from 'react-native';
+import {
+    View,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    ActivityIndicator,
+    Alert,
+    StyleSheet,
+    Switch
+} from 'react-native';
 import { launchImageLibrary, Asset } from 'react-native-image-picker';
 import axios from 'axios';
 import FastImage from '@d11/react-native-fast-image';
@@ -10,11 +19,13 @@ const ADD_STICKER_API = API_BASE_URL_DEV + '/stickers/add_sticker.php';
 export type StickerRating = 'normal' | 'nsfw';
 
 export const AddStickerScreen = ({ navigation }: any) => {
+
     const [stickerName, setStickerName] = useState('');
     const [fileName, setFileName] = useState('');
-    const [rating, setRating] = useState<StickerRating>('normal'); // 🚀 New Rating State
+    const [rating, setRating] = useState<StickerRating>('normal');
     const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
     const [loading, setLoading] = useState(false);
+    const [isSticker, setIsSticker] = useState(false);
 
     // 🚀 1. Open Device Image Gallery
     const handlePickImage = async () => {
@@ -35,7 +46,6 @@ export const AddStickerScreen = ({ navigation }: any) => {
             const asset = result.assets[0];
             setSelectedAsset(asset);
 
-            // Auto-populate target filename field from selected image name
             const originalName = asset.fileName || 'sticker_image';
             const baseName = originalName.substring(0, originalName.lastIndexOf('.')) || originalName;
 
@@ -58,8 +68,11 @@ export const AddStickerScreen = ({ navigation }: any) => {
             const formData = new FormData();
             formData.append('name', stickerName.trim() || 'Custom Sticker');
             formData.append('filename', fileName.trim());
-            formData.append('rating', rating); // 🚀 Send rating ('normal' | 'nsfw') to backend
+            formData.append('rating', rating);
 
+            // 🚀 Send 'isSticker' flag (1 = true, 0 = false) to PHP Backend
+            formData.append('isSticker', isSticker ? '1' : '0');
+            console.log('isSticker', isSticker, isSticker ? '  1' : '  0')
             // Append File Asset from react-native-image-picker
             formData.append('sticker_file', {
                 uri: selectedAsset.uri,
@@ -74,11 +87,13 @@ export const AddStickerScreen = ({ navigation }: any) => {
             if (response.data?.status === 'success') {
                 Alert.alert('Success', 'Sticker uploaded successfully!');
 
-                // 🚀 Reset all form states back to initial defaults
+                // Reset all form states back to initial defaults
                 setStickerName('');
                 setFileName('');
                 setSelectedAsset(null);
                 setRating('normal');
+
+
             } else {
                 Alert.alert('Upload Failed', response.data?.message || 'Server error.');
             }
@@ -131,7 +146,7 @@ export const AddStickerScreen = ({ navigation }: any) => {
                 autoCapitalize="none"
             />
 
-            {/* 4. Content Rating Selector (Admin Moderation) */}
+            {/* 4. Content Rating Selector */}
             <Text style={styles.label}>Content Rating (Admin Only)</Text>
             <View style={styles.ratingRow}>
                 <TouchableOpacity
@@ -153,7 +168,24 @@ export const AddStickerScreen = ({ navigation }: any) => {
                 </TouchableOpacity>
             </View>
 
-            {/* 5. Upload Button */}
+            {/* 🚀 5. Is Sticker Toggle Switch */}
+            <View style={styles.toggleRow}>
+                <View>
+                    <Text style={styles.toggleLabel}>Is Sticker Pack Item?</Text>
+                    <Text style={styles.toggleSubLabel}>
+                        {isSticker ? 'Categorized as Sticker' : 'Categorized as General Graphic'}
+                    </Text>
+                </View>
+
+                <Switch
+                    value={isSticker}
+                    onValueChange={(val) => setIsSticker(val)}
+                    trackColor={{ false: '#334155', true: '#059669' }}
+                    thumbColor={isSticker ? '#10B981' : '#94A3B8'}
+                />
+            </View>
+
+            {/* 6. Upload Button */}
             <TouchableOpacity onPress={handleUploadSticker} disabled={loading} style={styles.uploadBtn}>
                 {loading ? (
                     <ActivityIndicator color="#FFFFFF" />
@@ -195,7 +227,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         marginBottom: 14,
     },
-    ratingRow: { flexDirection: 'row', gap: 10, marginBottom: 20 },
+    ratingRow: { flexDirection: 'row', gap: 10, marginBottom: 16 },
     ratingChip: {
         flex: 1,
         paddingVertical: 10,
@@ -209,6 +241,22 @@ const styles = StyleSheet.create({
     ratingChipActiveNsfw: { backgroundColor: '#991B1B', borderColor: '#EF4444' },
     ratingChipText: { color: '#94A3B8', fontSize: 13, fontWeight: '600' },
     ratingChipTextActive: { color: '#FFFFFF' },
+
+    // 🚀 Styles for Is Sticker Toggle Row
+    toggleRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: '#011F18',
+        borderWidth: 1,
+        borderColor: '#059669',
+        borderRadius: 8,
+        padding: 12,
+        marginBottom: 20,
+    },
+    toggleLabel: { color: '#FFFFFF', fontSize: 14, fontWeight: '600' },
+    toggleSubLabel: { color: '#94A3B8', fontSize: 11, marginTop: 2 },
+
     uploadBtn: {
         backgroundColor: '#E65100',
         paddingVertical: 14,

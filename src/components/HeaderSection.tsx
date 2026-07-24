@@ -1,6 +1,6 @@
 import React, { useState } from 'react'; // 🎯 Added useState here
 import { Platform, Pressable, StatusBar, TouchableOpacity } from 'react-native';
-import { Menu, Bell, ChevronLeft, Search, X, LogOut, Navigation, User2, Navigation2, Settings } from 'lucide-react-native';
+import { Menu, Bell, ChevronLeft, Search, X, LogOut, Navigation, User2, Navigation2, Settings, Sticker } from 'lucide-react-native';
 import { Menu as HOSMenu, MenuItem, MenuItemLabel } from '../components/HOSGluestackUI';
 import FastImage from '@d11/react-native-fast-image';
 import { Box, Heading, HStack, VStack } from './HOSGluestackUI';
@@ -211,11 +211,13 @@ const HeaderSession = ({
                                             navigation.navigate('AddSticker');
                                         }}
                                     >
-                                        <Icon as={Navigation2} size="sm" className="text-red-600 mr-2" />
+                                        <Icon as={Sticker} size="sm" className="text-red-600 mr-2" />
                                         <MenuItemLabel className="text-red-600 font-bold text-sm">
-                                            Add Sticker
+                                            Add Sticker / gif
                                         </MenuItemLabel>
                                     </MenuItem>
+
+
                                 </>}
                                 <MenuItem
                                     key="exit"

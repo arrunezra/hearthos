@@ -23,25 +23,33 @@ try {
     $conn = method_exists($db, 'getConnection') ? $db->getConnection() : $db;
 
     // 1. Read parameters
-    $page  = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
-    $limit = isset($_GET['limit']) ? min(100, max(1, (int)$_GET['limit'])) : 20;
+    $page   = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+    $limit  = isset($_GET['limit']) ? min(100, max(1, (int)$_GET['limit'])) : 20;
     $offset = ($page - 1) * $limit;
 
-    // 🚀 Read role parameter ('admin' gets all, others get 'normal' only)
-    $role = isset($_GET['role']) ? trim(strtolower($_GET['role'])) : 'user';
+    // 🚀 Read role and rating parameters
+    $role   = isset($_GET['role']) ? trim(strtolower($_GET['role'])) : 'user';
+    $rating = isset($_GET['rating']) ? trim(strtolower($_GET['rating'])) : 'normal';
 
-    // 2. Build dynamic SQL WHERE clause based on role
+    // 🎯 2. Build dynamic SQL WHERE clause
     if ($role === 'admin') {
-        // Admin sees all active stickers regardless of rating
-        $whereClause = "WHERE is_active = 1";
+        // Admin gets content filtered by whatever rating toggle is active ('nsfw' or 'normal')
+        $targetRating = ($rating === 'nsfw') ? 'nsfw' : 'normal';
+        $whereClause  = "WHERE is_active = 1 AND rating = :rating";
     } else {
-        // Standard users only see normal content
-        $whereClause = "WHERE is_active = 1 AND rating = 'normal'";
+        // Regular users can ONLY access 'normal' content
+        $targetRating = 'normal';
+        $whereClause  = "WHERE is_active = 1 AND rating = 'normal'";
     }
 
     // 3. Query total count
     $countSql = "SELECT COUNT(*) AS total FROM stickers " . $whereClause;
     $countStmt = $conn->prepare($countSql);
+    
+    if ($role === 'admin') {
+        $countStmt->bindValue(':rating', $targetRating, PDO::PARAM_STR);
+    }
+    
     $countStmt->execute();
     $totalCount = (int)$countStmt->fetch(PDO::FETCH_ASSOC)['total'];
 
@@ -50,10 +58,18 @@ try {
             FROM stickers 
             " . $whereClause . " 
             ORDER BY id DESC 
-            LIMIT $limit OFFSET $offset";
+            LIMIT :limit OFFSET :offset";
 
     $stmt = $conn->prepare($sql);
+    
+    if ($role === 'admin') {
+        $stmt->bindValue(':rating', $targetRating, PDO::PARAM_STR);
+    }
+    
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
     $stmt->execute();
+    
     $stickers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // 5. Return JSON response

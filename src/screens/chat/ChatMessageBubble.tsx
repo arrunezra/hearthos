@@ -154,8 +154,9 @@ const ChatMessageBubble = ({
         return '#00000066';
     };
 
-    const isSticker = item.mediaType?.startsWith('sticker/') || item.text === '[Animation]';
-
+    const isSticker = item.mediaType?.startsWith('sticker/') || item.text === '[Animation]' || item.mediaType === 'sticker/lottie' || item.mediaType === 'application/json';
+    //console.log("item", item);
+    //console.log("isSticker", isSticker, isMedia);
     return (
         <VStack style={{ alignItems: isMe ? 'flex-end' : 'flex-start', marginBottom: verticalScale(12) }}>
             <SwipeableMessageRow isMe={isMe} onReplyTrigger={() => onReplyTrigger(item)}>
@@ -262,6 +263,7 @@ const ChatMessageBubble = ({
                                     />
                                 ) : (
                                     <Box style={{ position: 'relative', width: scale(220), height: verticalScale(180) }}>
+
                                         <FastImage
                                             source={{ uri: item.mediaUrl! }}
                                             style={{ width: '100%', height: '100%' }}

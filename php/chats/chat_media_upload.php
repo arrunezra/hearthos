@@ -16,7 +16,6 @@ $db = Database::getInstance();
 
 $userId      = isset($_POST['userid']) ? trim($_POST['userid']) : '';
 $displayName = isset($_POST['displayName']) ? trim($_POST['displayName']) : '';
-// 🎯 READ THE NEW FORMDATA FIELD
 $gifFrom     = isset($_POST['gifFrom']) ? trim($_POST['gifFrom']) : '';
 
 if (empty($userId) || empty($displayName) || !isset($_FILES['file'])) {
@@ -28,7 +27,6 @@ if (empty($userId) || empty($displayName) || !isset($_FILES['file'])) {
 // 📂 Target Path Allocations
 $baseUploadDir = "../uploads/chats/" . $displayName . "/";
 $thumbsDir     = "../uploads/chats/" . $displayName . "/thumbs/";
-$allowedMimes  = ['image/jpeg', 'image/png', 'image/gif'];
 
 // Ensure Storage Paths Exist
 if (!is_dir($baseUploadDir)) mkdir($baseUploadDir, 0755, true);
@@ -38,54 +36,107 @@ $fileTmpPath = $_FILES['file']['tmp_name'];
 $fileName    = $_FILES['file']['name'];
 $fileType    = $_FILES['file']['type'];
 
-if (!in_array($fileType, $allowedMimes)) {
+// Normalize File Extension & MIME Type
+$ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+
+$mimeMap = [
+    'jpg'  => 'image/jpeg',
+    'jpeg' => 'image/jpeg',
+    'png'  => 'image/png',
+    'gif'  => 'image/gif',
+    'webp' => 'image/webp',
+    'mp4'  => 'video/mp4',
+    'mov'  => 'video/quicktime',
+    'mkv'  => 'video/x-matroska',
+    'webm' => 'video/webm',
+    '3gp'  => 'video/3gpp'
+];
+
+// Fallback to Extension Mapping if Client MIME Type is Generic or Missing
+if (empty($fileType) || $fileType === 'application/octet-stream' || $fileType === 'image/x-webp') {
+    if (isset($mimeMap[$ext])) {
+        $fileType = $mimeMap[$ext];
+    }
+}
+
+// Verification List
+$allowedMimes = [
+    'image/jpeg', 'image/png', 'image/gif', 'image/webp',
+    'video/mp4', 'video/quicktime', 'video/x-matroska', 'video/webm', 'video/3gpp'
+];
+
+if (!in_array($fileType, $allowedMimes) && !isset($mimeMap[$ext])) {
     http_response_code(400);
-    echo json_encode(["success" => false, "message" => "Unsupported graphic MIME type."]);
+    echo json_encode(["success" => false, "message" => "Unsupported media or graphic MIME type."]);
     exit();
 }
 
-// Generate Safe Distinct Filenames
-$ext = pathinfo($fileName, PATHINFO_EXTENSION);
-$ext = $ext ? $ext : (($fileType === 'image/png') ? 'png' : (($fileType === 'image/gif') ? 'gif' : 'jpg'));
+// Check if file is a video asset type
+$isVideo = (strpos($fileType, 'video/') === 0);
+
+// 🚀 EXTENSION LOGIC
+if ($isVideo && !$ext) {
+    $ext = ($fileType === 'video/quicktime') ? 'mov' : (($fileType === 'video/webm') ? 'webm' : 'mp4');
+} else {
+    $ext = $ext ? $ext : (($fileType === 'image/png') ? 'png' : (($fileType === 'image/gif') ? 'gif' : (($fileType === 'image/webp') ? 'webp' : 'jpg')));
+}
+
 $uniquePrefix = $userId . "_" . microtime(true);
 
-// 🎯 DESIGN REQUIREMENT CONDITIONS:
-if ($gifFrom === 'Giphy') {
-    // Keep it exactly as a .gif format to preserve animations
+// 🚀 PRESERVE ORIGINAL GIF FILE FOR MAIN DIRECTORY
+if ($gifFrom === 'Giphy' || $fileType === 'image/gif' || $ext === 'gif') {
     $mainFileName = $uniquePrefix . ".gif";
 } else {
-    // Normal files fallback to original extension logic
     $mainFileName = $uniquePrefix . "." . $ext;
 }
 
-// Thumbnail target extension remains ALWAYS forced to .jpg for lightweight initial renders
+// Thumbnail file is ALWAYS forced to a static .jpg
 $thumbFileName = "thumb_" . $uniquePrefix . ".jpg";
 
 $targetMainPath  = $baseUploadDir . $mainFileName;
 $targetThumbPath = $thumbsDir . $thumbFileName;
 
-// Move Original Image to Primary Disk Space
+// Move Original Image/GIF/Video to Main Storage Directory
 if (!move_uploaded_file($fileTmpPath, $targetMainPath)) {
     http_response_code(500);
     echo json_encode(["success" => false, "message" => "Failed to write source media array to file storage destination."]);
     exit();
 }
 
-// 🎨 HELPER FUNCTION: Native Square Aspect Thumbnail Compression Generation via GD Engine
+// 🎨 HELPER 1: Graphic Image Thumbnail Generator (JPEG, PNG, GIF, WebP)
 function generateImageThumbnail($sourcePath, $destPath, $mimeType, $thumbSize = 200) {
+    $srcImage = false;
+
     switch ($mimeType) {
-        case 'image/jpeg': $srcImage = imagecreatefromjpeg($sourcePath); break;
-        case 'image/png':  $srcImage = imagecreatefrompng($sourcePath);  break;
-        case 'image/gif':  $srcImage = imagecreatefromgif($sourcePath);  break;
-        default: return false;
+        case 'image/jpeg': 
+            $srcImage = @imagecreatefromjpeg($sourcePath); 
+            break;
+        case 'image/png':  
+            $srcImage = @imagecreatefrompng($sourcePath);  
+            break;
+        case 'image/gif':  
+            $srcImage = @imagecreatefromgif($sourcePath);  
+            break;
+        case 'image/webp': 
+            if (function_exists('imagecreatefromwebp')) {
+                $srcImage = @imagecreatefromwebp($sourcePath);
+            }
+            break;
+    }
+
+    // Fallback binary reader
+    if (!$srcImage && function_exists('imagecreatefromstring')) {
+        $fileData = @file_get_contents($sourcePath);
+        if ($fileData !== false) {
+            $srcImage = @imagecreatefromstring($fileData);
+        }
     }
 
     if (!$srcImage) return false;
 
-    $width = imagesx($srcImage);
+    $width  = imagesx($srcImage);
     $height = imagesy($srcImage);
 
-    // Calculate Aspect Matching Offsets for clean Center-Cropping
     if ($width > $height) {
         $srcX = ($width - $height) / 2;
         $srcY = 0;
@@ -98,36 +149,55 @@ function generateImageThumbnail($sourcePath, $destPath, $mimeType, $thumbSize = 
         $srcH = $width;
     }
 
-    // Allocate Blank High-Res Rendering Canvas Target Workspace
     $thumbCanvas = imagecreatetruecolor($thumbSize, $thumbSize);
+    $whiteBackground = imagecolorallocate($thumbCanvas, 255, 255, 255);
+    imagefill($thumbCanvas, 0, 0, $whiteBackground);
 
-    // Handle transparent channels safely for PNG/GIF assets before merging to JPEG canvas bounds
-    if ($mimeType === 'image/png' || $mimeType === 'image/gif') {
-        $whiteBackground = imagecolorallocate($thumbCanvas, 255, 255, 255);
-        imagefill($thumbCanvas, 0, 0, $whiteBackground);
-    }
-
-    // Resample original graphic asset space down onto layout bounds parameters
     imagecopyresampled($thumbCanvas, $srcImage, 0, 0, $srcX, $srcY, $thumbSize, $thumbSize, $srcW, $srcH);
 
-    // Output is ALWAYS forced to imagejpeg with steady compression ratios
-    imagejpeg($thumbCanvas, $destPath, 80);
+    $success = imagejpeg($thumbCanvas, $destPath, 80);
 
     imagedestroy($srcImage);
     imagedestroy($thumbCanvas);
-    return true;
+
+    return $success;
 }
 
-// Invoke thumbnail processor (For Giphy, it takes the newly saved source .gif and center-crops frame 1 to a .jpg)
-$thumbCreated = generateImageThumbnail($targetMainPath, $targetThumbPath, $fileType);
+// 🎬 HELPER 2: Video Thumbnail Generator using FFmpeg System Command
+function generateVideoThumbnail($videoPath, $thumbPath) {
+    // Escapes paths safely for shell execution
+    $cmd = "ffmpeg -ss 00:00:01 -i " . escapeshellarg($videoPath) . " -vframes 1 -q:v 2 " . escapeshellarg($thumbPath) . " 2>&1";
+    
+    @shell_exec($cmd);
+
+    // Verify if FFmpeg successfully generated the JPG thumbnail
+    return file_exists($thumbPath) && filesize($thumbPath) > 0;
+}
+
+// 🚀 THUMBNAIL PROCESSING ROUTER
+$thumbCreated = false;
+
+if ($isVideo) {
+    // Attempt FFmpeg thumbnail extraction for video files
+    $thumbCreated = generateVideoThumbnail($targetMainPath, $targetThumbPath);
+} else {
+    // Standard image/gif/webp processor
+    $thumbCreated = generateImageThumbnail($targetMainPath, $targetThumbPath, $fileType);
+}
 
 // 🌍 Generate Public URL Signatures
 $baseUrl = 'https://hearthos.jeasuns.com/api/';
 
-$publicMainUrl  = $baseUrl . str_replace('../', '', $targetMainPath);
-$publicThumbUrl = $thumbCreated ? ($baseUrl . str_replace('../', '', $targetThumbPath)) : $publicMainUrl;
+$publicMainUrl = $baseUrl . str_replace('../', '', $targetMainPath);
 
-// 💾 Step 3: Log Metadata Properties inside MySQL Matrix via PDO Connection Handshakes
+if ($isVideo) {
+    // If FFmpeg extracted a frame, use generated thumb; otherwise use video placeholder fallback
+    $publicThumbUrl = $thumbCreated ? ($baseUrl . str_replace('../', '', $targetThumbPath)) : ($baseUrl . "assets/video_placeholder.jpg");
+} else {
+    $publicThumbUrl = $thumbCreated ? ($baseUrl . str_replace('../', '', $targetThumbPath)) : $publicMainUrl;
+}
+
+// 💾 Step 3: Log Metadata Properties in MySQL via PDO
 try {
     $stmt = $db->prepare("INSERT INTO chat_messages (room_id, sender_id, media_url, thumb_url, mime_type) VALUES (?, ?, ?, ?, ?)");
     $stmt->execute([
@@ -138,13 +208,12 @@ try {
         $fileType
     ]);
 
-    // Send successful response object back to React Native Axios lifecycle stream
     http_response_code(200);
     echo json_encode([
-        "success" => true,
-        "url" => $publicMainUrl,
-        "thumbUrl" => $publicThumbUrl,
-        "message" => "Media elements written to database logs flawlessly."
+        "success"  => true,
+        "url"      => $publicMainUrl,   
+        "thumbUrl" => $publicThumbUrl, 
+        "message"  => "Media elements written to database logs flawlessly."
     ]);
 
 } catch (PDOException $ex) {
@@ -152,3 +221,4 @@ try {
     http_response_code(500);
     echo json_encode(["success" => false, "message" => "Database transactional fault: " . $ex->getMessage()]);
 }
+?>

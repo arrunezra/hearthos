@@ -36,26 +36,54 @@ export const useChatAttachment = () => {
         const uploadUrl = API_BASE_URL_DEV + '/chats/chat_media_upload.php';
 
         try {
-            const mappedMedia = {
-                path: selectedAsset.uri || '',
-                mime: selectedAsset.type || 'image/jpeg',
-                filename: selectedAsset.fileName || `chat_${Date.now()}.jpg`,
-                size: selectedAsset.fileSize || 0,
-            };
+            const type = selectedAsset.type?.toLowerCase() || '';
+            const fileName = selectedAsset.fileName?.toLowerCase() || '';
+            const uri = selectedAsset.uri?.toLowerCase() || '';
 
-            // Run your native compression utility
-            const compressed = await handleImageCompression(mappedMedia);
-            if (!compressed) throw new Error("Compression failed");
-            tempUri = compressed.uri;
+            // 🚀 Flexible detection checks (using OR '||')
+            const isVideo = type.startsWith('video/') || uri.includes('.mp4') || uri.includes('.mov');
+
+            const isGif = type === 'image/gif' || fileName.endsWith('.gif') || uri.includes('.gif');
+
+            let uploadUri = selectedAsset.uri || '';
+            let uploadType = selectedAsset.type || (isVideo ? 'video/mp4' : 'image/jpeg');
+            let uploadName = selectedAsset.fileName || `chat_${Date.now()}.${isVideo ? 'mp4' : 'jpg'}`;
+
+
+
+            // 🚀 Fixed WebP Check: Matches standard/x-webp MIME or file extension/URI
+            const isWebp =
+                type === 'image/webp' ||
+                type === 'image/x-webp' ||
+                fileName.endsWith('.webp') ||
+                uri.includes('.webp');
+
+            // 🚀 Skip compression for Videos, GIFs, and WebP files
+            if (!isVideo && !isGif && !isWebp) {
+                const mappedMedia = {
+                    path: selectedAsset.uri || '',
+                    mime: selectedAsset.type || 'image/jpeg',
+                    filename: uploadName,
+                    size: selectedAsset.fileSize || 0,
+                };
+
+                const compressed = await handleImageCompression(mappedMedia);
+                if (!compressed) throw new Error("Compression failed");
+
+                uploadUri = compressed.uri;
+                uploadType = compressed.type || uploadType;
+                uploadName = compressed.name || uploadName;
+            }
+            tempUri = uploadUri;
 
             const uploadData = new FormData();
             uploadData.append('file', {
-                uri: compressed.uri,
-                type: compressed.type,
-                name: compressed.name,
+                uri: uploadUri,
+                type: uploadType,
+                name: uploadName,
             } as any);
 
-            uploadData.append('uri', compressed.uri);
+            uploadData.append('uri', uploadUri);
             uploadData.append('userid', userid);
             uploadData.append('displayName', displayName);
             uploadData.append('gifFrom', selectedAsset?.gifFrom || "");
@@ -65,7 +93,7 @@ export const useChatAttachment = () => {
                 onUploadProgress: ({ loaded, total }: any) => {
                     if (total && total > 0 && onProgressCallback) {
                         const progressPercentage = Math.min(Math.round((loaded * 100) / total), 100);
-                        onProgressCallback(progressPercentage); // 🚀 Fire callback to parent screen message tracking matrix
+                        onProgressCallback(progressPercentage); // 🚀 Fire progress callback
                     }
                 }
             });

@@ -25,21 +25,25 @@ try {
         throw new Exception("No valid sticker file uploaded.");
     }
 
-    $stickerName = isset($_POST['name']) ? trim($_POST['name']) : 'New Sticker';
+    $stickerName    = isset($_POST['name']) ? trim($_POST['name']) : 'New Sticker';
     $customFileName = isset($_POST['filename']) ? trim($_POST['filename']) : '';
 
-    $fileTmpPath = $_FILES['sticker_file']['tmp_name'];
+    $fileTmpPath      = $_FILES['sticker_file']['tmp_name'];
     $originalFileName = $_FILES['sticker_file']['name'];
-    $fileExtension = strtolower(pathinfo($originalFileName, PATHINFO_EXTENSION));
+    $fileExtension    = strtolower(pathinfo($originalFileName, PATHINFO_EXTENSION));
 
     $rating = isset($_POST['rating']) && in_array($_POST['rating'], ['normal', 'nsfw']) 
         ? $_POST['rating'] 
         : 'normal';
 
+    // 🚀 Read isSticker parameter (handles 'isSticker' or 'is_sticker' from POST)
+    $rawIsSticker = $_POST['isSticker'] ?? $_POST['is_sticker'] ?? 1;
+    $isSticker    = ($rawIsSticker === '1' || $rawIsSticker === 1 || $rawIsSticker === 'true' || $rawIsSticker === true) ? 1 : 0;
+
     // 2. Validate file extension
-    $allowedExtensions = ['json', 'webp', 'png', 'jpg', 'jpeg','gif'];
+    $allowedExtensions = ['json', 'webp', 'png', 'jpg', 'jpeg', 'gif'];
     if (!in_array($fileExtension, $allowedExtensions)) {
-        throw new Exception("Invalid file format. Only JSON, WebP, PNG, and JPG allowed.");
+        throw new Exception("Invalid file format. Only JSON, WebP, PNG, GIF, and JPG allowed.");
     }
 
     // Determine sticker type
@@ -66,7 +70,7 @@ try {
 
     // Avoid overwriting existing files with same custom name
     if (file_exists($targetFilePath)) {
-        $finalFileName = $cleanFileName . '_' . time() . '.' . $fileExtension;
+        $finalFileName  = $cleanFileName . '_' . time() . '.' . $fileExtension;
         $targetFilePath = $uploadDir . $finalFileName;
     }
 
@@ -76,43 +80,45 @@ try {
     }
 
     // Construct full CDN URL
-    $cdnUrl = "https://hearthos.jeasuns.com/api/uploads/stickers/" . $finalFileName;
+    $cdnUrl    = "https://hearthos.jeasuns.com/api/uploads/stickers/" . $finalFileName;
     $stickerId = 'stk_' . time() . '_' . rand(100, 999);
 
-    // 6. Save to MySQL Database
-    $sql = "INSERT INTO stickers (sticker_id, name, type, rating, url) 
-            VALUES (:sticker_id, :name, :type, :rating, :url)";
+    // 🚀 6. Save to MySQL Database with is_sticker column
+    $sql = "INSERT INTO stickers (sticker_id, name, type, rating, is_sticker, url) 
+            VALUES (:sticker_id, :name, :type, :rating, :is_sticker, :url)";
             
     $stmt = $conn->prepare($sql);
     $stmt->execute([
         ':sticker_id' => $stickerId,
         ':name'       => $stickerName,
         ':type'       => $type,
-        ':rating'     => $rating, // 🚀 Fixed: Bound rating parameter
+        ':rating'     => $rating,
+        ':is_sticker' => $isSticker,
         ':url'        => $cdnUrl
     ]);
 
     http_response_code(200);
     echo json_encode([
-        "status" => "success",
+        "status"  => "success",
         "message" => "Sticker uploaded successfully!",
-        "data" => [
-            "id"       => $stickerId,
-            "name"     => $stickerName,
-            "filename" => $finalFileName,
-            "type"     => $type,
-            "rating"   => $rating, // 🚀 Fixed: Correct JSON key name
-            "url"      => $cdnUrl
+        "data"    => [
+            "id"        => $stickerId,
+            "name"      => $stickerName,
+            "filename"  => $finalFileName,
+            "type"      => $type,
+            "rating"    => $rating,
+            "isSticker" => (int)$isSticker,
+            "url"       => $cdnUrl
         ]
     ]);
 
 } catch (Exception $ex) {
-    // 🚀 Log error trace safely
+    // Log error trace safely
     error_log("Action Error Trace: " . $ex->getMessage());
 
     http_response_code(500);
     echo json_encode([
-        "status" => "error",
+        "status"  => "error",
         "message" => $ex->getMessage()
     ]);
 }

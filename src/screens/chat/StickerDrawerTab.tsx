@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { ActivityIndicator, TouchableOpacity, FlatList, Dimensions, Alert } from 'react-native';
+import { ActivityIndicator, TouchableOpacity, FlatList, Dimensions, Alert, Text } from 'react-native';
 import axios from 'axios';
 import FastImage from '@d11/react-native-fast-image';
 import LottieView from 'lottie-react-native';
-import { Box } from '@/src/components/HOSGluestackUI'; // Adjust import
+import { Box, HStack, Switch } from '@/src/components/HOSGluestackUI'; // Adjust import for Switch/HStack
 import { scale, verticalScale } from '@/src/utils/scaling';
 import { API_BASE_URL_DEV } from '@/src/utils/environment';
 
@@ -12,42 +12,55 @@ export interface CDNStickerItem {
     name: string;
     type: 'lottie' | 'webp' | string;
     url: string;
+    rating?: string;
 }
 
 const API_BASE_URL = API_BASE_URL_DEV + '/stickers/get_stickers.php';
 const INACTIVATE_STICKER_API = API_BASE_URL_DEV + '/stickers/inactivate_sticker.php';
+
 export const StickerDrawerTab = ({ role, onSelectSticker }: { role: string, onSelectSticker: (item: CDNStickerItem) => void }) => {
     const [stickers, setStickers] = useState<CDNStickerItem[]>([]);
     const [page, setPage] = useState<number>(1);
     const [loading, setLoading] = useState<boolean>(false);
     const [hasMore, setHasMore] = useState<boolean>(true);
 
-    // 🚀 Lock ref to strictly prevent simultaneous duplicate requests
+    // 🚀 Admin Rating Filter Toggle (ON = nsfw, OFF = normal)
+    const [isRatingFilterOn, setIsRatingFilterOn] = useState<boolean>(false);
+
+    // Lock ref to strictly prevent simultaneous duplicate requests
     const isFetchingRef = useRef<boolean>(false);
-    // 🚀 1. Dynamic Width Calculations for 5 Columns
+
+    // 🚀 Dynamic Width Calculations for 5 Columns
     const { width: SCREEN_WIDTH } = Dimensions.get('window');
     const NUM_COLUMNS = 5;
-    const PADDING_HORIZONTAL = scale(8) * 2; // Left + Right horizontal padding
+    const PADDING_HORIZONTAL = scale(8) * 2;
     const AVAILABLE_WIDTH = SCREEN_WIDTH - PADDING_HORIZONTAL;
 
-    // Calculate cell size so it fits perfectly on any screen size
     const COLUMN_WIDTH = AVAILABLE_WIDTH / NUM_COLUMNS;
-    const ITEM_SIZE = COLUMN_WIDTH * 0.82; // 82% of column space for clean spacing
-    // 🚀 Fetch Function with strict ref guarding
-    const fetchStickers = useCallback(async (pageNum: number) => {
+    const ITEM_SIZE = COLUMN_WIDTH * 0.82;
+
+    // 🚀 Fetch Function incorporating the rating parameter
+    const fetchStickers = useCallback(async (pageNum: number, nsfwMode: boolean) => {
         if (isFetchingRef.current) return;
 
         isFetchingRef.current = true;
         setLoading(true);
 
+        const currentRating = nsfwMode ? 'nsfw' : 'normal';
+        console.log("currentRating", currentRating);
         try {
             const response = await axios.get(API_BASE_URL, {
-                params: { page: pageNum, limit: 50, role: role }
+                params: {
+                    page: pageNum,
+                    limit: 50,
+                    role: role,
+                    rating: currentRating, // 🎯 Filter by rating: 'nsfw' or 'normal'
+                    is_sticker: 1
+                }
             });
 
             if (response.data?.status === 'success') {
                 const newItems: CDNStickerItem[] = response.data.data || [];
-                //console.log('newItems', newItems);
                 setStickers(prev => (pageNum === 1 ? newItems : [...prev, ...newItems]));
                 setHasMore(response.data.hasMore ?? false);
                 setPage(pageNum);
@@ -58,24 +71,50 @@ export const StickerDrawerTab = ({ role, onSelectSticker }: { role: string, onSe
             setLoading(false);
             isFetchingRef.current = false;
         }
-    }, []); // 🚀 Empty dependencies array stops function re-creation loops!
+    }, [role]);
 
-    // 🚀 Initial Load on Mount Only
+    // 🚀 Trigger Fetch on Mount AND whenever Admin Toggles the Rating Switch
     useEffect(() => {
-        fetchStickers(1);
-    }, [fetchStickers]);
+        setStickers([]);
+        setPage(1);
+        fetchStickers(1, isRatingFilterOn);
+    }, [isRatingFilterOn, fetchStickers]);
 
     // 🚀 Infinite Scroll Trigger
     const handleLoadMore = () => {
-        // Prevent triggering on empty list, when loading, or when no more data exists
         if (!isFetchingRef.current && hasMore && stickers.length > 0) {
-            fetchStickers(page + 1);
+            fetchStickers(page + 1, isRatingFilterOn);
         }
     };
 
     return (
-        // 🚀 Wrap FlatList in a View/Box with flex: 1
         <Box style={{ flex: 1 }}>
+            {/* 🚀 ADMIN ONLY: Rating Filter Bar */}
+            {role === 'admin' && (
+                <HStack
+                    style={{
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        paddingHorizontal: scale(12),
+                        paddingVertical: verticalScale(6),
+                        backgroundColor: 'rgba(0,0,0,0.2)',
+                        borderBottomWidth: 1,
+                        borderBottomColor: 'rgba(255,255,255,0.08)'
+                    }}
+                >
+                    <Text style={{ color: isRatingFilterOn ? '#EF4444' : '#94A3B8', fontWeight: '700', fontSize: 12 }}>
+                        Content Filter: {isRatingFilterOn ? 'NSFW ONLY' : 'NORMAL'}
+                    </Text>
+
+                    <Switch
+                        value={isRatingFilterOn}
+                        onValueChange={(val) => setIsRatingFilterOn(val)}
+                        trackColor={{ false: '#334155', true: '#DC2626' }}
+                        thumbColor={isRatingFilterOn ? '#F87171' : '#94A3B8'}
+                    />
+                </HStack>
+            )}
+
             <FlatList
                 data={stickers}
                 numColumns={NUM_COLUMNS}
@@ -83,9 +122,9 @@ export const StickerDrawerTab = ({ role, onSelectSticker }: { role: string, onSe
                 contentContainerStyle={{
                     paddingHorizontal: scale(8),
                     paddingVertical: verticalScale(8),
-                    flexGrow: 1, // 🚀 Ensures content stretches properly
+                    flexGrow: 1,
                 }}
-                showsVerticalScrollIndicator={true} // 🚀 Ensure scroll bar is visible
+                showsVerticalScrollIndicator={true}
                 onEndReached={handleLoadMore}
                 onEndReachedThreshold={0.3}
                 ListFooterComponent={
@@ -133,23 +172,13 @@ export const StickerDrawerTab = ({ role, onSelectSticker }: { role: string, onSe
                                                                 (stk) => stk.id !== item.id
                                                             )
                                                         );
-                                                        Alert.alert(
-                                                            'Success',
-                                                            'Sticker deactivated successfully.'
-                                                        );
+                                                        Alert.alert('Success', 'Sticker deactivated successfully.');
                                                     } else {
-                                                        Alert.alert(
-                                                            'Error',
-                                                            response.data?.message ||
-                                                            'Failed to deactivate.'
-                                                        );
+                                                        Alert.alert('Error', response.data?.message || 'Failed to deactivate.');
                                                     }
                                                 } catch (error) {
                                                     console.error('Inactivate error:', error);
-                                                    Alert.alert(
-                                                        'Error',
-                                                        'Server connection failed.'
-                                                    );
+                                                    Alert.alert('Error', 'Server connection failed.');
                                                 }
                                             },
                                         },

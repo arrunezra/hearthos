@@ -79,7 +79,6 @@ export default function StartedScreen() {
                 // Administrative Override Rule: Reset existing active default nodes if building a test admin
                 dynamicIsDefault = false;
                 const batch = writeBatch(db);
-                debugger
 
                 const activeDefaultsQuery = query(usersCollectionRef, where('isDefault', '==', true));
                 const activeDefaultsSnapshot = await getDocs(activeDefaultsQuery);
