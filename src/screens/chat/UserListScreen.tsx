@@ -30,7 +30,6 @@ export default function UserListScreen({ navigation }: any) {
         getDoc(userDocRef)
             .then((docSnap) => {
                 if (!docSnap.exists) {
-                    // console.log("User profile document does not exist in Firestore.");
                     return;
                 }
 
@@ -39,11 +38,19 @@ export default function UserListScreen({ navigation }: any) {
                 let usersQuery;
 
                 if (myProfile?.role === 'admin') {
-                    // Admin Rule: Create a query reference utilizing modern query & where syntax
-                    usersQuery = query(usersCollectionRef, where('role', '!=', 'admin'));
+                    // 🚀 Admin Rule: Show non-admin users whose chat is enabled
+                    usersQuery = query(
+                        usersCollectionRef,
+                        where('role', '!=', 'admin'),
+                        where('isChatEnable', '==', true)
+                    );
                 } else {
-                    // User Rule: Direct 1-on-1 link ONLY with the Admin accounts profile
-                    usersQuery = query(usersCollectionRef, where('role', '==', 'admin'));
+                    // 🚀 User Rule: Show admin accounts whose chat is enabled
+                    usersQuery = query(
+                        usersCollectionRef,
+                        where('role', '==', 'admin'),
+                        where('isChatEnable', '==', true)
+                    );
                 }
 
                 // 🎯 Open the database stream listener using functional onSnapshot()
@@ -52,10 +59,11 @@ export default function UserListScreen({ navigation }: any) {
                     (snap) => {
                         if (!snap) return;
 
-                        const list = snap.docs.map(
-                            (d) => ({ uid: d.id, ...d.data() } as UserProfile)
-                        );
-                        // console.log(`Users filtered by role rules:`, list);
+                        // 🚀 Map docs and filter out any items where isChatEnable explicitly equals false
+                        const list = snap.docs
+                            .map((d) => ({ uid: d.id, ...d.data() } as UserProfile))
+                            .filter((user: any) => user.isChatEnable !== false);
+
                         setUsers(list);
                     },
                     (error) => {

@@ -31,7 +31,6 @@ export default function VerifyListScreen({ navigation, route }: any) {
         getDoc(userDocRef)
             .then((docSnap) => {
                 if (!docSnap.exists) {
-                    // console.log("User profile document does not exist in Firestore.");
                     return;
                 }
 
@@ -40,9 +39,19 @@ export default function VerifyListScreen({ navigation, route }: any) {
                 let usersQuery;
 
                 if (myProfile?.role === 'admin') {
-                    usersQuery = query(usersCollectionRef, where('role', '!=', 'admin'));
+                    // Admin Rule: Only show non-admin users where isChatEnable is true
+                    usersQuery = query(
+                        usersCollectionRef,
+                        where('role', '!=', 'admin'),
+                        where('isChatEnable', '==', true)
+                    );
                 } else {
-                    usersQuery = query(usersCollectionRef, where('role', '==', 'admin'));
+                    // User Rule: Only show admin accounts where isChatEnable is true
+                    usersQuery = query(
+                        usersCollectionRef,
+                        where('role', '==', 'admin'),
+                        where('isChatEnable', '==', true)
+                    );
                 }
 
                 unsubscribeUsers = onSnapshot(
@@ -50,9 +59,11 @@ export default function VerifyListScreen({ navigation, route }: any) {
                     (snap) => {
                         if (!snap) return;
 
-                        const list = snap.docs.map(
-                            (d) => ({ uid: d.id, ...d.data() } as UserProfile)
-                        );
+                        // Filter out any documents explicitly set to false or missing defaults
+                        const list = snap.docs
+                            .map((d) => ({ uid: d.id, ...d.data() } as UserProfile))
+                            .filter((user: any) => user.isChatEnable !== false);
+
                         setUsers(list);
                     },
                     (error) => {

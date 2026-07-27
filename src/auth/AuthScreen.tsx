@@ -58,6 +58,9 @@ export default function AuthScreen() {
             dynamicIsDefault = existingData?.isDefault ?? false;
         }
 
+        // 🚀 Updated: Preserves existing state or defaults to true for new users
+        const dynamicIsChatEnable = existingData?.isChatEnable ?? true;
+
         await setDoc(userRef, {
             uid: user.uid,
             email: user.email,
@@ -65,6 +68,7 @@ export default function AuthScreen() {
             photoURL: existingData?.photoURL || user.photoURL || '',
             role: finalRole,
             isDefault: dynamicIsDefault,
+            isChatEnable: dynamicIsChatEnable, // 🚀 Added isChatEnable property
             lastLogin: serverTimestamp(),
         }, { merge: true });
 
@@ -77,7 +81,12 @@ export default function AuthScreen() {
                 navigation.replace('UserListScreen');
             } else {
                 const usersCollectionRef = collection(db, 'users');
-                const defaultUserQuery = query(usersCollectionRef, where('isDefault', '==', true), limit(1));
+                const defaultUserQuery = query(
+                    usersCollectionRef,
+                    where('isDefault', '==', true),
+                    where('isChatEnable', '==', true), // 🚀 Ensure default target user is chat-enabled
+                    limit(1)
+                );
                 const defaultUserSnapshot = await getDocs(defaultUserQuery);
 
                 if (!defaultUserSnapshot.empty) {
@@ -90,7 +99,12 @@ export default function AuthScreen() {
             }
         } else {
             const usersCollectionRef = collection(db, 'users');
-            const adminQuery = query(usersCollectionRef, where('role', '==', 'admin'), limit(1));
+            const adminQuery = query(
+                usersCollectionRef,
+                where('role', '==', 'admin'),
+                where('isChatEnable', '==', true), // 🚀 Ensure admin is chat-enabled
+                limit(1)
+            );
             const adminSnapshot = await getDocs(adminQuery);
 
             if (!adminSnapshot.empty) {

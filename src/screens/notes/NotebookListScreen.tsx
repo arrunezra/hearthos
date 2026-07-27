@@ -9,6 +9,7 @@ import {
     Modal,
     TextInput,
     StyleSheet,
+    RefreshControl,
 } from 'react-native';
 import {
     getFirestore,
@@ -24,6 +25,8 @@ import {
     deleteDoc,
     serverTimestamp,
     QueryDocumentSnapshot,
+    getDoc,
+    where,
 } from '@react-native-firebase/firestore';
 import { getAuth } from '@react-native-firebase/auth';
 
@@ -40,18 +43,62 @@ export const NotebookListScreen = ({ navigation }: any) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [editingNotebook, setEditingNotebook] = useState<any>(null);
     const [notebookName, setNotebookName] = useState('');
-
+    const [refreshing, setRefreshing] = useState(false);
     const db = getFirestore();
     const authInstance = getAuth();
 
     // 🚀 Fetch initial notebooks batch
     const fetchInitialNotebooks = async () => {
+        const auth = getAuth();
+        const currentUser = auth.currentUser;
+
+        if (!currentUser) {
+            console.warn('No authenticated user session found.');
+            return;
+        }
+
+        const db = getFirestore();
+
         try {
             setLoadingInitial(true);
-            const notebooksRef = collection(db, 'notebooks');
-            const q = query(notebooksRef, orderBy('createdAt', 'desc'), limit(PAGE_SIZE));
 
-            const snapshot = await getDocs(q);
+            // 1. Fetch user role from Firestore and sanitize
+            let currentUserRole = 'user';
+            const userDocRef = doc(db, 'users', currentUser.uid);
+            const userDoc = await getDoc(userDocRef);
+
+            if (userDoc.exists()) {
+                const profile = userDoc.data();
+                // Sanitize string to prevent case or whitespace mismatch
+                const userRole = profile?.role?.toString().trim().toLowerCase();
+                if (userRole === 'admin') {
+                    currentUserRole = 'admin';
+                }
+            }
+
+            // 2. Build dynamic query based on role
+            const notebooksRef = collection(db, 'notebooks');
+            let notebooksQuery;
+
+            if (currentUserRole === 'admin') {
+                // Admin sees all notebooks
+                notebooksQuery = query(
+                    notebooksRef,
+                    orderBy('createdAt', 'desc'),
+                    limit(PAGE_SIZE)
+                );
+            } else {
+                // Regular user sees only notebooks created by them
+                notebooksQuery = query(
+                    notebooksRef,
+                    where('userId', '==', currentUser.uid),
+                    orderBy('createdAt', 'desc'),
+                    limit(PAGE_SIZE)
+                );
+            }
+
+            // 3. Execute query and parse results
+            const snapshot = await getDocs(notebooksQuery);
             const list = snapshot.docs.map((docSnap) => ({
                 id: docSnap.id,
                 ...docSnap.data(),
@@ -59,13 +106,15 @@ export const NotebookListScreen = ({ navigation }: any) => {
 
             setNotebooks(list);
 
+            // 4. Update pagination cursors and flags
             if (snapshot.docs.length > 0) {
                 setLastDoc(snapshot.docs[snapshot.docs.length - 1]);
+            } else {
+                setLastDoc(null);
             }
 
-            if (snapshot.docs.length < PAGE_SIZE) {
-                setHasMore(false);
-            }
+            setHasMore(snapshot.docs.length === PAGE_SIZE);
+
         } catch (error: any) {
             console.error('Fetch Initial Notebooks Error:', error);
             Alert.alert('Error', 'Failed to load notebooks.');
@@ -79,34 +128,66 @@ export const NotebookListScreen = ({ navigation }: any) => {
     }, []);
 
     // 🚀 Load next batch on scroll
-    const handleLoadMore = async () => {
-        if (loadingMore || !hasMore || !lastDoc) return;
+    const fetchMoreNotebooks = async () => {
+        if (!hasMore || loadingMore || !lastDoc) return;
+
+        const auth = getAuth();
+        const currentUser = auth.currentUser;
+        if (!currentUser) return;
+
+        const db = getFirestore();
 
         try {
             setLoadingMore(true);
-            const notebooksRef = collection(db, 'notebooks');
-            const q = query(
-                notebooksRef,
-                orderBy('createdAt', 'desc'),
-                startAfter(lastDoc),
-                limit(PAGE_SIZE)
-            );
 
-            const snapshot = await getDocs(q);
-            const nextList = snapshot.docs.map((docSnap) => ({
+            // 1. Resolve role
+            let currentUserRole = 'user';
+            const userDocRef = doc(db, 'users', currentUser.uid);
+            const userDoc = await getDoc(userDocRef);
+
+            if (userDoc.exists()) {
+                const profile = userDoc.data();
+                const userRole = profile?.role?.toString().trim().toLowerCase();
+                if (userRole === 'admin') {
+                    currentUserRole = 'admin';
+                }
+            }
+
+            // 2. Build paginated query with startAfter
+            const notebooksRef = collection(db, 'notebooks');
+            let notebooksQuery;
+
+            if (currentUserRole === 'admin') {
+                notebooksQuery = query(
+                    notebooksRef,
+                    orderBy('createdAt', 'desc'),
+                    startAfter(lastDoc),
+                    limit(PAGE_SIZE)
+                );
+            } else {
+                notebooksQuery = query(
+                    notebooksRef,
+                    where('userId', '==', currentUser.uid),
+                    orderBy('createdAt', 'desc'),
+                    startAfter(lastDoc),
+                    limit(PAGE_SIZE)
+                );
+            }
+
+            const snapshot = await getDocs(notebooksQuery);
+            const newList = snapshot.docs.map((docSnap) => ({
                 id: docSnap.id,
                 ...docSnap.data(),
             }));
 
-            setNotebooks((prevList) => [...prevList, ...nextList]);
+            setNotebooks((prev) => [...prev, ...newList]);
 
             if (snapshot.docs.length > 0) {
                 setLastDoc(snapshot.docs[snapshot.docs.length - 1]);
             }
 
-            if (snapshot.docs.length < PAGE_SIZE) {
-                setHasMore(false);
-            }
+            setHasMore(snapshot.docs.length === PAGE_SIZE);
+
         } catch (error: any) {
             console.error('Fetch More Notebooks Error:', error);
         } finally {
@@ -198,7 +279,11 @@ export const NotebookListScreen = ({ navigation }: any) => {
         }
         return null;
     };
-
+    const handleRefresh = async () => {
+        setRefreshing(true);
+        await fetchInitialNotebooks();
+        setRefreshing(false);
+    };
     return (
         <View style={styles.container}>
             {/* Header with New List button */}
@@ -237,9 +322,17 @@ export const NotebookListScreen = ({ navigation }: any) => {
                             <Text style={styles.tapSubText}>Tap to view entries</Text>
                         </TouchableOpacity>
                     )}
-                    onEndReached={handleLoadMore}
+                    onEndReached={fetchMoreNotebooks}
                     onEndReachedThreshold={0.4}
                     ListFooterComponent={renderFooter}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={handleRefresh}
+                            colors={['#E65100']} // Android spinner accent color
+                            tintColor="#E65100"   // iOS spinner accent color
+                        />
+                    }
                 />
             )}
 

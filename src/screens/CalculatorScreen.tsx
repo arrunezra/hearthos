@@ -239,29 +239,52 @@ export default function CalculatorScreen() {
                 updateRole('admin');
                 const configDoc = await getDoc(doc(db, 'system', 'config'));
                 const showUserList = configDoc.data()?.showUserList ?? true;
+
                 if (showUserList === true) {
                     navigation.navigate('UserListScreen');
                 } else {
-                    const defaultUserQuery = query(collection(db, 'users'), where('isDefault', '==', true), limit(1));
+                    // 🚀 Only query default user if chat is enabled
+                    const defaultUserQuery = query(
+                        collection(db, 'users'),
+                        where('isDefault', '==', true),
+                        where('isChatEnable', '==', true),
+                        limit(1)
+                    );
                     const defaultUserSnapshot = await getDocs(defaultUserQuery);
+
                     if (!defaultUserSnapshot.empty) {
                         const defaultUserDoc = defaultUserSnapshot.docs[0];
-                        navigation.navigate('ChatScreen', { targetUser: { uid: defaultUserDoc.id, ...defaultUserDoc.data() } });
+                        navigation.navigate('ChatScreen', {
+                            targetUser: { uid: defaultUserDoc.id, ...defaultUserDoc.data() }
+                        });
                     } else {
                         navigation.navigate('UserListScreen');
                     }
                 }
             } else {
+                // 🚀 CHECK IF CURRENT USER HAS CHAT ENABLED
+                if (profile?.isChatEnable === false) {
+                    // Alert.alert(
+                    //     "Chat Disabled",
+                    //     "Your account is currently not enabled for chat. Please contact an administrator."
+                    // );
+                    return;
+                }
 
                 setLoginUID(currentUser.uid);
                 updateRole('user');
-                // Find the administrative or default chat room target node for this user
-                const defaultAdminQuery = query(collection(db, 'users'), where('role', '==', 'admin'), limit(1));
+
+                // 🚀 Find the active & chat-enabled admin target
+                const defaultAdminQuery = query(
+                    collection(db, 'users'),
+                    where('role', '==', 'admin'),
+                    where('isChatEnable', '==', true),
+                    limit(1)
+                );
                 const defaultAdminSnapshot = await getDocs(defaultAdminQuery);
 
                 if (!defaultAdminSnapshot.empty) {
                     const adminDoc = defaultAdminSnapshot.docs[0];
-                    // 🎯 ROUTE TO CHAT: Direct regular users to their chat with the administrator instance
                     navigation.navigate('ChatScreen', {
                         targetUser: { uid: adminDoc.id, ...adminDoc.data() }
                     });
