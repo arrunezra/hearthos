@@ -28,8 +28,8 @@ android {
         applicationId "com.hearthos"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 15
-        versionName "1.1.15"
+        versionCode 19
+        versionName "1.1.19"
          missingDimensionStrategy 'react-native-capture-protection', 'base'
     }
     signingConfigs {

@@ -85,6 +85,8 @@ export default function ChatScreen({ route, navigation }: any) {
     const [isReversibleTranslation, setIsReversibleTranslation] = useState(false);
     const [isReverseTranslating, setIsReverseTranslating] = useState(false);
     const [editableText, setEditableText] = useState('');
+    const [isShowReadReceipt, setIsShowReadReceipt] = useState(false);
+
 
     // 🚀 Tracks the active video URL targeting full-screen media execution loops
     const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
@@ -159,36 +161,69 @@ export default function ChatScreen({ route, navigation }: any) {
     }, [navigation]);
     useFocusEffect(
         useCallback(() => {
+            if (!currentUser?.uid || !roomId) return;
+
             const db = getFirestore();
-            const getUserRole = async () => {
-                if (!currentUser?.uid) return;
+            let activeUserRole = currentUserRole;
+            let isReadReceiptActive = false; // Default fallback flag
+
+            // 1. Fetch User Profile Data (Role & Read Receipt preference)
+            const fetchUserProfile = async () => {
                 try {
                     const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
                     if (userDoc.exists()) {
                         const profile = userDoc.data();
-                        setShowTempAdminRole(profile?.role === 'admin');
-                        setCurrentUserRole(profile?.role || 'user');
+                        const role = profile?.role || 'user';
+
+                        activeUserRole = role;
+                        setShowTempAdminRole(role === 'admin');
+                        setCurrentUserRole(role);
+
+                        // 🚀 Check if user enabled read receipts in their profile (e.g., profile?.readReceipt)
+                        // If undefined or true, default to true, otherwise respect explicit false
+                        isReadReceiptActive = profile?.readReceipt !== false;
+                        setIsShowReadReceipt(isReadReceiptActive)
                     }
                 } catch (error) {
-                    console.error("Error retrieving user role structure:", error);
+                    console.error("Error retrieving user profile structure:", error);
                 }
             };
-            getUserRole();
+            fetchUserProfile();
 
+            // 2. Real-time Messages Stream
             const q = query(messagesCollection, orderBy('createdAt', 'desc'), limit(100));
             const unsubscribe = onSnapshot(q, (snap) => {
                 if (!snap) return;
+
                 const rawMessages = snap.docs.map(d => ({ id: d.id, ...d.data() } as MessageItem));
 
-                if (currentUserRole !== 'admin') {
+                // Filter messages based on active user role
+                const roleToCheck = activeUserRole || currentUserRole;
+                if (roleToCheck !== 'admin') {
                     const visibleMessages = rawMessages.filter(msg => msg?.isDeletedByUser !== true);
                     setMessages(visibleMessages);
                 } else {
                     setMessages(rawMessages);
                 }
+                // console.log('isReadReceiptActive', isReadReceiptActive)
+                // 🚀 ONLY UPDATE FIRESTORE READ STATUS IF `readReceipt` IS TRUE FOR CURRENT USER
+                //if (isReadReceiptActive) {
+                snap.docs.forEach((docSnap) => {
+                    const msgData = docSnap.data();
+                    // If message is from the other user and not read yet
+                    if (msgData.senderId !== currentUser.uid && !msgData.isRead) {
+                        updateDoc(doc(db, 'rooms', roomId, 'messages', docSnap.id), {
+                            isRead: true,
+                            status: 'read',
+                        }).catch(err => console.error("Error updating read status:", err));
+                    }
+                });
+                //}
+
             }, (error) => {
                 console.error("Firestore live loop stream connection failure:", error);
             });
+
             return () => {
                 unsubscribe();
             };
@@ -358,12 +393,13 @@ export default function ChatScreen({ route, navigation }: any) {
                     setCopiedModalText(false);
                 }}
                 onVideoPress={(url: string | null) => {
-                    console.log('onVideoPress url', url)
+                    //console.log('onVideoPress url', url)
                     setActiveVideoUrl(url)
 
                 }}
                 downloadingProgress={downloadingMap[item.id]}
                 onDownloadPress={handleDownloadVideoMessage}
+                isShowReadReceipt={isShowReadReceipt}
             />
         );
     }, [currentUser?.uid, currentUserRole, handleScrollToOriginalMessage, handleDeleteMessageTrigger, activeHighlightId]);
@@ -420,7 +456,7 @@ export default function ChatScreen({ route, navigation }: any) {
                     description: selectedAsset.type?.startsWith('video') ? '[Video File]' : '[Image File]'
                 }
             };
-            console.log('customizedMediaEvent', customizedMediaEvent)
+            //console.log('customizedMediaEvent', customizedMediaEvent)
             await handleSendMessage(customizedMediaEvent);
             isPickingMedia.current = false;
         } catch (pickerError) {
@@ -511,6 +547,9 @@ export default function ChatScreen({ route, navigation }: any) {
             mediaType: currentMime,
             isDeletedByUser: false,
             originalEmoji: originalEmojiChar || null, // 🚀 Saves the raw emoji character only when a sticker is sent
+            // 🚀 NEW: Default read/seen state when message is initially sent
+            status: 'sent',       // Can be 'sent' | 'delivered' | 'read'
+            isRead: false,        // Boolean flag for quick checks
             replyTo: replyMessage ? {
                 messageId: replyMessage.id,
                 text: replyMessage.text,

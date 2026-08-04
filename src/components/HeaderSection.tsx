@@ -9,7 +9,7 @@ import GradientView from './GradientView';
 import AnimatedMotiView from './AnimatedMotiView';
 import { scale, moderateScale, verticalScale } from '../utils/scaling';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import auth from '@react-native-firebase/auth';
+import auth, { getAuth, signOut } from '@react-native-firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 
 interface HeaderProps {
@@ -85,9 +85,10 @@ const HeaderSession = ({
                 await GoogleSignin.signOut();
             }
 
-            // 2. Check Firebase Session Status Safely 
-            if (auth().currentUser) {
-                await auth().signOut();
+            // 2. Check Firebase Session Status Safely using Modular SDK
+            const auth = getAuth();
+            if (auth.currentUser) {
+                await signOut(auth);
                 // console.log('Firebase session cleared cleanly.');
             } else {
                 console.log('No active Firebase session found, skipping signOut.');
@@ -213,7 +214,7 @@ const HeaderSession = ({
                                     >
                                         <Icon as={Sticker} size="sm" className="text-red-600 mr-2" />
                                         <MenuItemLabel className="text-red-600 font-bold text-sm">
-                                            Add Sticker / gif
+                                            Add Sticker/gif
                                         </MenuItemLabel>
                                     </MenuItem>
 

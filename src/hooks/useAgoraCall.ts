@@ -22,6 +22,8 @@ export const useAgoraCall = (
     const [remoteUid, setRemoteUid] = useState<number | null>(null);
     const [isMuted, setIsMuted] = useState(false);
     const [isVideoDisabled, setIsVideoDisabled] = useState(false);
+    // 🔊 Speaker state: Default to true for video calls, false for voice calls
+    const [isSpeakerOn, setIsSpeakerOn] = useState(isVideoCall);
     const isInitializing = useRef(false);
 
     const requestPermissions = async () => {
@@ -37,13 +39,11 @@ export const useAgoraCall = (
         try {
             const stringUid = String(uid);
             const url = `https://hearthos.jeasuns.com/api/config/rtcToken.php?channel=${channelName}&uid=${stringUid}`;
-            //console.log('[Token API] Fetching production v2 token:', url);
 
             const response = await fetch(url);
             if (!response.ok) throw new Error(`HTTP Error Status: ${response.status}`);
 
             const data = await response.json();
-            // console.log('[Token API Success] Token received safely.');
             return data.token || '';
         } catch (error) {
             console.error('[Token API Error]: Failed to fetch rtcToken:', error);
@@ -71,29 +71,29 @@ export const useAgoraCall = (
                 channelProfile: ChannelProfileType.ChannelProfileCommunication
             });
 
-            // 🚀 2. THE ORDER FIX: Set up media modes *before* opening listeners or pipelines
+            // 🚀 2. Set up media modes
             if (isVideoCall) {
                 agoraEngine.enableVideo();
                 agoraEngine.startPreview();
             } else {
-                // Completely kill video tracks for a clean audio handshake
                 agoraEngine.disableVideo();
             }
             agoraEngine.enableAudio();
 
-            // 🚀 3. Bind events to the securely initialized media scope
+            // 🔊 Set initial speaker state (Speaker for Video, Earpiece for Voice)
+            agoraEngine.setEnableSpeakerphone(isVideoCall);
+            setIsSpeakerOn(isVideoCall);
+
+            // 🚀 3. Bind events
             agoraEngine.registerEventHandler({
                 onJoinChannelSuccess: (connection: RtcConnection) => {
-                    //console.log('[RTC Success] Local device successfully joined:', connection.localUid);
                     setIsJoined(true);
                     isInitializing.current = false;
                 },
                 onUserJoined: (connection: RtcConnection, uid: number) => {
-                    //console.log('[RTC Event] Remote peer streaming channel detected:', uid);
                     setRemoteUid(uid);
                 },
                 onUserOffline: (connection: RtcConnection, uid: number) => {
-                    // console.log('[RTC Event] Remote user dropped offline');
                     setRemoteUid(null);
                     onRemoteLeave();
                 },
@@ -103,9 +103,8 @@ export const useAgoraCall = (
             });
 
             const targetUid = parseInt(String(localUid), 10);
-            //console.log(`[Agora Engine] Connecting to channel: ${roomId} as ${isVideoCall ? 'VIDEO' : 'AUDIO'} with UID: ${targetUid}`);
 
-            // 🚀 4. Match the token signature parameters perfectly
+            // 🚀 4. Join channel
             agoraEngine.joinChannel(token, roomId, targetUid, {
                 channelProfile: ChannelProfileType.ChannelProfileCommunication,
                 clientRoleType: ClientRoleType.ClientRoleBroadcaster,
@@ -131,13 +130,24 @@ export const useAgoraCall = (
         setIsVideoDisabled(!isVideoDisabled);
     };
 
+    // 🔊 Speakerphone Toggle Action Handler
+    const toggleSpeaker = () => {
+        try {
+            const nextSpeakerState = !isSpeakerOn;
+            agoraEngine.setEnableSpeakerphone(nextSpeakerState);
+            setIsSpeakerOn(nextSpeakerState);
+        } catch (error) {
+            console.error('[Agora Hook Error] Failed to toggle speaker:', error);
+        }
+    };
+
     const leaveChannel = () => {
         try {
             agoraEngine.stopPreview();
             agoraEngine.leaveChannel();
             agoraEngine.unregisterEventHandler({});
         } catch (e) {
-            // console.log("[Teardown] Engine bypass cleanup active.");
+            // Teardown fallback
         }
         setIsJoined(false);
         setRemoteUid(null);
@@ -153,5 +163,15 @@ export const useAgoraCall = (
         return () => leaveChannel();
     }, [roomId, localUid, isVideoCall, shouldConnect]);
 
-    return { isJoined, remoteUid, isMuted, isVideoDisabled, toggleMic, toggleCamera, leaveChannel };
+    return {
+        isJoined,
+        remoteUid,
+        isMuted,
+        isVideoDisabled,
+        isSpeakerOn,       // 👈 Export speaker state
+        toggleSpeaker,     // 👈 Export speaker toggle function
+        toggleMic,
+        toggleCamera,
+        leaveChannel
+    };
 };

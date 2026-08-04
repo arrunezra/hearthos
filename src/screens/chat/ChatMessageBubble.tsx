@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native';
+import FastImage from '@d11/react-native-fast-image';
+import Clipboard from '@react-native-clipboard/clipboard';
+import { Copy, Trash2, Languages, Play } from 'lucide-react-native';
+
 import { scale, moderateScale, verticalScale } from '@/src/utils/scaling';
 import { Box, VStack, Text, HStack, Center } from '@/src/components/HOSGluestackUI';
-import FastImage from '@d11/react-native-fast-image';
-import { ActivityIndicator, Alert, Platform, StyleSheet, TouchableOpacity } from 'react-native';
 import { OptimizedChatGif } from '@/src/components/OptimizedChatGif';
 import { ModernImageViewer } from '@/src/components/ModernImageViewer';
-import Clipboard from '@react-native-clipboard/clipboard';
 import SwipeableMessageRow from './SwipeableMessageRow';
-import { Copy, Trash2, Languages, Play, Download } from 'lucide-react-native';
 import { translateTextPipeline } from '@/src/utils/translation';
-import { checkVideoCacheExists, getLocalVideoPath } from './chatCacheManager';
 import { AnimatedStickerItem } from './AnimatedStickerItem';
 import { checkEmojiOnlyString } from '@/src/utils/tools';
+
 export interface MessageItem {
     id: string;
     senderId: string;
@@ -28,9 +29,12 @@ export interface MessageItem {
     };
     isDeletedByUser?: boolean;
     mediaType?: string;
-    // 🚀 NEW BACKGROUND UPLOAD INTERFACE PARAMS
     isUploading?: boolean;
     uploadProgress?: number;
+    // 🚀 READ/SEEN STATUS FIELDS
+    status?: 'sent' | 'delivered' | 'read';
+    isRead?: boolean;
+
 }
 
 interface ChatMessageBubbleProps {
@@ -44,13 +48,13 @@ interface ChatMessageBubbleProps {
     onReplyClick: (replyToId: string) => void;
     onDeleteTrigger: (messageId: string, senderId: string) => void;
     onTriggerTranslation: (translatedText: string) => void;
-    onVideoPress: (url: string | null) => void; // 🚀 New callback for full-screen video launch
+    onVideoPress: (url: string | null) => void;
     onDownloadPress: (item: MessageItem) => void;
     downloadingProgress?: number;
-
+    // 🚀 SETTING-BASED READ RECEIPT PROP
+    readReceiptsEnabled?: boolean;
+    isShowReadReceipt?: boolean;
 }
-
-
 
 const ChatMessageBubble = ({
     item,
@@ -65,7 +69,9 @@ const ChatMessageBubble = ({
     onTriggerTranslation,
     onVideoPress,
     onDownloadPress,
-    downloadingProgress
+    downloadingProgress,
+    readReceiptsEnabled = true, // Defaults to true if omitted
+    isShowReadReceipt = false
 }: ChatMessageBubbleProps) => {
     const isMe = item.senderId === currentUserId;
     const hasReply = !!item.replyTo;
@@ -79,32 +85,6 @@ const ChatMessageBubble = ({
     const emojiStatus = !isMedia && !isDeletedByUser ? checkEmojiOnlyString(item.text) : { isEmojiOnly: false, count: 0 };
     const renderBigEmojiStyle = emojiStatus.isEmojiOnly && emojiStatus.count <= 3;
     const [stickerPlayKey, setStickerPlayKey] = useState<number>(0);
-    // useEffect(() => {
-    //     const evaluateCacheStatus = async () => {
-    //         if (item.mediaType?.startsWith('video/') && item.mediaUrl) {
-    //             // 1. If it's already a native device asset path reference, validate instantly
-    //             if (item.mediaUrl.startsWith('file://') || item.mediaUrl.startsWith('/')) {
-    //                 setIsLocalCacheReady(true);
-    //                 setResolvedVideoUrl(item.mediaUrl);
-    //                 return;
-    //             }
-
-    //             // 2. Look up inside deep disk storage parameters to check if downloaded
-    //             const doesFileExist = await checkVideoCacheExists(item.mediaUrl);
-    //             setIsLocalCacheReady(doesFileExist);
-
-    //             if (doesFileExist) {
-    //                 const targetDiskLocation = getLocalVideoPath(item.mediaUrl);
-    //                 // 🚀 FORCE LOCAL ASSIGNMENT: Direct Android/iOS storage mapping
-    //                 setResolvedVideoUrl(Platform.OS === 'android' ? `file://${targetDiskLocation}` : targetDiskLocation);
-    //             } else {
-    //                 setResolvedVideoUrl(item.mediaUrl);
-    //             }
-    //         }
-    //     };
-    //     evaluateCacheStatus();
-    // }, [item.mediaUrl, item.isUploading]);
-
 
     const handleToggleTranslation = async () => {
         if (isTranslating) return;
@@ -155,8 +135,44 @@ const ChatMessageBubble = ({
     };
 
     const isSticker = item.mediaType?.startsWith('sticker/') || item.text === '[Animation]' || item.mediaType === 'sticker/lottie' || item.mediaType === 'application/json';
-    //console.log("item", item);
-    //console.log("isSticker", isSticker, isMedia);
+
+    // 🚀 READ / SEEN TICK INDICATOR RENDERER
+    const renderMessageStatus = () => {
+        if (!isMe || !isShowReadReceipt) return null; // Only show ticks for outgoing messages
+
+        if (item.isUploading) {
+            return (
+                <Text style={{ fontSize: moderateScale(8), color: '#94A3B8' }}>
+                    ✓
+                </Text>
+            );
+        }
+
+        const isMessageRead = item.status === 'read' || item.isRead;
+
+        // If user disabled read receipts in settings -> render gray double tick (✓✓)
+        if (!readReceiptsEnabled) {
+            return (
+                <Text style={{ fontSize: moderateScale(8), color: '#94A3B8' }}>
+                    ✓✓
+                </Text>
+            );
+        }
+
+        // If read receipts are enabled -> Blue tick for 'read', Gray double tick for 'sent/delivered'
+        return (
+            <Text
+                style={{
+                    fontSize: moderateScale(8),
+                    color: isMessageRead ? '#34B7F1' : '#94A3B8',
+
+                }}
+            >
+                ✓✓
+            </Text>
+        );
+    };
+
     return (
         <VStack style={{ alignItems: isMe ? 'flex-end' : 'flex-start', marginBottom: verticalScale(12) }}>
             <SwipeableMessageRow isMe={isMe} onReplyTrigger={() => onReplyTrigger(item)}>
@@ -168,17 +184,14 @@ const ChatMessageBubble = ({
                         if (item.isUploading) return;
 
                         if (item.mediaType?.startsWith('video/')) {
-                            // 🚀 STEP 1: Pass the remote URL straight to the parent viewer context state
                             if (item.mediaUrl) {
                                 onVideoPress(item.mediaUrl);
                             }
                         }
                         else if (isMedia && !item.isUploading) {
-                            // For standard images / static graphics
                             if (isSticker) {
                                 setStickerPlayKey((prev) => prev + 1);
                             } else setViewerVisible(true);
-
                         }
                         else {
                             setShowActions(false);
@@ -235,15 +248,13 @@ const ChatMessageBubble = ({
                         )}
 
                         {isSticker ? (
-                            /* 🚀 COMPACT STICKER CONTAINER (No background bubble, reduced dimensions) */
                             <AnimatedStickerItem
                                 mediaUrl={item.mediaUrl!}
-                                originalEmojiText={item.originalEmoji} // Raw emoji character (e.g., "😀") for the 5-sec fallback
+                                originalEmojiText={item.originalEmoji}
                                 timeString={timeString}
                                 isMe={isMe}
                                 playKey={stickerPlayKey}
                                 mediaType={item.mediaType}
-
                             />
                         ) : isMedia ? (
                             <Box style={{
@@ -263,14 +274,12 @@ const ChatMessageBubble = ({
                                     />
                                 ) : (
                                     <Box style={{ position: 'relative', width: scale(220), height: verticalScale(180) }}>
-
                                         <FastImage
                                             source={{ uri: item.mediaUrl! }}
                                             style={{ width: '100%', height: '100%' }}
                                             resizeMode={FastImage.resizeMode.cover}
                                         />
 
-                                        {/* VIDEO STATUS OVERLAY: Simplified down to a clean Play icon */}
                                         {item.mediaType?.startsWith('video/') && !item.isUploading && (
                                             <Box style={StyleSheet.absoluteFill}>
                                                 <Center style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.35)' }}>
@@ -286,7 +295,6 @@ const ChatMessageBubble = ({
                                             </Box>
                                         )}
 
-                                        {/* 🚀 THE INLINE UPLOAD PROGRESS OVERLAY */}
                                         {item.isUploading && (
                                             <Box style={StyleSheet.absoluteFill}>
                                                 <Center style={styles.uploadOverlayBackdrop}>
@@ -316,6 +324,7 @@ const ChatMessageBubble = ({
                                                 <Text style={{ fontSize: moderateScale(11), color: 'rgba(255, 255, 255, 0.8)' }}>
                                                     {timeString}
                                                 </Text>
+
                                             </Box>
                                         )}
                                     </Box>
@@ -362,35 +371,54 @@ const ChatMessageBubble = ({
                             </Box>
                         ) : (
                             <Box style={{
-                                flexDirection: 'row',
-                                flexWrap: 'wrap',
-                                alignItems: 'flex-end',
-                                paddingRight: scale(45),
-                                minWidth: scale(80)
+                                position: 'relative',
+                                flexDirection: 'column',
+                                justifyContent: 'flex-end',
+                                // 🚀 1. Give enough right padding so the time badge never overlaps text
+                                paddingRight: isMe
+                                    ? (isShowReadReceipt ? scale(48) : scale(38))
+                                    : scale(40),
+                                //paddingBottom: verticalScale(1),
+                                // 🚀 2. Increase minWidth so short texts ("Hi", "Dei") don't squeeze the time container
+                                minWidth: isMe ? scale(68) : scale(70),
                             }}>
+                                {/* Message Text */}
                                 <Text
                                     style={{
                                         fontSize: moderateScale(15),
                                         lineHeight: verticalScale(20),
-                                        marginBottom: verticalScale(2)
+                                        marginBottom: verticalScale(2),
+                                        flexShrink: 1,
+                                        flexWrap: 'wrap',
                                     }}
                                     className={isMe ? "text-white font-medium" : "text-slate-100 font-medium"}
                                 >
                                     {item.text}
                                 </Text>
+
+                                {/* Absolute Timestamp + Read Ticks */}
                                 <Box style={{
                                     position: 'absolute',
-                                    bottom: 0,
-                                    right: scale(-2),
+                                    bottom: verticalScale(-6),
+                                    right: 0,
                                     flexDirection: 'row',
-                                    alignItems: 'center'
+                                    alignItems: 'center',
+                                    gap: scale(3),
                                 }}>
+                                    {/* 🚀 3. Prevents "6 AM" from wrapping into "6 A" and "M" */}
                                     <Text
-                                        style={{ fontSize: moderateScale(10) }}
+                                        numberOfLines={1}
+                                        style={{
+                                            fontSize: moderateScale(8),
+                                            includeFontPadding: false
+                                        }}
                                         className={isMe ? "text-slate-200/80 font-semibold" : "text-slate-300/80 font-semibold"}
                                     >
                                         {timeString}
                                     </Text>
+
+                                    {/* 🚀 4. Render tick marks for outgoing messages */}
+                                    {renderMessageStatus()}
                                 </Box>
                             </Box>
                         )}
@@ -451,11 +479,10 @@ const ChatMessageBubble = ({
                 imageUrl={item.mediaUrl!}
                 onClose={() => setViewerVisible(false)}
             />
-        </VStack >
+        </VStack>
     );
 };
 
-// Internal Layout Overlay Styles sheet configurations
 const styles = StyleSheet.create({
     uploadOverlayBackdrop: {
         width: '100%',
@@ -487,7 +514,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 1,
         borderColor: 'rgba(255, 255, 255, 0.3)',
-        // Shadow elevation specs
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.4,
@@ -517,6 +543,10 @@ export default React.memo(ChatMessageBubble, (prevProps, nextProps) => {
         !!prevProps.isHighlighted === !!nextProps.isHighlighted &&
         prevProps.item.isUploading === nextProps.item.isUploading &&
         prevProps.item.uploadProgress === nextProps.item.uploadProgress &&
-        prevProps.onDeleteTrigger === nextProps.onDeleteTrigger
+        prevProps.onDeleteTrigger === nextProps.onDeleteTrigger &&
+        // 🚀 Add read state & settings equality checks
+        prevProps.item.isRead === nextProps.item.isRead &&
+        prevProps.item.status === nextProps.item.status &&
+        prevProps.readReceiptsEnabled === nextProps.readReceiptsEnabled
     );
 });

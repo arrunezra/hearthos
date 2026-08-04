@@ -3,23 +3,25 @@ import { StyleSheet, TouchableOpacity, AppState, AppStateStatus, Dimensions } fr
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getFirestore, doc, onSnapshot, updateDoc } from '@react-native-firebase/firestore';
 import { RtcSurfaceView, VideoSourceType } from 'react-native-agora';
-import { Phone, PhoneOff, Mic, MicOff, Video, VideoOff } from 'lucide-react-native';
+// 1. Import Volume icons
+import { Phone, PhoneOff, Mic, MicOff, Video, VideoOff, Volume2, VolumeX } from 'lucide-react-native';
 
 import { scale, moderateScale, verticalScale } from '@/src/utils/scaling';
 import { Box, Text, Center, HStack } from '@/src/components/HOSGluestackUI';
 import { useAgoraCall } from '@/src/hooks/useAgoraCall';
+
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
-// 🚀 Hashing engine: Safely transforms any Firebase String UID into a unique Agora Integer UID
+
 const getAgoraNumericUid = (firebaseUid: string): number => {
     let hash = 0;
     for (let i = 0; i < firebaseUid.length; i++) {
         const char = firebaseUid.charCodeAt(i);
         hash = ((hash << 5) - hash) + char;
-        hash |= 0; // Force signature transformation to a 32-bit integer boundary
+        hash |= 0;
     }
-    // Keeps the value positive and safely under Agora's 4.2 billion ceiling limit
     return Math.abs(hash) % 4000000000;
 };
+
 export default function CallScreen({ route, navigation }: any) {
     const { roomId, isVideoCall, isIncoming = false, callerId, receiverId } = route.params;
     const insets = useSafeAreaInsets();
@@ -27,19 +29,21 @@ export default function CallScreen({ route, navigation }: any) {
 
     const [hasAccepted, setHasAccepted] = useState(!isIncoming);
     const isNavigatingAway = useRef(false);
-    // 🚀 THE DYNAMIC ENGINE: Resolves who is local and who is remote based on call direction
+
     const localUserStringId = isIncoming ? receiverId : callerId;
     const remoteUserStringId = isIncoming ? callerId : receiverId;
-    // 🚀 STRICT 32-BIT AGORA COUNTS: Kept distinct but safely within standard numerical limits
-    //const LOCAL_USER_ID = isIncoming ? 9786970 : 6381162;
-    // 🚀 CONVERT TO PURE NUMBERS FOR AGORA NATIVE PIPELINES
+
     const LOCAL_USER_ID = getAgoraNumericUid(localUserStringId || 'guest');
     const EXPECTED_REMOTE_UID = getAgoraNumericUid(remoteUserStringId || 'peer');
+    const [callSeconds, setCallSeconds] = useState(0);
+    // 2. Destructure isSpeakerOn & toggleSpeaker from hook
     const {
         isJoined,
         remoteUid,
         isMuted,
         isVideoDisabled,
+        isSpeakerOn,
+        toggleSpeaker,
         toggleMic,
         toggleCamera,
         leaveChannel
@@ -50,7 +54,28 @@ export default function CallScreen({ route, navigation }: any) {
         hasAccepted,
         () => handleCloseStack()
     );
+    // ⏱️ 2. Start timer once the call is accepted
+    useEffect(() => {
+        // TypeScript automatically infers the exact return type
+        let interval: ReturnType<typeof setInterval>;
 
+        if (hasAccepted) {
+            interval = setInterval(() => {
+                setCallSeconds((prev) => prev + 1);
+            }, 1000);
+        }
+
+        return () => {
+            if (interval) clearInterval(interval);
+        };
+    }, [hasAccepted]);
+    const formatDuration = (totalSeconds: number) => {
+        const mins = Math.floor(totalSeconds / 60);
+        const secs = totalSeconds % 60;
+        const formattedMins = String(mins).padStart(2, '0');
+        const formattedSecs = String(secs).padStart(2, '0');
+        return `${formattedMins}:${formattedSecs}`;
+    };
     useEffect(() => {
         const callDocRef = doc(db, 'calls', roomId);
         const unsubscribeSnapshot = onSnapshot(callDocRef, (snapshot) => {
@@ -103,7 +128,14 @@ export default function CallScreen({ route, navigation }: any) {
     return (
         <Box style={{ flex: 1, backgroundColor: '#022C22' }}>
             <Box style={{ flex: 1, position: 'relative' }}>
-
+                {/* ⏱️ 4. Floating Header Timer (Visible during active call) */}
+                {hasAccepted && (
+                    <Box style={[styles.timerHeaderOverlay, { top: insets.top + scale(12) }]}>
+                        <Text style={styles.timerText}>
+                            {formatDuration(callSeconds)}
+                        </Text>
+                    </Box>
+                )}
                 {!hasAccepted ? (
                     // 🔔 Incoming Waiting UI State
                     <Center style={{ flex: 1 }}>
@@ -116,7 +148,7 @@ export default function CallScreen({ route, navigation }: any) {
                         </Text>
                     </Center>
                 ) : isVideoCall && remoteUid ? (
-                    // 📺 1. MAIN REMOTE VIDEO VIEW LAYER
+                    // 📺 Video View Layer
                     <RtcSurfaceView
                         key={`remote-canvas-viewport-${remoteUid}`}
                         canvas={{
@@ -126,24 +158,31 @@ export default function CallScreen({ route, navigation }: any) {
                         style={styles.videoSurfaceView}
                     />
                 ) : (
-                    // 🎙️ Connection Loader Backdrop Frame
+                    // 🎙️ Voice Call View Layer
                     <Center style={styles.videoSurfaceView}>
                         <Box style={styles.voiceCallAvatarPlaceholder} />
                         <Text style={{ color: 'white', fontSize: moderateScale(16), marginTop: verticalScale(16), textAlign: 'center', paddingHorizontal: scale(20) }}>
                             {isJoined
                                 ? (isVideoCall
                                     ? "Connected to Room!\nWaiting for remote video stream..."
-                                    : "Connected!\nWaiting for remote user...")
+                                    : "Connected")
                                 : (isVideoCall
                                     ? "Connecting Video Lines..."
                                     : "Connecting Audio Lines...")}
                         </Text>
+
+                        {/* ⏱️ Optional: Show timer below avatar for voice calls */}
+                        {!isVideoCall && (
+                            <Text style={{ color: '#10B981', fontSize: moderateScale(18), fontWeight: '600', marginTop: verticalScale(8) }}>
+                                {formatDuration(callSeconds)}
+                            </Text>
+                        )}
                     </Center>
                 )}
 
-                {/* 📺 2. LOCAL PREVIEW PICTURE-IN-PICTURE LAYER */}
+                {/* Local Preview Picture-in-Picture */}
                 {hasAccepted && isVideoCall && !isVideoDisabled && (
-                    <Box style={[styles.pipLocalPreviewFrame, { top: insets.top + scale(20) }]}>
+                    <Box style={[styles.pipLocalPreviewFrame, { top: insets.top + scale(60) }]}>
                         <RtcSurfaceView
                             key="local-preview-view"
                             canvas={{
@@ -159,7 +198,6 @@ export default function CallScreen({ route, navigation }: any) {
             {/* 🎛️ SYSTEM CONTROLS ACTION TOOLBAR */}
             <HStack style={[styles.controlBarDock, { paddingBottom: insets.bottom + scale(24) }]}>
                 {!hasAccepted ? (
-                    // 🚀 Incoming Acceptance Control Buttons
                     <HStack style={{ width: '100%', justifyContent: 'space-evenly', alignItems: 'center' }}>
                         <TouchableOpacity onPress={handleDeclineAction} style={[styles.actionRoundBtn, { backgroundColor: '#EF4444', width: scale(64), height: scale(64), borderRadius: scale(32) }]}>
                             <PhoneOff color="white" size={moderateScale(26)} />
@@ -170,16 +208,31 @@ export default function CallScreen({ route, navigation }: any) {
                         </TouchableOpacity>
                     </HStack>
                 ) : (
-                    // 🎙️ Active Live Call Management Controls View Panel
-                    <HStack style={{ width: '100%', justifyContent: 'center', gap: scale(28), alignItems: 'center' }}>
+                    <HStack style={{ width: '100%', justifyContent: 'center', gap: scale(18), alignItems: 'center' }}>
+                        {/* 🎤 Mute/Unmute Mic */}
                         <TouchableOpacity onPress={toggleMic} style={styles.actionRoundBtn}>
                             {isMuted ? <MicOff color="white" size={moderateScale(20)} /> : <Mic color="white" size={moderateScale(20)} />}
                         </TouchableOpacity>
+
+                        {/* 🔊 Speakerphone On/Off Button */}
+                        <TouchableOpacity
+                            onPress={toggleSpeaker}
+                            style={[
+                                styles.actionRoundBtn,
+                                isSpeakerOn && { backgroundColor: 'rgba(255, 255, 255, 0.35)' }
+                            ]}
+                        >
+                            {isSpeakerOn ? <Volume2 color="white" size={moderateScale(20)} /> : <VolumeX color="white" size={moderateScale(20)} />}
+                        </TouchableOpacity>
+
+                        {/* 📹 Camera Toggle (Video Calls Only) */}
                         {isVideoCall && (
                             <TouchableOpacity onPress={toggleCamera} style={styles.actionRoundBtn}>
                                 {isVideoDisabled ? <VideoOff color="white" size={moderateScale(20)} /> : <Video color="white" size={moderateScale(20)} />}
                             </TouchableOpacity>
                         )}
+
+                        {/* 📞 End Call */}
                         <TouchableOpacity onPress={handleCloseStack} style={[styles.actionRoundBtn, { backgroundColor: '#EF4444' }]}>
                             <PhoneOff color="white" size={moderateScale(20)} />
                         </TouchableOpacity>
@@ -234,5 +287,20 @@ const styles = StyleSheet.create({
         borderRadius: scale(50),
         backgroundColor: '#044E3E',
         alignSelf: 'center',
-    }
+    },
+    timerHeaderOverlay: {
+        position: 'absolute',
+        alignSelf: 'center',
+        zIndex: 9999,
+        backgroundColor: 'rgba(0, 0, 0, 0.4)',
+        paddingHorizontal: scale(16),
+        paddingVertical: verticalScale(6),
+        borderRadius: scale(20),
+    },
+    timerText: {
+        color: '#FFFFFF',
+        fontSize: moderateScale(14),
+        fontWeight: '600',
+        letterSpacing: 1,
+    },
 });

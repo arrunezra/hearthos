@@ -70,6 +70,7 @@ export default function AuthScreen() {
             isDefault: dynamicIsDefault,
             isChatEnable: dynamicIsChatEnable, // 🚀 Added isChatEnable property
             lastLogin: serverTimestamp(),
+            readReceipt: true,
         }, { merge: true });
 
         if (finalRole === 'admin') {
