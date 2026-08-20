@@ -37,6 +37,8 @@ import { downloadVideoToCache, getLocalVideoPath } from './chat/chatCacheManager
 import { VideoPlayerViewer } from './chat/VideoPlayerViewer';
 import { StickerDrawerTab } from './chat/StickerDrawerTab';
 import { CustomImagePickerDrawerTab } from './chat/CustomImagePickerDrawerTab';
+import { formatChatDateSeparator, isSameDay } from '../utils/dateFormatter';
+import { ChatDateBadge } from './chat/ChatDateBadge';
 
 const BOTTOM_MARGIN = scale(2);
 const INITIAL_INPUT_HEIGHT = scale(42);
@@ -373,34 +375,47 @@ export default function ChatScreen({ route, navigation }: any) {
         });
     }, [currentUser?.uid, currentUserRole, roomId]);
 
-    const renderMessageItem = useCallback(({ item }: { item: any }) => {
+    const renderMessageItem = useCallback(({ item, index }: { item: any, index: number }) => {
         const itemKey = item.isDeletedByUser ? `${item.id}-deleted` : item.id;
-        return (
-            <ChatMessageBubble
-                key={itemKey}
-                item={item}
-                currentUserId={currentUser?.uid}
-                timeString={formatMessageTime(item.createdAt)}
-                onReplyTrigger={setReplyMessage}
-                onReplyClick={handleScrollToOriginalMessage}
-                onDeleteTrigger={handleDeleteMessageTrigger}
-                isAdmin={currentUserRole === 'admin'}
-                isDeletedByUser={!!item?.isDeletedByUser}
-                // 🚀 PASS HIGHLIGHT STATUS DOWN
-                isHighlighted={activeHighlightId === item.id}
-                onTriggerTranslation={(translatedText: string) => {
-                    setActiveTranslation(translatedText);
-                    setCopiedModalText(false);
-                }}
-                onVideoPress={(url: string | null) => {
-                    //console.log('onVideoPress url', url)
-                    setActiveVideoUrl(url)
+        const olderMessage = messages[index + 1];
 
-                }}
-                downloadingProgress={downloadingMap[item.id]}
-                onDownloadPress={handleDownloadVideoMessage}
-                isShowReadReceipt={isShowReadReceipt}
-            />
+    // Check if date changed or if it's the very first/oldest message in history
+    const shouldShowDateBadge =
+        !olderMessage || !isSameDay(item.createdAt, olderMessage.createdAt);
+
+    const formattedDate = formatChatDateSeparator(item.createdAt);
+        return (
+            <>
+                {shouldShowDateBadge && formattedDate ? (
+                <ChatDateBadge dateString={formattedDate} />
+            ) : null}
+
+                <ChatMessageBubble
+                    key={itemKey}
+                    item={item}
+                    currentUserId={currentUser?.uid}
+                    timeString={formatMessageTime(item.createdAt)}
+                    onReplyTrigger={setReplyMessage}
+                    onReplyClick={handleScrollToOriginalMessage}
+                    onDeleteTrigger={handleDeleteMessageTrigger}
+                    isAdmin={currentUserRole === 'admin'}
+                    isDeletedByUser={!!item?.isDeletedByUser}
+                    // 🚀 PASS HIGHLIGHT STATUS DOWN
+                    isHighlighted={activeHighlightId === item.id}
+                    onTriggerTranslation={(translatedText: string) => {
+                        setActiveTranslation(translatedText);
+                        setCopiedModalText(false);
+                    }}
+                    onVideoPress={(url: string | null) => {
+                        //console.log('onVideoPress url', url)
+                        setActiveVideoUrl(url)
+
+                    }}
+                    downloadingProgress={downloadingMap[item.id]}
+                    onDownloadPress={handleDownloadVideoMessage}
+                    isShowReadReceipt={isShowReadReceipt}
+                />
+            </>
         );
     }, [currentUser?.uid, currentUserRole, handleScrollToOriginalMessage, handleDeleteMessageTrigger, activeHighlightId]);
     const handleMediaMessageSend = async (source: 'camera' | 'gallery') => {

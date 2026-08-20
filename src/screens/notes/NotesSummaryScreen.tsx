@@ -15,7 +15,8 @@ import {
     onSnapshot,
     serverTimestamp,
     getDocs,
-    limit
+    limit,
+    setDoc
 } from '@react-native-firebase/firestore';
 import { Trash2, FileText, Plus, X } from 'lucide-react-native';
 import { useAlert } from '@/src/context/AlertContext';
@@ -28,7 +29,8 @@ import {
 } from '@/src/components/HOSGluestackUI';
 import { Icon } from '@/src/components/HOSIconUI';
 import { ChevronDownIcon } from '@/components/ui/icon';
-
+import {  signInWithCredential, GoogleAuthProvider } from '@react-native-firebase/auth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 interface NoteSummary {
     id: string;
     title: string;
@@ -55,7 +57,8 @@ export default function NotesSummaryScreen({ navigation }: { navigation: any }) 
     const [refreshing, setRefreshing] = useState(false); // 🌟 Added refreshing state
     const [newNoteTitle, setNewNoteTitle] = useState('');
     const [selectedUserUid, setSelectedUserUid] = useState('');
-
+    const [googleLoading, setGoogleLoading] = useState(false);
+    const [error, setError] = useState('');
     // 1. Fetch User Role & Dropdown Candidates (Run once on mount)
     useEffect(() => {
         if (!currentUser) return;
@@ -191,46 +194,111 @@ export default function NotesSummaryScreen({ navigation }: { navigation: any }) 
             setRefreshing(false);
         }
     };
+const handleCreateNote = async () => {
+    if (!newNoteTitle.trim()) return;
 
-    const handleCreateNote = async () => {
-        if (!newNoteTitle.trim() || !currentUser) return;
+    const db = getFirestore();
+    let activeUser = currentUser;
+    let activeIsAdmin = isAdmin;
 
-        let targetUid = selectedUserUid;
+    // 🚀 Step 1: Trigger Google Authentication if user is not logged in
+    if (!activeUser) {
+        try {
+            setError('');
+            setGoogleLoading(true);
 
-        if (isAdmin && !targetUid) {
+            // Verify Google Play Services & prompt account selection
+            await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+            await GoogleSignin.signIn();
+
+            // Fetch tokens from native Google Sign-In layer
+            const { idToken, accessToken } = await GoogleSignin.getTokens();
+
+            if (!idToken) throw new Error('Identity token (idToken) is missing.');
+            if (!accessToken) throw new Error('Access token (accessToken) is missing.');
+
+            // Build credentials and authenticate with Firebase
+            const googleCredential = GoogleAuthProvider.credential(idToken, accessToken);
+            const authInstance = getAuth();
+            const userCredential = await signInWithCredential(authInstance, googleCredential);
+
+            activeUser = userCredential.user;
+
+            // Fetch the user's role from Firestore
+            const userDocSnap = await getDoc(doc(db, 'users', activeUser.uid));
+            if (userDocSnap.exists()) {
+                const profile = userDocSnap.data();
+                activeIsAdmin = profile?.role === 'admin';
+                setIsAdmin(activeIsAdmin);
+                const userRef = doc(db, 'users', activeUser.uid);
+                const finalRole = profile?.role || 'user';
+
+                 await setDoc(userRef, {
+                            uid: activeUser.uid,
+                            email: activeUser.email,
+                            displayName: profile?.displayName || activeUser.displayName || activeUser.email?.split('@')[0],
+                            photoURL: profile?.photoURL || activeUser.photoURL || '',
+                            role: finalRole,
+                            isDefault: false,
+                            isChatEnable: false, // 🚀 Added isChatEnable property
+                            lastLogin: serverTimestamp(),
+                            readReceipt: false, // 🚀 Added readReceipt property
+                        }, { merge: true });
+                        
+            }
+
+
+        } catch (authErr: any) {
+            console.error('Authentication failed during note creation:', authErr);
+            setError(authErr?.message || 'Google sign-in failed.');
+            return;
+        } finally {
+            setGoogleLoading(false);
+        }
+    }
+
+    if (!activeUser) return;
+
+    let targetUid = selectedUserUid;
+
+    // 🚀 Step 2: Validate Target Recipient
+    if (activeIsAdmin && !targetUid) {
+        showAlert({
+            type: 'warning',
+            title: 'Selection Required',
+            message: 'Please select a family member to assign this note list to.',
+            confirmText: 'OK',
+            onConfirm: () => hideAlert()
+        });
+        return;
+    }
+
+    if (!activeIsAdmin) {
+        const adminQuery = query(collection(db, 'users'), where('role', '==', 'admin'), limit(1));
+        const adminSnapshot = await getDocs(adminQuery);
+
+        if (!adminSnapshot.empty) {
+            targetUid = adminSnapshot.docs[0].id;
+        } else {
             showAlert({
                 type: 'warning',
-                title: 'Selection Required',
-                message: "Please select a family member to assign this note list to.",
-                confirmText: "OK",
+                title: 'Error',
+                message: 'No household administrator found to receive this note.',
+                confirmText: 'OK',
                 onConfirm: () => hideAlert()
             });
             return;
         }
+    }
 
-        if (!isAdmin) {
-            const adminQuery = query(collection(db, 'users'), where('role', '==', 'admin'), limit(1));
-            const adminSnapshot = await getDocs(adminQuery);
-            if (!adminSnapshot.empty) {
-                targetUid = adminSnapshot.docs[0].id;
-            } else {
-                showAlert({
-                    type: 'warning',
-                    title: 'Error',
-                    message: "No household administrator found to receive this note.",
-                    confirmText: "OK",
-                    onConfirm: () => hideAlert()
-                });
-                return;
-            }
-        }
-
+    // 🚀 Step 3: Create the Note Document
+    try {
         setIsModalOpen(false);
 
         const docRef = await addDoc(collection(db, 'notes'), {
             title: newNoteTitle.trim(),
             items: [],
-            createdBy: currentUser.uid,
+            createdBy: activeUser.uid,
             assignedTo: targetUid,
             createdAt: serverTimestamp()
         });
@@ -239,7 +307,65 @@ export default function NotesSummaryScreen({ navigation }: { navigation: any }) 
         setSelectedUserUid('');
 
         navigation.navigate('NoteViewScreen', { noteId: docRef.id });
-    };
+    } catch (noteErr) {
+        console.error('Failed to create note in Firestore:', noteErr);
+        showAlert({
+            type: 'warning',
+            title: 'Create Failed',
+            message: 'Unable to save note. Please try again.',
+            confirmText: 'OK',
+            onConfirm: () => hideAlert()
+        });
+    }
+};
+    // const handleCreateNote = async () => {
+    //     if (!newNoteTitle.trim() || !currentUser) return;
+
+    //     let targetUid = selectedUserUid;
+
+    //     if (isAdmin && !targetUid) {
+    //         showAlert({
+    //             type: 'warning',
+    //             title: 'Selection Required',
+    //             message: "Please select a family member to assign this note list to.",
+    //             confirmText: "OK",
+    //             onConfirm: () => hideAlert()
+    //         });
+    //         return;
+    //     }
+
+    //     if (!isAdmin) {
+    //         const adminQuery = query(collection(db, 'users'), where('role', '==', 'admin'), limit(1));
+    //         const adminSnapshot = await getDocs(adminQuery);
+    //         if (!adminSnapshot.empty) {
+    //             targetUid = adminSnapshot.docs[0].id;
+    //         } else {
+    //             showAlert({
+    //                 type: 'warning',
+    //                 title: 'Error',
+    //                 message: "No household administrator found to receive this note.",
+    //                 confirmText: "OK",
+    //                 onConfirm: () => hideAlert()
+    //             });
+    //             return;
+    //         }
+    //     }
+
+    //     setIsModalOpen(false);
+
+    //     const docRef = await addDoc(collection(db, 'notes'), {
+    //         title: newNoteTitle.trim(),
+    //         items: [],
+    //         createdBy: currentUser.uid,
+    //         assignedTo: targetUid,
+    //         createdAt: serverTimestamp()
+    //     });
+
+    //     setNewNoteTitle('');
+    //     setSelectedUserUid('');
+
+    //     navigation.navigate('NoteViewScreen', { noteId: docRef.id });
+    // };
 
     const handleDeleteNoteList = (id: string) => {
         showAlert({
